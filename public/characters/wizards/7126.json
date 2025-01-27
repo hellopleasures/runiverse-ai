@@ -1,0 +1,64 @@
+{
+  "id": 7126,
+  "name": "Battle Mage Ulysse of the Hollow",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/7126.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 7126,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Two_Tone_Fringe",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Plague_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Master_of_Wood,_Water,_and_Hill",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "The_Gnome's_Tooth:_the_Earth_Spell",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Omega",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Brownish",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "80",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

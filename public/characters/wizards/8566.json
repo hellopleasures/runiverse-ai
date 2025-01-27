@@ -1,0 +1,64 @@
+{
+  "id": 8566,
+  "name": "Charmer Beyna ",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/8566.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 8566,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Red",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "White_Wraith",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Albino_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Botanic_Master",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Passion_Potion",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Neptune",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "White_Magic",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "40",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "1E0200"
+}

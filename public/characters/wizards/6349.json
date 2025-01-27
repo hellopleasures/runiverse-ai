@@ -1,0 +1,59 @@
+{
+  "id": 6349,
+  "name": "Shaman Homer of the Oasis",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/6349.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 6349,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Double_Sash",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Plague_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Master_of_Wood,_Water,_and_Hill",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Garnet_Staff",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Brownish",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

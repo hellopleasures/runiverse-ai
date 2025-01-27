@@ -1,0 +1,59 @@
+{
+  "id": 9530,
+  "name": "Sage Flamos of the Lake",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/9530.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 9530,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Blue_Big_Buckle",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Merlin's_Monkey",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Flaming_Skull",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Staff",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Jungle",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

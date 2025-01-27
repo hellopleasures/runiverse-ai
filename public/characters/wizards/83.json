@@ -1,0 +1,64 @@
+{
+  "id": 83,
+  "name": "Archmagus Alessar of the Tower",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/83.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 83,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Red",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Cape_in_the_Wind",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Psychic_Rabbit",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "White_Wizard",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Wizard's_Pipe",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Air",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "White_Magic",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "60",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "1E0200"
+}

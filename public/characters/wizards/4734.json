@@ -1,0 +1,59 @@
+{
+  "id": 4734,
+  "name": "Magus Danny of the Havens",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/4734.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 4734,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Red",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Brown_Tunic",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Lucky_Black_Cat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "MachoMan",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Dragon_Fireworks",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Blue_Shift",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "1E0200"
+}

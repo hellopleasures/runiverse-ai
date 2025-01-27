@@ -1,0 +1,64 @@
+{
+  "id": 3817,
+  "name": "Witch Ophelia of the Hills",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/3817.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 3817,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Red_Hip_Pouch",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Red_Mamba",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Vamp",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Dragon_Fireworks",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Mars",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Crimson",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

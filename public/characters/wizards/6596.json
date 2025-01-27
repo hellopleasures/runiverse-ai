@@ -1,0 +1,64 @@
+{
+  "id": 6596,
+  "name": "Adept Corvin of the Valley",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/6596.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 6596,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Green_Scholar",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Albino_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Corvid",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Wizard's_Pipe",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Air",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Academic",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "80",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

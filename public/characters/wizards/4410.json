@@ -1,0 +1,64 @@
+{
+  "id": 4410,
+  "name": "Druid Celeste of El Dorado",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/4410.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 4410,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Dapper_Formal",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Emerald_Slime",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Charmer",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Ruby_Staff",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Lime",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Crimson",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "60",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

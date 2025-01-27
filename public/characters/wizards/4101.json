@@ -1,0 +1,64 @@
+{
+  "id": 4101,
+  "name": "Battle Mage Homer of the Hall",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/4101.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 4101,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Orange_Caped_Traveller",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Great_Owl",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Kelt",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Siren's_Bell",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Sun",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Orange",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "60",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

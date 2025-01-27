@@ -1,0 +1,64 @@
+{
+  "id": 9854,
+  "name": "Shadow Mage Calista of the River",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/9854.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 9854,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Red",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Purple_Cloak",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Lucky_Black_Cat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "ArtChick",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Crystal_Skull",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Cinnabar",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Purple_Haze",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "80",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "1E0200"
+}

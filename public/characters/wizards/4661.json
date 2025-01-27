@@ -1,0 +1,59 @@
+{
+  "id": 4661,
+  "name": "Hedge Wizard Blaise of the Sacred Pillars",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/4661.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 4661,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Orange_Scholar",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Sapphire_Slime",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Strongman",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Dryad's_Ear:_the_Plant_Spell",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Blue_Shift",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

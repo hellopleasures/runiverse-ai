@@ -1,0 +1,64 @@
+{
+  "id": 4568,
+  "name": "Arch-Magician Baptiste of Xanadu",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/4568.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 4568,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Green_Mantle_Robe",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Golden_Toad",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Creol",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "The_Midas_Rod",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Lime",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Gold",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "40",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

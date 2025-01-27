@@ -1,0 +1,54 @@
+{
+  "id": 8888,
+  "name": "Headless Wizard",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/8888.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 8888,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Green_Big_Buckle",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Headless",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Crystal_Skull",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Pirate",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "1",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "33",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

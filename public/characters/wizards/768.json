@@ -1,0 +1,59 @@
+{
+  "id": 768,
+  "name": "Druid Zane of the Capital",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/768.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 768,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Dapper_Formal",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Bliss_Cat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Eastern_Arcanist",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Phoenix_Feather",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Formal",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "75",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

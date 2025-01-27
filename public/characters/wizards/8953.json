@@ -1,0 +1,54 @@
+{
+  "id": 8953,
+  "name": "Battle Mage Ethan of the Wild",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/8953.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 8953,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Vest_Green",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Swashbuckler",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "The_Midas_Rod",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Brownish",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "66",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

@@ -1,0 +1,64 @@
+{
+  "id": 1985,
+  "name": " Uvlius of the Keep",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/1985.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 1985,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Royal_Shoulder_Cape",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Great_Owl",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Diviner",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Ruby_Staff",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Sun",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Blue_Shift",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "40",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

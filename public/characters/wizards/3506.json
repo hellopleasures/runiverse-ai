@@ -1,0 +1,64 @@
+{
+  "id": 3506,
+  "name": "Thaumaturge Fark of the Canyon",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/3506.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 3506,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Blue_Coveralls",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Blue_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Bard",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Harmony_Staff",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Water",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Blue_Shift",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

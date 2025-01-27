@@ -1,0 +1,64 @@
+{
+  "id": 3402,
+  "name": "Illusionist Ofaris of the Wood",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/3402.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 3402,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Green_Caped_Traveller",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Bliss_Cat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Eastern_Arcanist",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Isaac's_Apple",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Sun",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Cosmic",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "60",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

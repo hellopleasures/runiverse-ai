@@ -1,0 +1,59 @@
+{
+  "id": 951,
+  "name": "Archmagus Eden of the Wild",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/951.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 951,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Green_Lined_Coveralls",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Emerald_Slime",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Professor",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Goblet_of_Immortality",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Formal",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

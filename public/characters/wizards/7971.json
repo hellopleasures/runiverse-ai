@@ -1,0 +1,59 @@
+{
+  "id": 7971,
+  "name": "Shadow Mage Sarah of the Belfry",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/7971.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 7971,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Yellow_Cleric",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Plague_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Red_Priestess",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Vile_of_Virgin's_Blood",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Formal",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

@@ -1,0 +1,54 @@
+{
+  "id": 7934,
+  "name": "Enchanter Apollo of the Mount",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/7934.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 7934,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Royal_Shoulder_Cape",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Scholar",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Book_of_Magic",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Academic",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

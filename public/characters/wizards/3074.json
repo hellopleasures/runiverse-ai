@@ -1,0 +1,64 @@
+{
+  "id": 3074,
+  "name": "Hydromancer Zafar of the Mount",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/3074.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 3074,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Green_Hip_Scarf",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Giant_Ladybug",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Djinn",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Kelpie's_Fury:_the_Water_Spell",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Mercury",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Blue_Shift",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "40",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

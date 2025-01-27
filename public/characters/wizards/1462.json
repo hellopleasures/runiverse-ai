@@ -1,0 +1,64 @@
+{
+  "id": 1462,
+  "name": "Arch-Magician Talon from the Shadow",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/1462.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 1462,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "White_Wraith",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Albino_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Polar_Shapeshifter",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Egg_of_Unknown_Beast",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Cinnabar",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "White_Magic",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "80",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

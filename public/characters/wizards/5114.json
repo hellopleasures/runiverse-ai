@@ -1,0 +1,59 @@
+{
+  "id": 5114,
+  "name": "Archmagus Lumos of the Palms",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/5114.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 5114,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Desert_Wear",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Lucky_Black_Cat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Astral_Arcanist",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Bag_of_Tricks",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Monk",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

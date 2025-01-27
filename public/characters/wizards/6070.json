@@ -1,0 +1,64 @@
+{
+  "id": 6070,
+  "name": " Isaac of the Sacred Pillars",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/6070.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 6070,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Royal_Shoulder_Cape",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Crackerjack_Crow",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Faustian",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Zephyr's_Laugh:_the_Wind_Spell",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Mars",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Academic",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "80",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

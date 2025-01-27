@@ -1,0 +1,54 @@
+{
+  "id": 3497,
+  "name": "Artificer Luther of Elysium",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/3497.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 3497,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Green_Hip_Scarf",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Mandinka",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Bag_of_Tricks",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Rugged",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

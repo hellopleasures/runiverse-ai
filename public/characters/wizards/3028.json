@@ -1,0 +1,64 @@
+{
+  "id": 3028,
+  "name": "Druid Qasim of the Heath",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/3028.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 3028,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Red",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Blue_Coveralls",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Blue_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Stranger",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Phoenix_Feather",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Mercury",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Blue_Shift",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "80",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "1E0200"
+}

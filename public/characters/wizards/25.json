@@ -1,0 +1,54 @@
+{
+  "id": 25,
+  "name": "Necromancer Nikita ",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/25.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 25,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Gold_Skeleton",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Gold_Skeleton",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Golden_Soul_Reaper",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Gold",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

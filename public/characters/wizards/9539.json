@@ -1,0 +1,59 @@
+{
+  "id": 9539,
+  "name": "Enchanter Arabella of the Forest",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/9539.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 9539,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Blue_Coveralls",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Giant_Ladybug",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Coven_Sister",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Ruby_Staff",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Crimson",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

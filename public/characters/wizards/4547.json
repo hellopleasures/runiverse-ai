@@ -1,0 +1,64 @@
+{
+  "id": 4547,
+  "name": "Sorcerer Lumos of the Sun",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/4547.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 4547,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Orchid_Harem_Pants",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Blue_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Thelemist",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Bag_of_Tricks",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Water",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Gold",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "60",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

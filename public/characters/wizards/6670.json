@@ -1,0 +1,59 @@
+{
+  "id": 6670,
+  "name": "Chronomancer Lux of the Carnival",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/6670.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 6670,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Green_Elven_Cloak",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Red_Mamba",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Arcadian_Master",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Sphinx's_Hourglass",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Academic",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

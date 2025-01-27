@@ -1,0 +1,59 @@
+{
+  "id": 4585,
+  "name": " Charlord of the Garden",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/4585.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 4585,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Green_Elven_Cloak",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Flaming_Skull",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "The_Midas_Rod",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Jupiter",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Flame",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "1",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "25",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

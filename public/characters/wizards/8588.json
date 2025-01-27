@@ -1,0 +1,59 @@
+{
+  "id": 8588,
+  "name": "Alchemist Merlon of the Atheneum",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/8588.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 8588,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Orange_Scholar",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Onyx_Wolf",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Yellow_Wizard",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Astral_Potion",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Chemistry",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

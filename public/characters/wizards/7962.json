@@ -1,0 +1,54 @@
+{
+  "id": 7962,
+  "name": "Archmagus Ozohr of the Bastion",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/7962.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 7962,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Aristocrat_Green",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Albino_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Eastern_Arcanist",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Formal",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

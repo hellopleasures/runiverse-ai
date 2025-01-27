@@ -1,0 +1,64 @@
+{
+  "id": 8678,
+  "name": "Electromancer Alessar from the Shadow",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/8678.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 8678,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Red",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Robe_of_Shadow",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Golden_Toad",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Yellow_Wizard",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Thor's_Wrath:_the_Lightning_Spell",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Brimstone",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Amber",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "60",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "1E0200"
+}

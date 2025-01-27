@@ -1,0 +1,59 @@
+{
+  "id": 8048,
+  "name": "Illusionist Bao of the Platonic Shadow",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/8048.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 8048,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Tech_Coat",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Albino_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Shaolin",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Isaac's_Apple",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Academic",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

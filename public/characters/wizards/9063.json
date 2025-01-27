@@ -1,0 +1,64 @@
+{
+  "id": 9063,
+  "name": "Spellsinger Lucinda of the River",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/9063.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 9063,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Spandex__Green",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Ember_Frog",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Crone",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Siren's_Bell",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Saturn",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Feminine",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "40",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

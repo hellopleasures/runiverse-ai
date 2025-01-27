@@ -1,0 +1,64 @@
+{
+  "id": 9877,
+  "name": " Cassiopeia of the Marsh",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/9877.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 9877,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Purple_Cloak",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Sun_Cat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Red_Priestess",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Thor's_Wrath:_the_Lightning_Spell",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Mars",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Feminine",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "40",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

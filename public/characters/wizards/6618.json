@@ -1,0 +1,59 @@
+{
+  "id": 6618,
+  "name": "Archmagus Khudalf of the Rock",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/6618.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 6618,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Orchid_Harem_Pants",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Sapphire_Slime",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Animist",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Harmony_Staff",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Blue_Shift",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

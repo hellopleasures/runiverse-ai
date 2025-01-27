@@ -1,0 +1,54 @@
+{
+  "id": 2699,
+  "name": " Merlon of the Forest",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/2699.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 2699,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Green_Big_Buckle",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Warlock",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "The_Midas_Rod",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Wand",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "1",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "33",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

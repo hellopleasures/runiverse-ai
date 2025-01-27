@@ -1,0 +1,64 @@
+{
+  "id": 4060,
+  "name": "Diabolist Aiko of the Hall",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/4060.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 4060,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Aristocrat_Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Bliss_Cat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Kabuki_",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Soul_Harvester",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Pluto",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Formal",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "80",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

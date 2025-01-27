@@ -1,0 +1,59 @@
+{
+  "id": 2431,
+  "name": "Archmagus Milton of the Light",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/2431.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 2431,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Ice_Robe",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Bliss_Cat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Hermit",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Passion_Potion",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Cosmic",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "75",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

@@ -1,0 +1,59 @@
+{
+  "id": 5139,
+  "name": "Runecaster Axel of the Valley",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/5139.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 5139,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Green_Hip_Scarf",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Green_Asp",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Woodland_Shapeshifter",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Book_of_Magic",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Rugged",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "75",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

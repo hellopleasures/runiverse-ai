@@ -1,0 +1,64 @@
+{
+  "id": 9575,
+  "name": "Sorcerer Idris of the Hall",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/9575.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 9575,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Aristocrat_Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Blue_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Stranger",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Astral_Potion",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Pluto",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Blue_Shift",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "80",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

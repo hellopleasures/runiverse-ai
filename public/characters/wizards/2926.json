@@ -1,0 +1,64 @@
+{
+  "id": 2926,
+  "name": "Thaumaturge Bathsheba of Dreams",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/2926.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 2926,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Yellow_Cleric",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Blue_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Dark_Sister",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Stellar_Staff",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Steel",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Blue_Shift",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "80",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

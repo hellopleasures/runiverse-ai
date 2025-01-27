@@ -1,0 +1,64 @@
+{
+  "id": 1021,
+  "name": "Voodoo Priest Victor of Elysium",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/1021.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 1021,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Royal_Shoulder_Cape",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Sapphire_Slime",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Creol",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Astral_Potion",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Brimstone",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Blue_Shift",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "60",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

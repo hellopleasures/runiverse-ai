@@ -1,0 +1,64 @@
+{
+  "id": 1823,
+  "name": "Alchemist Solomon of Arcadia",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/1823.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 1823,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Blue_Big_Buckle",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Sapphire_Slime",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Seer",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Astral_Potion",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Saturn",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Blue_Shift",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "80",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

@@ -1,0 +1,59 @@
+{
+  "id": 8381,
+  "name": " David of the Hills",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/8381.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 8381,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Orange_Caped_Traveller",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Blue_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Seer",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "The_Midas_Rod",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Blue_Shift",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "75",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

@@ -1,0 +1,64 @@
+{
+  "id": 3493,
+  "name": "Mystic Danny of the Sands",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/3493.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 3493,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Orchid_Harem_Pants",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Lucky_Black_Cat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Woodland_Shapeshifter",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Lunar_Staff",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Pluto",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Purple_Haze",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "80",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

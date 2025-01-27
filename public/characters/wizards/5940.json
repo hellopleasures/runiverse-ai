@@ -1,0 +1,59 @@
+{
+  "id": 5940,
+  "name": "Archmagus Casper of the Riviera",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/5940.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 5940,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Green_Big_Buckle",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Onyx_Wolf",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Fortune_Seeker",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Goblet_of_Immortality",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Formal",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

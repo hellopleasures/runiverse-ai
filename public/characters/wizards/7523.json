@@ -1,0 +1,59 @@
+{
+  "id": 7523,
+  "name": "Alchemist Faiz of the Hills",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/7523.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 7523,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Blue_Big_Buckle",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Merlin's_Monkey",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Dream_Master",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Passion_Potion",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Jungle",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

@@ -1,0 +1,54 @@
+{
+  "id": 9642,
+  "name": "Arch-Magician Merlon of the Hollow",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/9642.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 9642,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Green_Big_Buckle",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Blue_Wizard",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Courage_Staff",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Crook",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "1",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "33",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

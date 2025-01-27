@@ -1,0 +1,54 @@
+{
+  "id": 7311,
+  "name": "Runecaster Fidget of the Rock",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/7311.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 7311,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Double_Sash",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Wooden_Boy",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Courage_Staff",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Crimson",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

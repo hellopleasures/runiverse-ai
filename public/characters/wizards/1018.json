@@ -1,0 +1,64 @@
+{
+  "id": 1018,
+  "name": "Alchemist Hadrien of the Court",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/1018.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 1018,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Aristocrat_Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Lucky_Black_Cat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Prophet",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Nightshade_Potion",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Earth",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Chemistry",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "40",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

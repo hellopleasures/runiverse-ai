@@ -1,0 +1,59 @@
+{
+  "id": 7664,
+  "name": "Battle Mage Ulysse of the Crag",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/7664.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 7664,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Red_Suit",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Plague_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Wildman",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Bag_of_Tricks",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Rugged",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "75",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

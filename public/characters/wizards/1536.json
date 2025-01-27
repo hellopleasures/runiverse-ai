@@ -1,0 +1,59 @@
+{
+  "id": 1536,
+  "name": "Archmagus Ofaris of the Havens",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/1536.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 1536,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Orange_Hip_Scarf_",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Albino_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Hermit",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Nightshade_Potion",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Chemistry",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

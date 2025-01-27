@@ -1,0 +1,64 @@
+{
+  "id": 2220,
+  "name": "Magus Uday of Avalon",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/2220.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 2220,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Orange_Hip_Scarf_",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Crackerjack_Crow",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Stranger",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Bag_of_Tricks",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Saturn",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Rugged",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "80",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

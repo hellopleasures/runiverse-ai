@@ -1,0 +1,10 @@
+{
+    "name": "One Messed Up Pony",
+    "description": "LOTS OF PONIES",
+    "image": "https://forgottenbabies.com/ponies/1170.png",
+    "edition": 1170,
+    "attributes": [
+      [{"trait_type":"background","value":"green_background"},{"trait_type":"body","value":"brown_mecha_pony"},{"trait_type":"clothes","value":"antenae"},{"trait_type":"head","value":"bandana"},{"trait_type":"mouth","value":"wires"}]
+    ],
+    "compiler": "Black Sand Mount Generator"
+  }

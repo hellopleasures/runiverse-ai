@@ -1,0 +1,59 @@
+{
+  "id": 5630,
+  "name": "Artificer Uday of the Oasis",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/5630.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 5630,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Orchid_Harem_Pants",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Plague_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Dark_Arcanist",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Key_of_the_7th_Realm",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Gold",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

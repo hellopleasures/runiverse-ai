@@ -1,0 +1,59 @@
+{
+  "id": 2219,
+  "name": "Artificer Ethan of the Field",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/2219.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 2219,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Blue_Coveralls",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Topaz_Slime",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Gruffling",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Bag_of_Tricks",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Rugged",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

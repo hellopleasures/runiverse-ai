@@ -1,0 +1,64 @@
+{
+  "id": 7377,
+  "name": "Colormancer Rainman of the Realm",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/7377.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 7377,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Red",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Blue_Elven_Cloak",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Sapphire_Slime",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Hue_Master",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Guillaume's_Broom",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Steel",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Blue_Shift",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "60",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "1E0200"
+}

@@ -1,0 +1,54 @@
+{
+  "id": 4976,
+  "name": "Artificer Bobbin of the Brambles",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/4976.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 4976,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Blue_Coveralls",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Wooden_Boy",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Prometheus's_Torch",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Crimson",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

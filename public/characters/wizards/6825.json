@@ -1,0 +1,64 @@
+{
+  "id": 6825,
+  "name": "Alchemist Ozohr of the Mount",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/6825.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 6825,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Orange_Hip_Scarf_",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Swamp_Bullfrog",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Professor",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Peace_Staff",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Steel",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "White_Magic",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "40",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

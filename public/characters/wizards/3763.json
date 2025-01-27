@@ -1,0 +1,59 @@
+{
+  "id": 3763,
+  "name": " Lumos of the Field",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/3763.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 3763,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Vest_Green",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Emerald_Slime",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Man_Behind_the_Curtain",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Hobgoblin's_Flame:_the_Wayward_Spell",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Verdant",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

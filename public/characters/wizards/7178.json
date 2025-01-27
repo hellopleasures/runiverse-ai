@@ -1,0 +1,64 @@
+{
+  "id": 7178,
+  "name": "Sorcerer Alatar of the Wold",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/7178.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 7178,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Brown_Coveralls",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Emerald_Slime",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Cloud_Prophet",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Dryad's_Ear:_the_Plant_Spell",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Jupiter",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Cyan",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "40",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

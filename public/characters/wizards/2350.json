@@ -1,0 +1,59 @@
+{
+  "id": 2350,
+  "name": "Cleric Silas of the Veil",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/2350.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 2350,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Blue_Elven_Cloak",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Red_Mamba",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Green_Wizard",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Fairy_Glamour:_the_Dazzle_Spell",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Goofy",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

@@ -1,0 +1,59 @@
+{
+  "id": 9737,
+  "name": "Magus Chooki of the Carnival",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/9737.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 9737,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Green_Elven_Cloak",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Lucky_Black_Cat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Dark_Arcanist",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Nightshade_Potion",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Purple_Haze",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

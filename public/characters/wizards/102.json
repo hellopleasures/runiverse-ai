@@ -1,0 +1,64 @@
+{
+  "id": 102,
+  "name": "Battle Mage Cassius of the Steppe",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/102.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 102,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Overcoat",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Albino_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Polar_Shapeshifter",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Candle_of_Intuition",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Pluto",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "White_Magic",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "80",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

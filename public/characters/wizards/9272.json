@@ -1,0 +1,64 @@
+{
+  "id": 9272,
+  "name": "Ice Mage Elmo of the Berg",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/9272.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 9272,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Red_Suit",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Red_Mamba",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Wooden_Boy",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Red_Mushroom",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Omega",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Crimson",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

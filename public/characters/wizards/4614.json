@@ -1,0 +1,64 @@
+{
+  "id": 4614,
+  "name": "Enchanter Arabella of Alfheim",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/4614.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 4614,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Green_Elven_Cloak",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Forever_Bat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Mambo",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Crystal_Skull",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Neptune",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Purple_Haze",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

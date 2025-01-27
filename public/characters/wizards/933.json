@@ -1,0 +1,64 @@
+{
+  "id": 933,
+  "name": "Arcanist Bullock of the Road",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/933.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 933,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Green_Lined_Coveralls",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Crackerjack_Crow",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Canaanite",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Candle_of_Intuition",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Fire",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Rugged",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "80",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

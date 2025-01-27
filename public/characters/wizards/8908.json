@@ -1,0 +1,59 @@
+{
+  "id": 8908,
+  "name": "Necromancer Seth of the Desert",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/8908.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 8908,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Desert_Wear",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Red_Mamba",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Corpse_Feeder",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "The_Midas_Rod",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Blue_Shift",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

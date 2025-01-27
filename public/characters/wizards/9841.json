@@ -1,0 +1,64 @@
+{
+  "id": 9841,
+  "name": "Archmagus Max of the Capital",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/9841.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 9841,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "SupaFly",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Golden_Toad",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Felis",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Dragon_Fireworks",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Pluto",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Purple_Haze",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "60",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

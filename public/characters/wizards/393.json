@@ -1,0 +1,64 @@
+{
+  "id": 393,
+  "name": "Adept David of the Tower",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/393.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 393,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Dapper_Formal",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Lucky_Black_Cat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Prophet",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Book_of_Magic",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Up_Only",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "City",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "60",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

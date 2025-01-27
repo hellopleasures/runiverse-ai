@@ -1,0 +1,64 @@
+{
+  "id": 1405,
+  "name": "Archmagus Allistair of the Capital",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/1405.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 1405,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Dapper_Formal",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Merlin's_Monkey",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Faustian",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Isaac's_Apple",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Cinnabar",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Crimson",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "80",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

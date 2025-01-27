@@ -1,0 +1,54 @@
+{
+  "id": 2720,
+  "name": "Cleric Shu of the Wold",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/2720.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 2720,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Blue_Hip_Pouch",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Kempo",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Harmony_Staff",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Blue_Shift",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

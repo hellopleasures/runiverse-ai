@@ -1,0 +1,59 @@
+{
+  "id": 30,
+  "name": "Great Old One Andolini",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/30.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 30,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Brown_Tunic",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Merlin's_Monkey",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Great_Old_One",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Bag_of_Tricks",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Darkness",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

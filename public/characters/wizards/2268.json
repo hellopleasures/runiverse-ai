@@ -1,0 +1,64 @@
+{
+  "id": 2268,
+  "name": "Hedge Wizard Aleister of the Cosmos",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/2268.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 2268,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Brown_Tunic",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Swamp_Bullfrog",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Skylord",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Dryad's_Ear:_the_Plant_Spell",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Neptune",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Swamp",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "40",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

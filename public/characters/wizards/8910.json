@@ -1,0 +1,64 @@
+{
+  "id": 8910,
+  "name": "Spellsinger Hagar of the Havens",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/8910.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 8910,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Cosmic_Cardigan",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Albino_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Wildman",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Siren's_Bell",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Sun",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Amber",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "40",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

@@ -1,0 +1,64 @@
+{
+  "id": 1600,
+  "name": "Evoker Soya of the Cosmos",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/1600.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 1600,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "White_Tunic",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Green_Asp",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Faustian",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Fairy_Glamour:_the_Dazzle_Spell",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Jupiter",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Crimson",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "40",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

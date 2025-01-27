@@ -1,0 +1,59 @@
+{
+  "id": 6311,
+  "name": "Arch-Magician Nolan of the Hills",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/6311.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 6311,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Vest_Green",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Red_Mamba",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Mandinka",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Fairy_Glamour:_the_Dazzle_Spell",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Amber",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

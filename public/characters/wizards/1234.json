@@ -1,0 +1,59 @@
+{
+  "id": 1234,
+  "name": "The Color Master ",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/1234.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 1234,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Rainbow_Suit",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Rain_Toucan",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Hue_Master",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Loki's_Bridge:_the_Rainbow_Spell",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Rainbow",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

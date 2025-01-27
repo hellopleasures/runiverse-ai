@@ -1,0 +1,59 @@
+{
+  "id": 1143,
+  "name": "Cryptomancer Aleister of the Obelisk",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/1143.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 1143,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Green_Scholar",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Swamp_Bullfrog",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Man_Behind_the_Curtain",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Hobgoblin's_Flame:_the_Wayward_Spell",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Verdant",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

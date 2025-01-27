@@ -1,0 +1,64 @@
+{
+  "id": 5743,
+  "name": "Arch-Magician Pandora of the Wood",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/5743.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 5743,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Spandex__Dark",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Ember_Frog",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Red_Priestess",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "The_Midas_Rod",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Cinnabar",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Crimson",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "60",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

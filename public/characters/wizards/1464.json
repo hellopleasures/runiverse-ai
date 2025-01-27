@@ -1,0 +1,54 @@
+{
+  "id": 1464,
+  "name": "Ice Mage Nikolas of the Ice",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/1464.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 1464,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Black",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Red_Suit",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Red_Wizard",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Candle_of_Intuition",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Crimson",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "100",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "000000"
+}

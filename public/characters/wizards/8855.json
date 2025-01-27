@@ -1,0 +1,64 @@
+{
+  "id": 8855,
+  "name": "Pyromancer Brown Cow of the Lake",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/8855.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 8855,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Blue_Lined_Coveralls_",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Plague_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Canaanite",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Hobgoblin's_Flame:_the_Wayward_Spell",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Sun",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Brownish",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "60",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

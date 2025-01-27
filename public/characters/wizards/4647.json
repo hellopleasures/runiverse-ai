@@ -1,0 +1,64 @@
+{
+  "id": 4647,
+  "name": "Alchemist Behemoth of the Cosmos",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/4647.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 4647,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Red",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Ice_Robe",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Forever_Bat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Canaanite",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Cannabis_Potion",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Brass",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Wraith",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "60",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "1E0200"
+}

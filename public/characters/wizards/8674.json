@@ -1,0 +1,64 @@
+{
+  "id": 8674,
+  "name": "Witch Shivra of the Belfry",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/8674.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 8674,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Yellow_Cleric",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Crackerjack_Crow",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Wild_Woman",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Mug_of_Ale",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Uranus",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Rugged",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "60",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

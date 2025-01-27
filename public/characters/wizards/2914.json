@@ -1,0 +1,59 @@
+{
+  "id": 2914,
+  "name": "Artificer Celeste of the Court",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/2914.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 2914,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Orange_Caped_Traveller",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Coven_Sister",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Bag_of_Tricks",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Air",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "City",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

@@ -1,0 +1,59 @@
+{
+  "id": 3651,
+  "name": "Necromancer Burnside of the Gnostics",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/3651.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 3651,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Green",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Brown_Tunic",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Plague_Rat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Flaming_Skull",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Grim_Reaper's_Breath:_the_Death_Spell",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Darkness",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "75",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "040D04"
+}

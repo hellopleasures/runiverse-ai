@@ -1,0 +1,59 @@
+{
+  "id": 7384,
+  "name": "Artificer Judas of the Steppe",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/7384.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 7384,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Blue_Big_Buckle",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Swamp_Bullfrog",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Corpse_Feeder",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Bag_of_Tricks",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Brownish",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "50",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

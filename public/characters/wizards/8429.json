@@ -1,0 +1,64 @@
+{
+  "id": 8429,
+  "name": "Wild Mage Zaim of the Garden",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/8429.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 8429,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Blue_Elven_Cloak",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Sun_Cat",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Djinn",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "A_Big_Magic_Stick",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Cinnabar",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Orange",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "60",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

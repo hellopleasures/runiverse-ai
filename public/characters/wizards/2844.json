@@ -1,0 +1,54 @@
+{
+  "id": 2844,
+  "name": "Alchemist Milton of the Canyon",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/2844.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 2844,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Blue_Lined_Coveralls_",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Man_Behind_the_Curtain",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Mandrake_Potion",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Blue_Shift",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "3",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "2",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "66",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}

@@ -1,0 +1,64 @@
+{
+  "id": 9720,
+  "name": "Arcanist Danny of the Brambles",
+  "image": "ipfs://QmbtiPZfgUzHd79T1aPcL9yZnhGFmzwar7h4vmfV6rV8Kq/9720.png",
+  "attributes": [
+    {
+      "trait_type": "serial",
+      "value": 9720,
+      "filename": null
+    },
+    {
+      "trait_type": "background",
+      "value": "Blue",
+      "filename": null
+    },
+    {
+      "trait_type": "body",
+      "value": "Orange_Caped_Traveller",
+      "filename": null
+    },
+    {
+      "trait_type": "familiar",
+      "value": "Fox_Trickster",
+      "filename": null
+    },
+    {
+      "trait_type": "head",
+      "value": "Kelt",
+      "filename": null
+    },
+    {
+      "trait_type": "prop",
+      "value": "Candle_of_Intuition",
+      "filename": null
+    },
+    {
+      "trait_type": "rune",
+      "value": "Rune_of_Up_Only",
+      "filename": null
+    },
+    {
+      "trait_type": "affinity",
+      "value": "Crimson",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits",
+      "value": "5",
+      "filename": null
+    },
+    {
+      "trait_type": "# traits in affinity",
+      "value": "4",
+      "filename": null
+    },
+    {
+      "trait_type": "% traits in affinity",
+      "value": "80",
+      "filename": null
+    }
+  ],
+  "compiler": null,
+  "background_color": "09071B"
+}
