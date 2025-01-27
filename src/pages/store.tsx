@@ -9,13 +9,11 @@ const PhaserGame = dynamic(() => import('../components/PhaserGame'), { ssr: fals
 export default function StorePage() {
   const router = useRouter();
 
-  // Example usage of the global controls:
   useGlobalControls({
     onEscape: () => {
       // Return to character screen
       router.push('/');
     }
-    // Additional movement callbacks can be used if needed
   });
 
   const handleClickExit = useCallback(() => {
@@ -47,7 +45,6 @@ export default function StorePage() {
           alignItems: 'center',
         }}
       >
-        {/* The RuneBoy image scales up to fill the parent container */}
         <img
           src="/RuneBoys/original.png"
           alt="Gameboy Frame"
@@ -76,6 +73,7 @@ export default function StorePage() {
         >
           <div style={{ width: '100%', height: '100%', position: 'relative' }}>
             <PhaserGame />
+            {/* Removed the top-right exit button; rely on bottom-left or within Store */}
             <div
               style={{
                 position: 'absolute',
@@ -91,20 +89,7 @@ export default function StorePage() {
                 backgroundColor: 'rgba(0,0,0,0.5)',
               }}
             >
-              <div style={{ position: 'absolute', top: '0.5rem', right: '0.5rem' }}>
-                <button
-                  onClick={handleClickExit}
-                  style={{
-                    backgroundColor: '#900',
-                    color: '#fff',
-                    border: 'none',
-                    padding: '0.3rem 0.8rem',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Exit
-                </button>
-              </div>
+              {/* The Store component has its own exit on the left panel now */}
               <Store />
             </div>
           </div>

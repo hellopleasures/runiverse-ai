@@ -10,6 +10,7 @@ interface Attribute {
   trait_type: string;
   value: string | number;
   filename: string | null;
+  original_value?: string | number;
 }
 
 interface EquippedItems {
@@ -17,7 +18,7 @@ interface EquippedItems {
 }
 
 function getCollectionFolder(contract: string) {
-  switch (contract.toLowerCase()) {
+  switch (contract?.toLowerCase()) {
     case WIZARD_CONTRACT.toLowerCase():
       return 'wizards';
     case WARRIOR_CONTRACT.toLowerCase():
@@ -36,7 +37,7 @@ export default function CharacterPreview() {
   const [equippedItems, setEquippedItems] = useState<EquippedItems>({});
 
   if (!selectedCharacter || !selectedCharacter.attributes) {
-    return <div className="text-gray-700">Loading...</div>;
+    return <div style={{ color: '#ccc' }}>Loading...</div>;
   }
 
   const traitOrder: { [key: string]: number } = {
@@ -53,40 +54,34 @@ export default function CharacterPreview() {
   const sortedAttributes = [...selectedCharacter.attributes]
     .filter(attr => traitOrder.hasOwnProperty(attr.trait_type.toLowerCase()))
     .sort((a, b) => {
-      const atA = a.trait_type.toLowerCase();
-      const atB = b.trait_type.toLowerCase();
-      return (traitOrder[atA] || 99) - (traitOrder[atB] || 99);
+      const aKey = a.trait_type.toLowerCase();
+      const bKey = b.trait_type.toLowerCase();
+      return (traitOrder[aKey] || 99) - (traitOrder[bKey] || 99);
     });
 
-  function getTraitImage(trait: Attribute, zIndex: number) {
+  function getTraitImage(attr: Attribute, zIndex: number) {
     const folder = getCollectionFolder(selectedCharacter.contract);
-    const traitValue =
-      typeof trait.value === 'string'
-        ? trait.value.replace(/\s+/g, '_').toLowerCase()
-        : trait.value;
-    const path = `/assets/${folder}/${trait.trait_type.toLowerCase()}/${traitValue}.png`;
+    const traitValue = typeof attr.value === 'string'
+      ? attr.value.replace(/\s+/g, '_').toLowerCase()
+      : attr.value;
 
-    const equippedValue = equippedItems[trait.trait_type.toLowerCase()];
-    // If the user toggled it off
-    const finalValue = equippedValue !== undefined ? equippedValue : trait.value;
-    if (finalValue === 'none' || finalValue === '' || !folder) {
-      return null;
-    }
+    const equippedValue = equippedItems[attr.trait_type.toLowerCase()];
+    const finalValue = equippedValue !== undefined ? equippedValue : attr.value;
+    if (finalValue === 'none' || !folder) return null;
 
     return (
       <img
-        key={`${trait.trait_type}-${finalValue}`}
-        src={path}
-        alt={`${trait.trait_type}-${finalValue}`}
+        key={`${attr.trait_type}-${finalValue}`}
+        src={`/assets/${folder}/${attr.trait_type.toLowerCase()}/${traitValue}.png`}
+        alt={`${attr.trait_type} - ${finalValue}`}
         style={{
           position: 'absolute',
           top: 0,
           left: 0,
           zIndex
         }}
-        width={250}
-        height={250}
-        onClick={() => handleToggleTrait(trait.trait_type, String(finalValue))}
+        width={240}
+        height={240}
       />
     );
   }
@@ -101,75 +96,63 @@ export default function CharacterPreview() {
     });
   }
 
-  function handleResetEquipped() {
-    setEquippedItems({});
-  }
-
-  function handleBuyEquipped() {
-    console.log('Buying equipped items:', equippedItems);
-  }
-
   return (
     <div
-      className="bg-white shadow-md rounded p-4"
-      style={{ width: '240px', position: 'relative' }}
+      style={{
+        backgroundColor: '#fff',
+        borderRadius: '4px',
+        padding: '0.5rem',
+        width: '240px'
+      }}
     >
-      <div style={{ marginBottom: '0.5rem' }}>
-        <strong>Character ID</strong>
+      {/* Character ID */}
+      <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
+        <strong style={{ color: '#333' }}>Character Name</strong>
         <div
           style={{
             backgroundColor: '#eee',
             padding: '0.25rem',
             marginTop: '0.25rem',
-            borderRadius: '4px'
+            borderRadius: '4px',
+            fontSize: '0.85rem',
+            color: '#333',
+            whiteSpace: 'normal' // allow wrapping
           }}
         >
           {selectedCharacter.name || 'Unknown Name'}
         </div>
       </div>
+
+      {/* Character Image */}
       <div
         style={{
           position: 'relative',
           width: '240px',
           height: '240px',
-          overflow: 'hidden',
-          marginBottom: '1rem',
-          backgroundColor: '#ddd'
+          backgroundColor: '#ccc',
+          overflow: 'hidden'
         }}
       >
-        {sortedAttributes.map((trait, i) => {
-          const traitType = trait.trait_type.toLowerCase();
-          const z = traitOrder[traitType] || i;
-          return getTraitImage(trait, z);
+        {sortedAttributes.map((attr, i) => {
+          const z = traitOrder[attr.trait_type.toLowerCase()] || i;
+          return getTraitImage(attr, z);
         })}
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <button
-          style={{
-            backgroundColor: '#2196f3',
-            border: 'none',
-            color: '#fff',
-            padding: '0.4rem 0.8rem',
-            cursor: 'pointer'
-          }}
-          onClick={handleBuyEquipped}
-          disabled={Object.keys(equippedItems).length === 0}
-        >
-          Buy Equipped
-        </button>
-        <button
-          style={{
-            backgroundColor: '#777',
-            border: 'none',
-            color: '#fff',
-            padding: '0.4rem 0.8rem',
-            cursor: 'pointer'
-          }}
-          onClick={handleResetEquipped}
-          disabled={Object.keys(equippedItems).length === 0}
-        >
-          Reset
-        </button>
+
+      {/* Under the character: small listing of attributes */}
+      <div style={{ marginTop: '0.5rem', fontSize: '0.75rem', color: '#555' }}>
+        <div><strong>Equipped Items:</strong></div>
+        {sortedAttributes.map((attr) => {
+          const val = attr.value;
+          if (val && val !== 'none') {
+            return (
+              <div key={attr.trait_type} style={{ whiteSpace: 'normal' }}>
+                {attr.trait_type.replace(/_/g, ' ')}: {String(val).replace(/_/g, ' ')}
+              </div>
+            );
+          }
+          return null;
+        })}
       </div>
     </div>
   );
