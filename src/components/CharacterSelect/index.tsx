@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 import { useCharacter } from '../../context/CharacterContext';
 import { useRouter } from 'next/router';
-// We'll assume there's a global controls hook to unify D-Pad / WASD usage
 import { useGlobalControls } from '../../hooks/useGlobalControls';
 
 const WIZARD_CONTRACT = '0x521f9c7505005cfa19a8e5786a9c3c9c9f5e6f42';
@@ -20,12 +19,12 @@ const CHARACTERS = [
   { id: '2', contract: WIZARD_CONTRACT },
   { id: '10', contract: WARRIOR_CONTRACT },
   { id: '42', contract: BABY_CONTRACT },
-  { id: '99', contract: SOUL_CONTRACT },
+  { id: '16', contract: SOUL_CONTRACT },
   { id: '100', contract: WIZARD_CONTRACT },
   { id: '101', contract: WIZARD_CONTRACT },
   { id: '102', contract: WARRIOR_CONTRACT },
   { id: '103', contract: BABY_CONTRACT },
-  { id: '104', contract: SOUL_CONTRACT },
+  { id: '16', contract: SOUL_CONTRACT },
   { id: '105', contract: WIZARD_CONTRACT },
   { id: '106', contract: WIZARD_CONTRACT },
 ];
@@ -158,6 +157,15 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose }) => {
     return (
       <div
         key={`${charData.contract}-${charData.id}`}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          marginBottom: '0.5rem',
+          padding: '0.5rem',
+          backgroundColor: isSelected ? 'rgba(255,215,0,0.3)' : 'transparent',
+          border: isSelected ? '2px solid #FFD700' : '2px solid transparent',
+          cursor: 'pointer',
+        }}
         onClick={() => {
           setLeftIndex(globalIndex);
           setPaneFocus('left');
@@ -171,9 +179,14 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose }) => {
         <img
           src={imageUrl}
           alt={`Character ${charData.id}`}
-          className="w-10 h-10 object-contain mr-2"
+          style={{
+            width: '50px',
+            height: '50px',
+            objectFit: 'contain',
+            marginRight: '1rem',
+          }}
         />
-        <div className="text-white text-sm">
+        <div style={{ color: '#fff' }}>
           {getContractLabel(charData.contract)} #{charData.id}
         </div>
       </div>
@@ -185,10 +198,15 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose }) => {
     return (
       <div
         key={item}
-        className={`
-          mb-1 px-2 py-1 text-sm cursor-default border
-          ${isSelected ? 'border-yellow-400 bg-yellow-300/20' : 'border-gray-600 bg-gray-700/20'}
-        `}
+        style={{
+          margin: '0.5rem 0',
+          border: isSelected ? '2px solid #FFD700' : '1px solid #666',
+          padding: '0.5rem',
+          cursor: 'default',
+          backgroundColor: isSelected
+            ? 'rgba(255,215,0,0.3)'
+            : 'rgba(255,255,255,0.05)',
+        }}
       >
         {item}
       </div>
@@ -197,44 +215,101 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose }) => {
 
   function renderSelectedCharacter() {
     if (!selectedCharacter) {
-      return <div className="mt-2 text-sm font-bold">No character selected</div>;
+      return (
+        <div style={{ marginTop: '1rem' }}>
+          <strong>No character selected</strong>
+        </div>
+      );
     }
     const label = getContractLabel(selectedCharacter.contract);
     return (
-      <div className="mt-2 text-sm">
+      <div style={{ marginTop: '1rem' }}>
         <strong>Currently Selected:</strong> {label} #{selectedCharacter.id}
       </div>
     );
   }
 
   return (
-    <div className="w-full h-full flex items-center justify-center bg-gradient-to-b from-purple-900 to-black">
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       <div
-        className="w-11/12 h-5/6 max-w-4xl border-4 border-gray-200 bg-gray-900
-                   flex flex-row overflow-hidden"
+        style={{
+          width: '90%',
+          height: '90%',
+          background: 'rgba(0,0,0,0.8)',
+          border: '2px solid #FFF',
+          display: 'flex',
+          flexDirection: 'row',
+          overflow: 'hidden',
+        }}
       >
-        {/* Left Pane: Character list */}
-        <div className="flex-1 flex flex-col">
-          <h2 className="text-center text-white mt-2 mb-2 text-xl font-bold font-ocra">
+        {/* Left half: character list */}
+        <div
+          style={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <h2
+            style={{
+              textAlign: 'center',
+              color: '#fff',
+              margin: '1rem 0',
+            }}
+          >
             Character Select
           </h2>
-          <div className="flex-1 overflow-y-auto px-2">
+          {/* The scrollable list container */}
+          <div
+            style={{
+              flex: 1,
+              overflowY: 'auto',
+              padding: '0 1rem',
+            }}
+          >
             {currentItems.map((_, idx) => {
               const globalIndex = startIndex + idx;
               return renderCharacterRow(idx, globalIndex);
             })}
           </div>
-          <div className="text-center text-white my-2 text-sm">
+
+          {/* Pagination */}
+          <div style={{ textAlign: 'center', color: '#fff', margin: '0.5rem' }}>
             Page {currentPage + 1} / {totalPages}
           </div>
         </div>
 
-        {/* Right Pane: Sub menu */}
-        <div className="flex-1 border-l border-white flex flex-col p-2 text-white">
-          <h2 className="text-center text-lg mb-2 font-bold font-ocra">Sub Menu</h2>
-          <div className="flex flex-col">
-            {subMenuItems.map((item, i) => renderSubMenuItem(item, i))}
-          </div>
+        {/* Right half: sub menu */}
+        <div
+          style={{
+            flex: 1,
+            borderLeft: '1px solid #fff',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '1rem',
+            color: '#fff',
+          }}
+        >
+          <h2
+            style={{
+              textAlign: 'center',
+              marginBottom: '1rem',
+            }}
+          >
+            Sub Menu
+          </h2>
+          {/* Submenu items */}
+          {subMenuItems.map((item, i) => renderSubMenuItem(item, i))}
+
+          {/* Display currently selected character info */}
           {renderSelectedCharacter()}
         </div>
       </div>
