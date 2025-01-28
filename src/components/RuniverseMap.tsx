@@ -23,20 +23,31 @@ interface LocationMap {
 }
 
 interface RuniverseMapProps {
-  width?: number;
-  height?: number;
-  gridSize?: number;
+  width?: number;    // total map width in tiles
+  height?: number;   // total map height in tiles
+  gridSize?: number; // tile size in px
   onClose?: () => void;
 }
 
+/**
+ * We now have a 16×16-tile viewport, each tile is 25px => total 400x400 px.
+ * This should align nicely with a Phaser-like 400×400 scene.
+ */
 export default function RuniverseMap({
   width = 50,
   height = 40,
-  gridSize = 32,
+  gridSize = 25,
   onClose,
 }: RuniverseMapProps) {
+  // Viewport is 16 tiles wide/tall
+  const viewportWidth = 16;
+  const viewportHeight = 16;
+
   const [mapData, setMapData] = useState<LocationMap>({});
-  const [playerPos, setPlayerPos] = useState<Coordinates>({ x: 16, y: 12 });
+  // Start player near middle
+  const [playerPos, setPlayerPos] = useState<Coordinates>({ x: 8, y: 8 });
+  // Camera offset (top-left tile of viewport)
+  const [cameraOffset, setCameraOffset] = useState<Coordinates>({ x: 0, y: 0 });
   const [currentTileData, setCurrentTileData] = useState<LocationData | null>(null);
 
   useEffect(() => {
@@ -65,14 +76,41 @@ export default function RuniverseMap({
     fetchMap();
   }, []);
 
+  function clamp(value: number, min: number, max: number) {
+    return Math.max(min, Math.min(max, value));
+  }
+
   function move(dx: number, dy: number) {
-    setPlayerPos((prev) => {
-      const newX = Math.max(0, Math.min(width - 1, prev.x + dx));
-      const newY = Math.max(0, Math.min(height - 1, prev.y + dy));
+    setPlayerPos(prev => {
+      const newX = clamp(prev.x + dx, 0, width - 1);
+      const newY = clamp(prev.y + dy, 0, height - 1);
       return { x: newX, y: newY };
+    });
+
+    setCameraOffset(prev => {
+      const nextOffset = { ...prev };
+      // The player's position relative to camera
+      const relX = playerPos.x - cameraOffset.x;
+      const relY = playerPos.y - cameraOffset.y;
+
+      // If within 3..(viewport-4) horizontally, shift camera
+      if (dx !== 0) {
+        if (relX >= 3 && relX <= viewportWidth - 4) {
+          nextOffset.x = clamp(prev.x + dx, 0, width - viewportWidth);
+        }
+      }
+      // If within 3..(viewport-4) vertically, shift camera
+      if (dy !== 0) {
+        if (relY >= 3 && relY <= viewportHeight - 4) {
+          nextOffset.y = clamp(prev.y + dy, 0, height - viewportHeight);
+        }
+      }
+
+      return nextOffset;
     });
   }
 
+  // Update tile info
   useEffect(() => {
     const key = `${playerPos.x}-${playerPos.y}`;
     setCurrentTileData(mapData[key] || null);
@@ -88,69 +126,81 @@ export default function RuniverseMap({
     },
   });
 
+  // The player's position on-screen in px
+  const playerRenderX = (playerPos.x - cameraOffset.x) * gridSize;
+  const playerRenderY = (playerPos.y - cameraOffset.y) * gridSize;
+
+  // The background offset for panning
+  const backgroundOffsetX = -cameraOffset.x * gridSize;
+  const backgroundOffsetY = -cameraOffset.y * gridSize;
+
   return (
     <div
       style={{
         position: 'relative',
-        width: `${width * gridSize}px`,
-        height: `${height * gridSize}px`,
+        width: `${viewportWidth * gridSize}px`,  // 16 * 25 = 400
+        height: `${viewportHeight * gridSize}px`, // 16 * 25 = 400
         overflow: 'hidden',
         backgroundColor: '#333',
       }}
     >
-      <img
-        src="/img/runiversemap.png"
-        alt="Runiverse Map"
+      <div
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
+          top: backgroundOffsetY,
+          left: backgroundOffsetX,
+          width: `${width * gridSize}px`,
+          height: `${height * gridSize}px`,
+          backgroundImage: 'url("/img/runiversemap.png")',
+          backgroundSize: 'cover',
           zIndex: 0,
         }}
       />
 
+      {/* Player */}
       <div
         style={{
           position: 'absolute',
-          top: `${playerPos.y * gridSize}px`,
-          left: `${playerPos.x * gridSize}px`,
+          top: playerRenderY,
+          left: playerRenderX,
           width: `${gridSize}px`,
           height: `${gridSize}px`,
           backgroundColor: 'red',
           zIndex: 1,
         }}
-      ></div>
+      />
 
-      {/* Tile info in top-right corner */}
+      {/* Tile info overlay */}
       <div
         style={{
           position: 'absolute',
-          top: 0,
-          right: 0,
-          width: '200px',
-          height: '150px',
-          backgroundColor: 'rgba(0,0,0,0.7)',
+          top: '0.5rem',
+          right: '0.5rem',
+          width: '180px',
+          maxHeight: '50%',
+          backgroundColor: '#000',
           color: '#fff',
           padding: '0.5rem',
-          zIndex: 2,
+          zIndex: 9999,
+          fontSize: '0.75rem',
+          overflowY: 'auto',
+          border: '1px solid #444',
+          borderRadius: '4px',
         }}
       >
-        <h3>Current Tile</h3>
-        <p>
+        <h3 style={{ margin: '0 0 0.4rem 0' }}>Current Tile</h3>
+        <p style={{ margin: 0 }}>
           <strong>Coords:</strong> ({playerPos.x}, {playerPos.y})
         </p>
         {currentTileData ? (
           <>
-            <p>
+            <p style={{ margin: '0.4rem 0 0 0' }}>
               <strong>Biome:</strong> {currentTileData.biome}
             </p>
-            <p>{currentTileData.description}</p>
+            <p style={{ margin: 0 }}>{currentTileData.description}</p>
           </>
         ) : (
-          <p>Unexplored tile</p>
+          <p style={{ margin: 0 }}>Unexplored tile</p>
         )}
       </div>
     </div>

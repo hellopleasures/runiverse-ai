@@ -1,14 +1,18 @@
 import React, { useState, useEffect, KeyboardEvent } from 'react';
 import dynamic from 'next/dynamic';
+import { useGlobalControls } from '../hooks/useGlobalControls';
 
-// Dynamically import components that reference window or rely on SSR-problematic logic
+// We no longer import the placeholder GameInterface
+// import dynamic from 'next/dynamic'; -> already used above
+
+// We'll import RuniverseAdventure instead:
 const PhaserGame = dynamic(() => import('../components/PhaserGame'), { ssr: false });
+// Replacing placeholder with the real RuniverseAdventure
+const RuniverseAdventure = dynamic(() => import('../components/Game/RuniverseAdventure'), { ssr: false });
+
 const CharacterSelect = dynamic(() => import('../components/CharacterSelect'), { ssr: false });
 const RuniverseMap = dynamic(() => import('../components/RuniverseMap'), { ssr: false });
 const CharacterCreation = dynamic(() => import('../components/Game/CharacterCreation'), { ssr: false });
-const GameInterface = dynamic(() => import('../components/Game/GameInterface'), { ssr: false });
-
-import { useGlobalControls } from '../hooks/useGlobalControls';
 
 export default function HomePage() {
   // Menu navigation
@@ -19,29 +23,28 @@ export default function HomePage() {
   // Overlays
   const [showMap, setShowMap] = useState(false);
   const [showCharacterCreation, setShowCharacterCreation] = useState(false);
-  const [showGameInterface, setShowGameInterface] = useState(false);
+  // Let's rename this to showAdventure
+  const [showAdventure, setShowAdventure] = useState(false);
 
   // Menu items
   const options = [
     'Start Game',
     'Characters',
     'Character Creation',
-    'Game Interface',
+    'Runiverse Adventure',
     'Map',
     'Options',
     'Credits',
   ];
 
-  // Keyboard selection logic
   useEffect(() => {
-    // On the server, window is undefined
     if (typeof window === 'undefined') return;
 
     function handleKeyDown(e: KeyboardEvent) {
       const key = e.key.toLowerCase();
 
-      // If ANY overlay is open, skip menu navigation
-      if (showCharacterSelect || showMap || showCharacterCreation || showGameInterface || gameStarted) {
+      // If an overlay is open or the game is started, skip menu nav
+      if (showCharacterSelect || showMap || showCharacterCreation || showAdventure || gameStarted) {
         return;
       }
 
@@ -64,8 +67,8 @@ export default function HomePage() {
           case 'Character Creation':
             setShowCharacterCreation(true);
             break;
-          case 'Game Interface':
-            setShowGameInterface(true);
+          case 'Runiverse Adventure':
+            setShowAdventure(true);
             break;
           default:
             console.log(`Selected: ${currentOption}`);
@@ -79,23 +82,22 @@ export default function HomePage() {
       window.removeEventListener('keydown', handleKeyDown as any);
     };
   }, [
-    selectedIndex, 
-    options, 
+    selectedIndex,
+    options,
     showCharacterSelect,
     showMap,
     showCharacterCreation,
-    showGameInterface,
+    showAdventure,
     gameStarted
   ]);
 
   // For closure via ESC in each overlay
   useGlobalControls({
     onEscape: () => {
-      // If an overlay is open, close it first
       if (showCharacterSelect) setShowCharacterSelect(false);
       else if (showMap) setShowMap(false);
       else if (showCharacterCreation) setShowCharacterCreation(false);
-      else if (showGameInterface) setShowGameInterface(false);
+      else if (showAdventure) setShowAdventure(false);
       else if (gameStarted) setGameStarted(false);
     }
   });
@@ -174,16 +176,16 @@ export default function HomePage() {
             backgroundColor: '#000',
           }}
         >
-          {/* MAIN MENU RENDER */}
+          {/* MAIN MENU */}
           {!gameStarted &&
             !showCharacterSelect &&
             !showMap &&
             !showCharacterCreation &&
-            !showGameInterface &&
+            !showAdventure &&
             renderMenu()}
 
-          {/* PHASER GAME (Start Game) */}
-          {gameStarted && !showCharacterSelect && !showMap && !showCharacterCreation && !showGameInterface && (
+          {/* PHASER GAME */}
+          {gameStarted && !showCharacterSelect && !showMap && !showCharacterCreation && !showAdventure && (
             <PhaserGame />
           )}
 
@@ -244,8 +246,8 @@ export default function HomePage() {
             </div>
           )}
 
-          {/* Game Interface Overlay */}
-          {showGameInterface && (
+          {/* Runiverse Adventure */}
+          {showAdventure && (
             <div
               style={{
                 position: 'absolute',
@@ -254,19 +256,9 @@ export default function HomePage() {
                 width: '100%',
                 height: '100%',
                 backgroundColor: 'rgba(0,0,0,0.85)',
-                overflowY: 'auto',
               }}
             >
-              <GameInterface
-                storyText="Placeholder story text. Press ESC to close."
-                options={[
-                  { optionText: 'Option A', nextStep: 'a' },
-                  { optionText: 'Option B', nextStep: 'b' },
-                ]}
-                continueAvailable
-                onOptionClick={(step) => console.log('Clicked step:', step)}
-                onContinue={() => console.log('Continue clicked')}
-              />
+              <RuniverseAdventure />
             </div>
           )}
         </div>

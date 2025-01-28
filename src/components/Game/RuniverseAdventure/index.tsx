@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useCharacter } from '../../../context/CharacterContext';
 import CharacterCreation from '../CharacterCreation';
 import GameInterface from '../GameInterface';
-import styles from "@/app/pixelbutton.module.css";
+import styles from "../../../styles/pixelbutton.module.css";
 
 interface Story {
   id: string;
