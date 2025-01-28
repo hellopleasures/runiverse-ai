@@ -1,9 +1,22 @@
+@font-face {
+  font-family: 'MekSans';
+  src: url('/fonts/meksans.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MekMono';
+  src: url('/fonts/mekmono.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'MekSans';
 }
 
 a {

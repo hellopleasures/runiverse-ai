@@ -19,7 +19,7 @@ export default function HomePage() {
   const [showCharacterSelect, setShowCharacterSelect] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
-
+  
   // Overlays
   const [showMap, setShowMap] = useState(false);
   const [showCharacterCreation, setShowCharacterCreation] = useState(false);
@@ -107,22 +107,66 @@ export default function HomePage() {
       style={{
         display: 'inline-block',
         border: '2px solid #333',
+        width: '100%',
+        alignItems: 'center',
+        height: '100%',
         padding: '0.5rem',
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        backgroundImage: 'url(/img/background.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
       }}
     >
+      <style jsx>{`
+        @keyframes blink {
+          0% { opacity: 1; }
+          50% { opacity: 0.3; }
+          100% { opacity: 1; }
+        }
+        .blinking-title {
+          animation: blink 1.5s ease-in-out infinite;
+        }
+      `}</style>
+{/*       <h1 
+        className="blinking-title"
+        style={{
+          textAlign: 'center', 
+          fontFamily: 'MekMono', 
+          textTransform: 'uppercase', 
+          color: '#10390b', 
+          fontSize: '58px'
+        }}
+      >
+        Runiverse
+      </h1> */}
+      <div style={{ 
+        display: 'flex', 
+        flexDirection: 'row',  
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '30%',
+        margin: '400px auto',
+        width: '80%',
+        flexWrap: 'wrap',
+         }}>
       {options.map((option, index) => (
         <div
           key={option}
           style={{
             fontWeight: selectedIndex === index ? 'bold' : 'normal',
             margin: '0.3rem 0',
-            color: '#fff',
+            color: selectedIndex === index ? 'yellow' : '#ffffff',
+            textTransform: 'uppercase',
+            fontSize: '24px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '50%',
           }}
         >
           {option}
         </div>
       ))}
+      </div>
     </div>
   );
 
