@@ -8,6 +8,7 @@ import React, {
 import { useCharacter } from '../../context/CharacterContext';
 import { useRouter } from 'next/router';
 import { useGlobalControls } from '../../hooks/useGlobalControls';
+import { FaAngleDown } from "react-icons/fa";
 
 const WIZARD_CONTRACT = '0x521f9c7505005cfa19a8e5786a9c3c9c9f5e6f42';
 const WARRIOR_CONTRACT = '0x9690b63eb85467be5267a3603f770589ab12dc95';
@@ -16,7 +17,7 @@ const SOUL_CONTRACT = '0x251b5f14a825c537ff788604ea1b58e49b70726f';
 
 const CHARACTERS = [
   { id: '1', contract: WIZARD_CONTRACT },
-  { id: '2', contract: WIZARD_CONTRACT },
+  { id: '7889', contract: WIZARD_CONTRACT },
   { id: '10', contract: WARRIOR_CONTRACT },
   { id: '42', contract: BABY_CONTRACT },
   { id: '16', contract: SOUL_CONTRACT },
@@ -157,38 +158,33 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose }) => {
     return (
       <div
         key={`${charData.contract}-${charData.id}`}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          marginBottom: '0.5rem',
-          padding: '0.5rem',
-          backgroundColor: isSelected ? 'rgba(255,215,0,0.3)' : 'transparent',
-          border: isSelected ? '2px solid #FFD700' : '2px solid transparent',
-          cursor: 'pointer',
-        }}
+        className={`
+          flex items-center mb-2 p-2 cursor-pointer
+          ${isSelected ? 'bg-yellow-400/30 border-4 border-yellow-400 blinking-border' : 'border border-transparent'}
+        `}
         onClick={() => {
           setLeftIndex(globalIndex);
           setPaneFocus('left');
         }}
-        className={`
-          flex items-center mb-2 px-2 py-1 cursor-pointer border-2
-          ${isSelected ? 'border-yellow-400 bg-yellow-300/20' : 'border-transparent bg-transparent'}
-          transition-colors
-        `}
       >
         <img
           src={imageUrl}
           alt={`Character ${charData.id}`}
-          style={{
-            width: '50px',
-            height: '50px',
-            objectFit: 'contain',
-            marginRight: '1rem',
-          }}
+          className="w-[60px] h-[60px] object-contain mr-4"
         />
-        <div style={{ color: '#fff' }}>
+        <div className="text-[#333d02] font-[MekMono] uppercase text-xl">
           {getContractLabel(charData.contract)} #{charData.id}
         </div>
+        <style jsx>{`
+          @keyframes borderBlink {
+            0% { border-color: #facc15; }
+            50% { border-color: transparent; }
+            100% { border-color: #facc15; }
+          }
+          .blinking-border {
+            animation: borderBlink 1s ease-in-out infinite;
+          }
+        `}</style>
       </div>
     );
   }
@@ -198,16 +194,21 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose }) => {
     return (
       <div
         key={item}
-        style={{
-          margin: '0.5rem 0',
-          border: isSelected ? '2px solid #FFD700' : '1px solid #666',
-          padding: '0.5rem',
-          cursor: 'default',
-          backgroundColor: isSelected
-            ? 'rgba(255,215,0,0.3)'
-            : 'rgba(255,255,255,0.05)',
-        }}
+        className={`
+          my-2 p-2 cursor-default text-center font-[MekMono] uppercase text-xl
+          ${isSelected ? 'border-4 border-yellow-400 bg-yellow-400/30 blinking-border' : 'border-4 border-[#333d02] bg-white/5'}
+        `}
       >
+        <style jsx>{`
+          @keyframes borderBlink {
+            0% { border-color: #facc15; }
+            50% { border-color: transparent; }
+            100% { border-color: #facc15; }
+          }
+          .blinking-border {
+            animation: borderBlink 1s ease-in-out infinite;
+          }
+        `}</style>
         {item}
       </div>
     );
@@ -216,65 +217,29 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose }) => {
   function renderSelectedCharacter() {
     if (!selectedCharacter) {
       return (
-        <div style={{ marginTop: '1rem' }}>
+        <div className="mt-4">
           <strong>No character selected</strong>
         </div>
       );
     }
     const label = getContractLabel(selectedCharacter.contract);
     return (
-      <div style={{ marginTop: '1rem' }}>
-        <strong>Currently Selected:</strong> {label} #{selectedCharacter.id}
+      <div className="text-[#333d02] uppercase text-lg text-center">
+        <strong>Currently Selected:<br/></strong> {label} #{selectedCharacter.id}
       </div>
     );
   }
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <div
-        style={{
-          width: '90%',
-          height: '90%',
-          background: 'rgba(0,0,0,0.8)',
-          border: '2px solid #FFF',
-          display: 'flex',
-          flexDirection: 'row',
-          overflow: 'hidden',
-        }}
-      >
+    <div className="w-full h-full flex items-center justify-center bg-[#697c01]">
+      <div className="w-[90%] h-[90%]  flex flex-row gap-8 overflow-hidden">
         {/* Left half: character list */}
-        <div
-          style={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <h2
-            style={{
-              textAlign: 'center',
-              color: '#fff',
-              margin: '1rem 0',
-            }}
-          >
+        <div className="w-1/2 flex flex-col border-4 border-[#333d02]">
+          <h2 className="text-center text-[#333d02] my-4 text-xl uppercase">
             Character Select
           </h2>
           {/* The scrollable list container */}
-          <div
-            style={{
-              flex: 1,
-              overflowY: 'auto',
-              padding: '0 1rem',
-            }}
-          >
+          <div className="flex-1 overflow-hidden px-4">
             {currentItems.map((_, idx) => {
               const globalIndex = startIndex + idx;
               return renderCharacterRow(idx, globalIndex);
@@ -282,28 +247,24 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose }) => {
           </div>
 
           {/* Pagination */}
-          <div style={{ textAlign: 'center', color: '#fff', margin: '0.5rem' }}>
-            Page {currentPage + 1} / {totalPages}
+          <div className="blinking-title flex justify-center items-center text-[#333d02] my-2" >
+          <style jsx>{`
+        @keyframes blink {
+          0% { opacity: 1; }
+          50% { opacity: 0.3; }
+          100% { opacity: 1; }
+        }
+        .blinking-title {
+          animation: blink 1.5s ease-in-out infinite;
+        }
+      `}</style>
+          < FaAngleDown />
           </div>
         </div>
 
         {/* Right half: sub menu */}
-        <div
-          style={{
-            flex: 1,
-            borderLeft: '1px solid #fff',
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '1rem',
-            color: '#fff',
-          }}
-        >
-          <h2
-            style={{
-              textAlign: 'center',
-              marginBottom: '1rem',
-            }}
-          >
+        <div className="w-1/2 flex flex-col p-4 text-[#333d02] border-4 border-[#333d02]">
+          <h2 className="text-center mb-4 text-xl uppercase">
             Sub Menu
           </h2>
           {/* Submenu items */}

@@ -103,19 +103,7 @@ export default function HomePage() {
   });
 
   const renderMenu = () => (
-    <div
-      style={{
-        display: 'inline-block',
-        border: '2px solid #333',
-        width: '100%',
-        alignItems: 'center',
-        height: '100%',
-        padding: '0.5rem',
-        backgroundImage: 'url(/img/background.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    >
+    <div className="inline-block border-2 border-[#333] w-full items-center h-full p-2 bg-[url('/img/background.png')] bg-cover bg-center">
       <style jsx>{`
         @keyframes blink {
           0% { opacity: 1; }
@@ -126,100 +114,32 @@ export default function HomePage() {
           animation: blink 1.5s ease-in-out infinite;
         }
       `}</style>
-{/*       <h1 
-        className="blinking-title"
-        style={{
-          textAlign: 'center', 
-          fontFamily: 'MekMono', 
-          textTransform: 'uppercase', 
-          color: '#10390b', 
-          fontSize: '58px'
-        }}
-      >
-        Runiverse
-      </h1> */}
-      <div style={{ 
-        display: 'flex', 
-        flexDirection: 'row',  
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '30%',
-        margin: '400px auto',
-        width: '80%',
-        flexWrap: 'wrap',
-         }}>
-      {options.map((option, index) => (
-        <div
-          key={option}
-          style={{
-            fontWeight: selectedIndex === index ? 'bold' : 'normal',
-            margin: '0.3rem 0',
-            color: selectedIndex === index ? 'yellow' : '#ffffff',
-            textTransform: 'uppercase',
-            fontSize: '24px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '50%',
-          }}
-        >
-          {option}
-        </div>
-      ))}
+
+      <div className="flex flex-row justify-center items-center h-[30%] my-[400px] mx-auto w-[90%] flex-wrap">
+        {options.map((option, index) => (
+          <div
+            key={option}
+            className={`m-[0.3rem_0] uppercase text-2xl flex justify-center items-center font-['MekMono'] w-1/2
+              ${selectedIndex === index ? 'font-bold text-yellow-400' : 'text-white'}
+              ${selectedIndex === index ? 'blinking-title' : ''}`}
+          >
+            {option}
+          </div>
+        ))}
       </div>
     </div>
   );
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#2d2d2d',
-        overflow: 'hidden',
-      }}
-    >
-      <div
-        style={{
-          position: 'relative',
-          width: 'auto',
-          height: '100%',
-          maxHeight: '100%',
-          aspectRatio: '144 / 240',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
+    <div className="w-full h-screen flex justify-center items-center bg-[#2d2d2d] overflow-hidden">
+      <div className="relative w-auto h-full max-h-full aspect-[144/240] flex justify-center items-center">
         <img
           src="/RuneBoys/original.png"
           alt="Gameboy Frame"
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            objectFit: 'contain',
-            imageRendering: 'pixelated',
-          }}
+          className="absolute w-full h-full object-contain [image-rendering:pixelated]"
         />
 
-        <div
-          style={{
-            position: 'absolute',
-            top: '8%',
-            left: '8.75%',
-            width: '82.5%',
-            aspectRatio: '1 / 1',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'hidden',
-            backgroundColor: '#000',
-          }}
-        >
+        <div className="absolute top-[8%] left-[8.75%] w-[82.5%] aspect-square flex items-center justify-center overflow-hidden bg-black">
           {/* MAIN MENU */}
           {!gameStarted &&
             !showCharacterSelect &&
@@ -235,35 +155,14 @@ export default function HomePage() {
 
           {/* Character Select Overlay */}
           {showCharacterSelect && (
-            <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                backgroundColor: 'rgba(0,0,0,0.75)',
-              }}
-            >
+            <div className="absolute top-0 left-0 w-full h-full bg-black/75">
               <CharacterSelect onClose={() => setShowCharacterSelect(false)} />
             </div>
           )}
 
           {/* MAP Overlay */}
           {showMap && (
-            <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                backgroundColor: 'rgba(0,0,0,0.75)',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
+            <div className="absolute top-0 left-0 w-full h-full bg-black/75 flex justify-center items-center">
               <RuniverseMap
                 onClose={() => setShowMap(false)}
                 width={50}
@@ -275,33 +174,14 @@ export default function HomePage() {
 
           {/* Character Creation Overlay */}
           {showCharacterCreation && (
-            <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                backgroundColor: 'rgba(0,0,0,0.85)',
-                overflowY: 'auto',
-              }}
-            >
+            <div className="absolute top-0 left-0 w-full h-full bg-black/85 overflow-y-auto">
               <CharacterCreation />
             </div>
           )}
 
           {/* Runiverse Adventure */}
           {showAdventure && (
-            <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                backgroundColor: 'rgba(0,0,0,0.85)',
-              }}
-            >
+            <div className="absolute top-0 left-0 w-full h-full bg-black/85">
               <RuniverseAdventure />
             </div>
           )}

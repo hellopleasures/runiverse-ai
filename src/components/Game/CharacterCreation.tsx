@@ -439,15 +439,13 @@ const CharacterCreation: FC = () => {
   }
 
   return (
-    <div className="w-full h-full bg-gradient-to-b from-gray-800 to-black flex items-center justify-center">
-      <div
-        className="w-11/12 h-5/6 max-w-4xl border-4 border-gray-200 bg-gray-900
-                   flex flex-row overflow-hidden pixel-font"
-        style={{ imageRendering: 'pixelated' }}
+    <div className="w-full h-full bg-[#697c01] flex items-center justify-center">
+      <div 
+        className="w-11/12 h-5/6 max-w-4xl border-4 border-[#333d02] bg-[#697c01] flex flex-row overflow-hidden"
       >
         {/* Left Pane: Tab list */}
-        <div className="w-1/3 h-full border-r border-gray-600 flex flex-col">
-          <h2 className="font-ocra text-center text-white mt-2 mb-2 text-xl">
+        <div className="w-1/3 h-full border-r-4 border-[#333d02] flex flex-col">
+          <h2 className="font-[MekMono] text-center text-[#333d02] mt-2 mb-2 text-xl uppercase">
             Character Creation
           </h2>
           {renderTabButtons()}
@@ -457,37 +455,46 @@ const CharacterCreation: FC = () => {
         <div className="flex flex-col w-2/3 h-full">
           {/* Display selected character (if any) at top */}
           {selectedCharacter && (
-            <div className="text-center text-white py-2 border-b border-gray-600">
+            <div className="text-center text-[#333d02] py-2 border-b-4 border-[#333d02]">
               {selectedCharacter.image && (
                 <img
                   src={selectedCharacter.image}
                   alt={selectedCharacter.name}
-                  className="mx-auto w-16 h-16 border border-white object-cover rounded-full mb-2"
-                  style={{ imageRendering: 'pixelated' }}
+                  className="mx-auto w-16 h-16 border-4 border-[#333d02] object-cover rounded-full mb-2"
                 />
               )}
-              <h2 className="font-ocra text-lg">
+              <h2 className="font-[MekMono] text-lg uppercase">
                 {selectedCharacter.name || 'Unnamed Hero'}
               </h2>
             </div>
           )}
 
           {/* Main content */}
-          <div className="flex-1 overflow-y-auto bg-black">
+          <div className="flex-1 overflow-y-auto">
             {renderTabContent()}
           </div>
 
           {/* Footer: E to Save/Next or final create */}
-          <div className="p-3 border-t border-gray-600 flex justify-center">
+          <div className="p-3 border-t-4 border-[#333d02] flex justify-center">
             <button
               onClick={handlePressE}
-              className="bg-yellow-400 text-black font-ocra uppercase text-md px-6 py-2 rounded-xl
-                         hover:bg-yellow-300 transition-colors"
+              className="border-4 border-[#333d02] text-[#333d02] font-[MekMono] uppercase text-md px-6 py-2 hover:bg-yellow-400/30 transition-colors"
             >
               {tabIndex < TABS.length - 1 ? 'Next (E)' : 'Finalize (E)'}
             </button>
           </div>
         </div>
+
+        <style jsx>{`
+          @keyframes borderBlink {
+            0% { border-color: #facc15; }
+            50% { border-color: transparent; }
+            100% { border-color: #facc15; }
+          }
+          .blinking-border {
+            animation: borderBlink 1s ease-in-out infinite;
+          }
+        `}</style>
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ export default function Store() {
 
   const itemsPerPage = 12;
   const columns = 3;
-  const categories = ['eye_accessories', 'body', 'prop', 'hats', 'tops', 'bottoms'];
+  const categories = ['eye_acc', 'body', 'prop', 'hats', 'tops', 'bottoms'];
 
   // Load store items
   useEffect(() => {
@@ -154,6 +154,41 @@ export default function Store() {
   }
   const displayedItems = getDisplayedItems();
   const totalPages = Math.ceil(getAllItems().length / itemsPerPage);
+
+  // Update pagination handlers to loop
+  const handlePrevPage = () => {
+    setCurrentPage(p => p > 1 ? p - 1 : totalPages);
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(p => p < totalPages ? p + 1 : 1);
+  };
+
+  // Update onAction case
+  const onAction = () => {
+    const currentF = focusable[focusIndex];
+    if (!currentF) return;
+    switch (currentF.type) {
+      case 'EXIT':
+        router.push('/');
+        break;
+      case 'TAB':
+        setActiveTab(currentF.name!);
+        setCurrentPage(1);
+        break;
+      case 'PAGINATION_PREV':
+        handlePrevPage();
+        break;
+      case 'PAGINATION_NEXT':
+        handleNextPage();
+        break;
+      case 'ITEM':
+        handleItemClick(activeTab, currentF.name!);
+        break;
+      default:
+        break;
+    }
+  };
 
   // Build focus array
   function buildFocusable(): Focusable[] {
@@ -281,30 +316,7 @@ export default function Store() {
       }
       setFocusIndex(prev => Math.min(focusable.length - 1, prev + 1));
     },
-    onAction: () => {
-      const currentF = focusable[focusIndex];
-      if (!currentF) return;
-      switch (currentF.type) {
-        case 'EXIT':
-          router.push('/');
-          break;
-        case 'TAB':
-          setActiveTab(currentF.name!);
-          setCurrentPage(1);
-          break;
-        case 'PAGINATION_PREV':
-          setCurrentPage(p => Math.max(1, p - 1));
-          break;
-        case 'PAGINATION_NEXT':
-          setCurrentPage(p => Math.min(totalPages, p + 1));
-          break;
-        case 'ITEM':
-          handleItemClick(activeTab, currentF.name!);
-          break;
-        default:
-          break;
-      }
-    },
+    onAction: onAction,
     onEscape: () => {
       router.push('/');
     }
@@ -332,172 +344,122 @@ export default function Store() {
   const displayedFocusItemIndex = focusable[focusIndex]?.index;
 
   return (
-    <div style={{ display: 'flex', width: '100%', height: '100%' }}>
-      <div style={{ width: '25%', minWidth: '180px', padding: '0.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div style={{ transform: 'scale(0.85)', transformOrigin: 'top left' }}>
-          <CharacterPreview />
-        </div>
-        <div style={{ marginTop: '0.5rem', color: '#fff', textAlign: 'center' }}>
-          <strong>Dubloons:</strong> 999
-        </div>
-        <button
-          onClick={handleClickExit}
-          style={{
-            backgroundColor: '#900',
-            color: '#fff',
-            border: 'none',
-            padding: '0.4rem 1rem',
-            cursor: 'pointer',
-            marginTop: '0.75rem'
-          }}
-        >
-          Exit
-        </button>
-      </div>
-
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '0.5rem' }}>
-        {errorMessage && (
-          <div style={{ color: 'red', marginBottom: '0.5rem' }}>{errorMessage}</div>
-        )}
-
-        {/* Tabs */}
-        <div style={{ display: 'flex', marginBottom: '0.5rem', gap: '0.25rem' }}>
-          {categories.map(tab => {
-            const isSelected = (displayedFocusType === 'TAB' && displayedFocusName === tab);
-            const active = (tab === activeTab);
-            return (
-              <div
-                key={tab}
-                onClick={() => handleTabClick(tab)}
-                style={{
-                  flex: 1,
-                  backgroundColor: isSelected ? '#ffeb3b' : (active ? '#777' : '#333'),
-                  color: isSelected ? '#000' : '#fff',
-                  padding: '0.3rem',
-                  textAlign: 'center',
-                  textTransform: 'uppercase',
-                  cursor: 'pointer'
-                }}
-              >
-                {tab.replace(/_/g, ' ')}
-              </div>
-            );
-          })}
+    <div className="py-4 flex items-center justify-center bg-[#697c01]">
+      <div className="w-[100%] h-[100%] flex flex-col gap-2">
+        {/* Left panel */}
+        <div className="flex flex-col items-center">
+          <div className="origin-top-left">
+            <CharacterPreview />
+          </div>
+          <div className="w-full flex flex-row justify-between">
+          <div className="text-[#333d02] text-xl uppercase font-[MekMono]">
+            <strong>Dubloons:</strong> 999
+          </div>
+          <button
+            onClick={handleClickExit}
+            className="font-[MekMono] uppercase text-xl text-[#333d02]"
+          >
+            Exit
+          </button>
+          </div>
         </div>
 
-        {/* Items Grid */}
-        <div style={{
-          flex: 1,
-          display: 'grid',
-          gridTemplateColumns: `repeat(${columns}, 1fr)`,
-          gap: '0.5rem',
-          overflowY: 'auto',
-          backgroundColor: '#222'
-        }}>
-          {displayedItems.map((item, idx) => {
-            const isSelected = (
-              displayedFocusType === 'ITEM' &&
-              displayedFocusItemIndex === idx
-            );
-            return (
-              <div
-                key={item.path + idx}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: isSelected ? '#555' : '#333',
-                  cursor: 'pointer',
-                  padding: '0.5rem',
-                  outline: isSelected ? '2px solid #ffd700' : 'none'
-                }}
-                onClick={() => handleItemMouseClick(item.name)}
-              >
-                <span
-                  style={{
-                    color: '#fff',
-                    marginBottom: '0.25rem',
-                    fontSize: '0.9rem',
-                    textAlign: 'center',
-                    whiteSpace: 'normal'
-                  }}
+        {/* Right panel */}
+        <div className=" flex flex-col border-4 border-[#333d02]">
+          {errorMessage && (
+            <div className="text-red-500 mb-2 p-2">{errorMessage}</div>
+          )}
+
+          {/* Tabs */}
+          <div className="flex gap-1 p-2">
+            {categories.map(tab => {
+              const isSelected = (displayedFocusType === 'TAB' && displayedFocusName === tab);
+              const active = (tab === activeTab);
+              return (
+                <div
+                  key={tab}
+                  onClick={() => handleTabClick(tab)}
+                  className={`
+                    flex-1 p-2 text-center cursor-pointer font-[MekMono] uppercase text-[#333d02]
+                    ${isSelected ? 'border-4 border-yellow-400 bg-yellow-400/30 blinking-border' : ''}
+                    ${active && !isSelected ? 'border-4 border-[#333d02] bg-white/5' : ''}
+                    ${!active && !isSelected ? 'border-4 border-[#333d02] bg-transparent' : ''}
+                  `}
                 >
-                  {item.name.replace(/_/g, ' ')}
-                </span>
-                <img
-                  src={item.path}
-                  alt={item.name}
-                  style={{
-                    width: '64px',
-                    height: '64px',
-                    objectFit: 'contain',
-                    marginBottom: '0.25rem'
-                  }}
-                />
-                <button
-                  style={{
-                    backgroundColor: '#2196f3',
-                    color: '#fff',
-                    border: 'none',
-                    padding: '0.3rem 0.6rem',
-                    cursor: 'pointer',
-                    fontSize: '0.8rem'
-                  }}
+                  {tab.replace(/_/g, ' ')}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Items Grid */}
+          <div className="flex-1 grid grid-cols-3 gap-2 p-2 bg-[#333d02]/10 overflow-y-auto min-h-0">
+            {displayedItems.map((item, idx) => {
+              const isSelected = (
+                displayedFocusType === 'ITEM' &&
+                displayedFocusItemIndex === idx
+              );
+              return (
+                <div
+                  key={item.path + idx}
+                  className={`
+                    flex flex-col items-center justify-center p-2 cursor-pointer
+                    ${isSelected ? 'border-4 border-yellow-400 bg-yellow-400/30 blinking-border' : 'border-4 border-[#333d02] bg-white/5'}
+                  `}
+                  onClick={() => handleItemMouseClick(item.name)}
                 >
-                  Buy for 10g
-                </button>
-              </div>
-            );
-          })}
+                  <span className="text-[#333d02] mb-1 text-sm text-center font-[MekMono] w-[150px] truncate uppercase">
+                    {item.name.replace(/_/g, ' ')}
+                  </span>
+                  <img
+                    src={item.path}
+                    alt={item.name}
+                    className="w-16 h-16 object-contain mb-1"
+                  />
+                  <button className="bg-[#333d02] text-[#697c01] border-none px-2 py-1 cursor-pointer text-sm font-[MekMono] uppercase">
+                    Buy for 10g
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Pagination */}
+          <div className="flex items-center justify-center gap-4 p-2">
+            <button
+              onClick={handlePrevPage}
+              className={`
+                px-3 py-2 font-[MekMono] uppercase text-[#333d02]
+                ${displayedFocusType === 'PAGINATION_PREV' ? 'border-4 border-yellow-400 bg-yellow-400/30 blinking-border' : 'border-4 border-[#333d02] bg-white/5'}
+              `}
+            >
+              Prev
+            </button>
+            <span className="text-[#333d02] font-[MekMono]">
+              {currentPage} / {totalPages || 1}
+            </span>
+            <button
+              onClick={handleNextPage}
+              className={`
+                px-3 py-2 font-[MekMono] uppercase text-[#333d02]
+                ${displayedFocusType === 'PAGINATION_NEXT' ? 'border-4 border-yellow-400 bg-yellow-400/30 blinking-border' : 'border-4 border-[#333d02] bg-white/5'}
+              `}
+            >
+              Next
+            </button>
+          </div>
         </div>
 
-        {/* Pagination */}
-        <div style={{
-          marginTop: '0.5rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: '#fff'
-        }}>
-          {(() => {
-            const isPrevFocus = (displayedFocusType === 'PAGINATION_PREV');
-            const isNextFocus = (displayedFocusType === 'PAGINATION_NEXT');
-            return (
-              <>
-                <button
-                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                  style={{
-                    backgroundColor: isPrevFocus ? '#ffeb3b' : '#444',
-                    color: isPrevFocus ? '#000' : '#fff',
-                    border: 'none',
-                    padding: '0.4rem 0.8rem',
-                    cursor: 'pointer'
-                  }}
-                  disabled={currentPage === 1}
-                >
-                  Prev
-                </button>
-                <span style={{ margin: '0 1rem' }}>
-                  {currentPage} / {totalPages || 1}
-                </span>
-                <button
-                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                  style={{
-                    backgroundColor: isNextFocus ? '#ffeb3b' : '#444',
-                    color: isNextFocus ? '#000' : '#fff',
-                    border: 'none',
-                    padding: '0.4rem 0.8rem',
-                    cursor: 'pointer'
-                  }}
-                  disabled={currentPage === totalPages || totalPages === 0}
-                >
-                  Next
-                </button>
-              </>
-            );
-          })()}
-        </div>
+        <style jsx>{`
+          @keyframes borderBlink {
+            0% { border-color: #facc15; }
+            50% { border-color: transparent; }
+            100% { border-color: #facc15; }
+          }
+          .blinking-border {
+            animation: borderBlink 1s ease-in-out infinite;
+          }
+        `}</style>
       </div>
     </div>
   );

@@ -9,6 +9,9 @@ interface UseGlobalControlsOptions {
   onAction?: () => void;       // e.g., Enter or Space
   onSecondary?: () => void;    // e.g., Q or E
   onEscape?: () => void;       // e.g., ESC
+  onA?: () => void;
+  onB?: () => void;
+  onE?: () => void;
 }
 
 export function useGlobalControls({
