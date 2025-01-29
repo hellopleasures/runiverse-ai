@@ -77,6 +77,7 @@ const CharacterCreation: FC = () => {
     if (!selectedCharacter?.attributes) return;
 
     const getValue = (key: string) => {
+      if (!selectedCharacter?.attributes) return '';
       const found = selectedCharacter.attributes.find(attr => attr.trait_type === key);
       return found?.value || '';
     };

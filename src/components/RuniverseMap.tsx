@@ -135,72 +135,44 @@ export default function RuniverseMap({
   const backgroundOffsetY = -cameraOffset.y * gridSize;
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: `${viewportWidth * gridSize}px`,  // 16 * 25 = 400
-        height: `${viewportHeight * gridSize}px`, // 16 * 25 = 400
-        overflow: 'hidden',
-        backgroundColor: '#333',
-      }}
-    >
+    <div className="relative w-full h-full overflow-hidden bg-neutral-800">
       <div
+        className="absolute bg-cover z-0"
         style={{
-          position: 'absolute',
           top: backgroundOffsetY,
           left: backgroundOffsetX,
           width: `${width * gridSize}px`,
           height: `${height * gridSize}px`,
           backgroundImage: 'url("/img/runiversemap.png")',
-          backgroundSize: 'cover',
-          zIndex: 0,
         }}
       />
 
       {/* Player */}
       <div
+        className="absolute bg-red-500 z-10"
         style={{
-          position: 'absolute',
           top: playerRenderY,
           left: playerRenderX,
           width: `${gridSize}px`,
           height: `${gridSize}px`,
-          backgroundColor: 'red',
-          zIndex: 1,
         }}
       />
 
       {/* Tile info overlay */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '0.5rem',
-          right: '0.5rem',
-          width: '180px',
-          maxHeight: '50%',
-          backgroundColor: '#000',
-          color: '#fff',
-          padding: '0.5rem',
-          zIndex: 9999,
-          fontSize: '0.75rem',
-          overflowY: 'auto',
-          border: '1px solid #444',
-          borderRadius: '4px',
-        }}
-      >
-        <h3 style={{ margin: '0 0 0.4rem 0' }}>Current Tile</h3>
-        <p style={{ margin: 0 }}>
+      <div className="absolute top-2 right-2 w-[180px] max-h-[50%] bg-black text-white p-2 z-50 text-xs overflow-y-auto border border-neutral-600 rounded">
+        <h3 className="m-0 mb-1.5">Current Tile</h3>
+        <p className="m-0">
           <strong>Coords:</strong> ({playerPos.x}, {playerPos.y})
         </p>
         {currentTileData ? (
           <>
-            <p style={{ margin: '0.4rem 0 0 0' }}>
+            <p className="mt-1.5 mb-0">
               <strong>Biome:</strong> {currentTileData.biome}
             </p>
-            <p style={{ margin: 0 }}>{currentTileData.description}</p>
+            <p className="m-0">{currentTileData.description}</p>
           </>
         ) : (
-          <p style={{ margin: 0 }}>Unexplored tile</p>
+          <p className="m-0">Unexplored tile</p>
         )}
       </div>
     </div>
