@@ -219,92 +219,107 @@ const EquipScreen: React.FC = () => {
   const totalPages = Math.ceil((activeTab === 'eye_accessories' ? getFilteredEyeAccessories() : items[activeTab]).length / itemsPerPage);
 
   return (
-    <div className="flex gap-8 p-4">
-      <div className="flex-shrink-0">
-        <CharacterPreview />
-      </div>
+    <div className="w-full h-full flex items-center justify-center bg-[#697c01]">
+      <div className="w-[90%] h-[90%] flex flex-col gap-8">
+        <div className="flex-shrink-0">
+          <CharacterPreview />
+        </div>
 
-      <div className="flex-grow">
-        <div className="bg-white shadow-md rounded p-4">
-          <h2 className="text-2xl font-bold mb-4">Equipment</h2>
-          
-          <div className="flex mb-6 space-x-4">
-            {['eye_accessories', 'body', 'prop', 'hats', 'tops', 'bottoms'].map(tab => (
-              <button
-                key={tab}
-                className={`py-3 px-6 rounded ${activeTab === tab ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'}`}
-                onClick={() => {
-                  setActiveTab(tab);
-                  setCurrentPage(1);
-                }}
-              >
-                {tab.toUpperCase().replace(/_/g, ' ')}
-              </button>
-            ))}
-          </div>
+        <div className="flex-grow border-4 border-[#333d02] bg-[#697c01]">
+          <div className="p-4">
+            <h2 className="text-center text-[#333d02] text-xl uppercase font-[MekMono] mb-4">Equipment</h2>
+            
+            <div className="flex mb-6 space-x-4">
+              {['eye_accessories', 'body', 'prop', 'hats', 'tops', 'bottoms'].map(tab => (
+                <button
+                  key={tab}
+                  className={`py-3 px-6 rounded font-[MekMono] uppercase border-4 
+                    ${activeTab === tab 
+                      ? 'border-yellow-400 bg-yellow-400/30 text-[#333d02]' 
+                      : 'border-[#333d02] bg-white/5 text-[#333d02]'
+                    }`}
+                  onClick={() => {
+                    setActiveTab(tab);
+                    setCurrentPage(1);
+                  }}
+                >
+                  {tab.replace(/_/g, ' ')}
+                </button>
+              ))}
+            </div>
 
-          <div className="grid grid-cols-2 gap-4 min-h-[50rem]">
-            {getItemsToDisplay().map((item, index) => (
-              <div
-                key={index}
-                className="border p-4 flex items-center bg-gray-100 cursor-pointer"
-                onClick={() => {
-                  if (item.path) {
-                    handleItemClick(activeTab, item.name);
-                  }
-                }}
-              >
-                {item.path ? (
-                  <>
-                    <img src={item.path} alt={item.name} className="w-24 h-24 mr-6" />
-                    <div>
-                      <div className="text-lg text-gray-700">
-                        {item.name.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
+            <div className="grid grid-cols-2 gap-4 min-h-[50rem]">
+              {getItemsToDisplay().map((item, index) => (
+                <div
+                  key={index}
+                  className={`border-4 border-[#333d02] p-4 flex items-center cursor-pointer
+                    ${item.path ? 'bg-white/5' : 'bg-white/10'}`}
+                  onClick={() => {
+                    if (item.path) {
+                      handleItemClick(activeTab, item.name);
+                    }
+                  }}
+                >
+                  {item.path ? (
+                    <>
+                      <img src={item.path} alt={item.name} className="w-24 h-24 mr-6" />
+                      <div>
+                        <div className="text-lg text-[#333d02] font-[MekMono] uppercase">
+                          {item.name.replace(/_/g, ' ')}
+                        </div>
                       </div>
-                    </div>
-                  </>
-                ) : (
-                  <div className="w-24 h-24 mr-6 bg-gray-200"></div>
-                )}
-              </div>
-            ))}
-          </div>
+                    </>
+                  ) : (
+                    <div className="w-24 h-24 mr-6 bg-white/20"></div>
+                  )}
+                </div>
+              ))}
+            </div>
 
-          <div className="flex justify-between mt-6">
-            <button
-              className="py-3 px-6 rounded bg-gray-300 text-gray-700"
-              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </button>
-            <span className="py-3 px-6">{currentPage} / {totalPages}</span>
-            <button
-              className="py-3 px-6 rounded bg-gray-300 text-gray-700"
-              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
-          </div>
+            <div className="flex justify-between mt-6">
+              <button
+                className={`py-3 px-6 font-[MekMono] uppercase border-4 
+                  ${currentPage === 1 
+                    ? 'border-[#333d02] bg-white/10 text-[#333d02]/50' 
+                    : 'border-[#333d02] bg-white/5 text-[#333d02]'
+                  }`}
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+              <span className="py-3 px-6 text-[#333d02] font-[MekMono]">{currentPage} / {totalPages}</span>
+              <button
+                className={`py-3 px-6 font-[MekMono] uppercase border-4 
+                  ${currentPage === totalPages 
+                    ? 'border-[#333d02] bg-white/10 text-[#333d02]/50' 
+                    : 'border-[#333d02] bg-white/5 text-[#333d02]'
+                  }`}
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </div>
 
-          {errorMessage && (
-            <div className="text-red-500 mt-4">{errorMessage}</div>
-          )}
+            {errorMessage && (
+              <div className="text-red-500 mt-4 font-[MekMono]">{errorMessage}</div>
+            )}
 
-          <div className="mt-4 flex justify-end space-x-4">
-            <button 
-              className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-              onClick={handleResetAll}
-            >
-              Reset All
-            </button>
-            <button 
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              onClick={handleSaveEquipment}
-            >
-              Save Equipment
-            </button>
+            <div className="mt-4 flex justify-end space-x-4">
+              <button 
+                className="border-4 border-[#333d02] bg-white/5 text-[#333d02] px-4 py-2 font-[MekMono] uppercase hover:bg-white/10"
+                onClick={handleResetAll}
+              >
+                Reset All
+              </button>
+              <button 
+                className="border-4 border-yellow-400 bg-yellow-400/30 text-[#333d02] px-4 py-2 font-[MekMono] uppercase hover:bg-yellow-400/40"
+                onClick={handleSaveEquipment}
+              >
+                Save Equipment
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -20,80 +20,21 @@ export default function EquipPage() {
   }, [router]);
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#2d2d2d',
-        overflow: 'hidden',
-      }}
-    >
-      <div
-        style={{
-          position: 'relative',
-          width: 'auto',
-          height: '100%',
-          maxHeight: '100%',
-          aspectRatio: '144 / 240',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
+    <div className="w-full h-screen flex justify-center items-center bg-[#2d2d2d] overflow-hidden">
+      <div className="relative h-full w-auto aspect-[144/240] flex justify-center items-center">
         <img
           src="/RuneBoys/original.png"
           alt="Gameboy Frame"
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            objectFit: 'contain',
-            imageRendering: 'pixelated',
-          }}
+          className="absolute w-full h-full object-contain [image-rendering:pixelated]"
         />
-        <div
-          style={{
-            position: 'absolute',
-            top: '8%',
-            left: '8.75%',
-            width: '82.5%',
-            aspectRatio: '1 / 1',
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-            backgroundColor: '#000',
-          }}
-        >
-          <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+        <div className="absolute top-[8%] left-[8.75%] w-[82.5%] aspect-square flex flex-col overflow-hidden bg-black">
+          <div className="w-full h-full relative">
             <PhaserGame />
-            <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                overflowY: 'auto',
-                padding: '0.5rem',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'flex-start',
-                backgroundColor: 'rgba(0,0,0,0.5)',
-              }}
-            >
-              <div style={{ position: 'absolute', top: '0.5rem', right: '0.5rem' }}>
+            <div className="absolute inset-0 overflow-y-auto p-2 flex justify-center items-start bg-[#697c01]">
+              <div className="absolute top-2 right-2">
                 <button
                   onClick={handleClickExit}
-                  style={{
-                    backgroundColor: '#900',
-                    color: '#fff',
-                    border: 'none',
-                    padding: '0.3rem 0.8rem',
-                    cursor: 'pointer',
-                  }}
+                  className="bg-[#900] text-white border-none px-3 py-1 cursor-pointer"
                 >
                   Exit
                 </button>

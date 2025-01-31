@@ -35,6 +35,7 @@ function getCollectionFolder(contract: string) {
 export default function CharacterPreview() {
   const { selectedCharacter } = useCharacter();
   const [equippedItems, setEquippedItems] = useState<EquippedItems>({});
+  const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
   if (!selectedCharacter || !selectedCharacter.attributes) {
     return <div style={{ color: '#ccc' }}>Loading...</div>;
@@ -60,6 +61,7 @@ export default function CharacterPreview() {
     });
 
   function getTraitImage(attr: Attribute, zIndex: number) {
+    if (!selectedCharacter) return null;
     const folder = getCollectionFolder(selectedCharacter.contract);
     const traitValue = typeof attr.value === 'string'
       ? attr.value.replace(/\s+/g, '_').toLowerCase()
@@ -74,14 +76,8 @@ export default function CharacterPreview() {
         key={`${attr.trait_type}-${finalValue}`}
         src={`/assets/${folder}/${attr.trait_type.toLowerCase()}/${traitValue}.png`}
         alt={`${attr.trait_type} - ${finalValue}`}
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          zIndex
-        }}
-        width={240}
-        height={240}
+        className="absolute inset-0 w-[200px] h-[200px] object-contain"
+        style={{ zIndex }}
       />
     );
   }
@@ -96,63 +92,87 @@ export default function CharacterPreview() {
     });
   }
 
-  return (
-    <div
-      style={{
-        backgroundColor: '#fff',
-        borderRadius: '4px',
-        padding: '0.5rem',
-        width: '240px'
-      }}
-    >
-      {/* Character ID */}
-      <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
-        <strong style={{ color: '#333' }}>Character Name</strong>
-        <div
-          style={{
-            backgroundColor: '#eee',
-            padding: '0.25rem',
-            marginTop: '0.25rem',
-            borderRadius: '4px',
-            fontSize: '0.85rem',
-            color: '#333',
-            whiteSpace: 'normal' // allow wrapping
-          }}
-        >
-          {selectedCharacter.name || 'Unknown Name'}
-        </div>
-      </div>
+  const handleDownload = async () => {
+    if (!canvasRef.current || !selectedCharacter) return;
+    
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-      {/* Character Image */}
-      <div
-        style={{
-          position: 'relative',
-          width: '240px',
-          height: '240px',
-          backgroundColor: '#ccc',
-          overflow: 'hidden'
-        }}
-      >
+    canvas.width = 200;
+    canvas.height = 200;
+
+    for (const attr of sortedAttributes) {
+      const folder = getCollectionFolder(selectedCharacter.contract);
+      const traitValue = typeof attr.value === 'string'
+        ? attr.value.replace(/\s+/g, '_').toLowerCase()
+        : attr.value;
+      
+      if (traitValue === 'none' || !folder) continue;
+
+      try {
+        const img = await loadImage(`/assets/${folder}/${attr.trait_type.toLowerCase()}/${traitValue}.png`);
+        ctx.drawImage(img, 0, 0, 200, 200);
+      } catch (error) {
+        console.error(`Failed to load image for ${attr.trait_type}:`, error);
+      }
+    }
+
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${selectedCharacter.name || 'character'}.png`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  };
+
+  const loadImage = (src: string): Promise<HTMLImageElement> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
+  };
+
+  return (
+    <div className="border-4 border-[#333d02] p-4 flex flex-row gap-3 items-center">
+      <canvas ref={canvasRef} style={{ display: 'none' }} />
+      
+      <div className="relative w-[200px] h-[200px]">
         {sortedAttributes.map((attr, i) => {
           const z = traitOrder[attr.trait_type.toLowerCase()] || i;
           return getTraitImage(attr, z);
         })}
       </div>
 
-      {/* Under the character: small listing of attributes */}
-      <div style={{ marginTop: '0.5rem', fontSize: '0.75rem', color: '#555' }}>
-        <div><strong>Equipped Items:</strong></div>
+      <div className="">
+        <strong className="text-[#333d02] text-xl font-mek-mono uppercase">Character Name</strong>
+        <p className="text-2xl leading-none text-[#333d02] font-[MekMono] uppercase">
+          {selectedCharacter.name || 'Unknown Name'}
+        </p>
+        <p className="uppercase text-xl text-[#333d02]">Equipped Items:</p>
         {sortedAttributes.map((attr) => {
           const val = attr.value;
           if (val && val !== 'none') {
             return (
-              <div key={attr.trait_type} style={{ whiteSpace: 'normal' }}>
+              <div key={attr.trait_type} className="uppercase text-[#333d02] text-2xl font-[MekMono] leading-none">
                 {attr.trait_type.replace(/_/g, ' ')}: {String(val).replace(/_/g, ' ')}
               </div>
             );
           }
           return null;
         })}
+        
+        <button
+          onClick={handleDownload}
+          className="mt-2 px-2 py-1 bg-[#333d02] uppercase font-[MekMono] text-white rounded hover:bg-[#4a5803] transition-colors"
+        >
+          Download
+        </button>
       </div>
     </div>
   );

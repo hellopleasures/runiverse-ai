@@ -6,28 +6,13 @@ import React, {
   KeyboardEvent,
 } from 'react';
 import { useCharacter } from '../../context/CharacterContext';
-import { useRouter } from 'next/router';
 import { useGlobalControls } from '../../hooks/useGlobalControls';
+import { FaAngleDown } from "react-icons/fa";
 
 const WIZARD_CONTRACT = '0x521f9c7505005cfa19a8e5786a9c3c9c9f5e6f42';
 const WARRIOR_CONTRACT = '0x9690b63eb85467be5267a3603f770589ab12dc95';
 const BABY_CONTRACT = '0x4b1e130ae84c97b931ffbe91ead6b1da16993d45';
 const SOUL_CONTRACT = '0x251b5f14a825c537ff788604ea1b58e49b70726f';
-
-const CHARACTERS = [
-  { id: '1', contract: WIZARD_CONTRACT },
-  { id: '2', contract: WIZARD_CONTRACT },
-  { id: '10', contract: WARRIOR_CONTRACT },
-  { id: '42', contract: BABY_CONTRACT },
-  { id: '16', contract: SOUL_CONTRACT },
-  { id: '100', contract: WIZARD_CONTRACT },
-  { id: '101', contract: WIZARD_CONTRACT },
-  { id: '102', contract: WARRIOR_CONTRACT },
-  { id: '103', contract: BABY_CONTRACT },
-  { id: '16', contract: SOUL_CONTRACT },
-  { id: '105', contract: WIZARD_CONTRACT },
-  { id: '106', contract: WIZARD_CONTRACT },
-];
 
 function getContractLabel(contract: string) {
   switch (contract.toLowerCase()) {
@@ -44,12 +29,29 @@ function getContractLabel(contract: string) {
   }
 }
 
-interface CharacterSelectProps {
-  onClose: () => void;
+function getCharacterImageUrl(contract: string, id: string) {
+  switch (contract.toLowerCase()) {
+    case WIZARD_CONTRACT.toLowerCase():
+      return `https://www.forgottenrunes.com/api/art/wizards/${id}.png`;
+    case WARRIOR_CONTRACT.toLowerCase():
+      return `https://portal.forgottenrunes.com/api/warriors/img/${id}.png`;
+    case BABY_CONTRACT.toLowerCase():
+      return `https://www.forgottenrunes.com/api/art/wizards/${id}.png`;
+    case SOUL_CONTRACT.toLowerCase():
+      return `https://portal.forgottenrunes.com/api/souls/img/${id}`;
+    default:
+      return '/assets/no-image.png';
+  }
 }
 
+interface CharacterData {
+  id: string;
+  contract: string;
+}
+
+// We'll keep subMenuItems but replace "Villager Creator" usage
 const subMenuItems = [
-  'Mint new character',
+  'Villager Creator',
   'Items',
   'Store',
   'Edit Character',
@@ -59,12 +61,34 @@ const subMenuItems = [
 
 type PaneFocus = 'left' | 'right';
 
-const CharacterSelect: FC<CharacterSelectProps> = ({ onClose }) => {
-  const { setSelectedCharacter, selectedCharacter } = useCharacter();
-  const router = useRouter();
+interface CharacterSelectProps {
+  onClose: () => void;
+  onOpenVillagerCreator?: () => void;
+}
 
+const CHARACTERS: CharacterData[] = [
+  { id: '1', contract: WIZARD_CONTRACT },
+  { id: '7889', contract: WIZARD_CONTRACT },
+  { id: '10', contract: WARRIOR_CONTRACT },
+  { id: '42', contract: BABY_CONTRACT },
+  { id: '16', contract: SOUL_CONTRACT },
+  { id: '100', contract: WIZARD_CONTRACT },
+  { id: '101', contract: WIZARD_CONTRACT },
+  { id: '102', contract: WARRIOR_CONTRACT },
+  { id: '103', contract: BABY_CONTRACT },
+  { id: '105', contract: WIZARD_CONTRACT },
+  { id: '106', contract: WIZARD_CONTRACT },
+];
+
+const CharacterSelect: FC<CharacterSelectProps> = ({ onClose, onOpenVillagerCreator }) => {
+  const { setSelectedCharacter, selectedCharacter } = useCharacter();
   const [paneFocus, setPaneFocus] = useState<PaneFocus>('left');
   const [leftIndex, setLeftIndex] = useState(0);
+  const [rightIndex, setRightIndex] = useState(0);
+
+  useGlobalControls({
+    onEscape: onClose,
+  });
 
   const itemsPerPage = 5;
   const totalPages = Math.ceil(CHARACTERS.length / itemsPerPage);
@@ -72,13 +96,6 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose }) => {
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentItems = CHARACTERS.slice(startIndex, endIndex);
-
-  const [rightIndex, setRightIndex] = useState(0);
-
-  // Use a global controls hook that can unify WASD/dpad
-  useGlobalControls({
-    onEscape: onClose
-  });
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -109,19 +126,23 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose }) => {
           setPaneFocus('left');
         } else if (key === ' ' || key === 'enter') {
           const selected = subMenuItems[rightIndex];
-          if (selected === 'Mint new character') {
-            router.push('/villager-creator');
+          if (selected === 'Villager Creator') {
+            // Instead of router.push, call our callback to open overlay
+            if (onOpenVillagerCreator) {
+              onOpenVillagerCreator();
+            }
           } else if (selected === 'Store') {
-            router.push('/store');
+            // We'll keep store as router push if needed, or do something else
+            window.location.href = '/store';
           } else if (selected === 'Equip') {
-            router.push('/equip');
+            window.location.href = '/equip';
           } else {
             console.log(`Submenu selected: ${selected}`);
           }
         }
       }
     },
-    [paneFocus, leftIndex, rightIndex, onClose, setSelectedCharacter, router]
+    [paneFocus, leftIndex, rightIndex, onClose, setSelectedCharacter, onOpenVillagerCreator]
   );
 
   useEffect(() => {
@@ -137,58 +158,39 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose }) => {
   function renderCharacterRow(index: number, globalIndex: number) {
     const charData = currentItems[index];
     const isSelected = globalIndex === leftIndex && paneFocus === 'left';
-    let imageUrl = '/assets/no-image.png';
 
-    switch (charData.contract.toLowerCase()) {
-      case WIZARD_CONTRACT.toLowerCase():
-        imageUrl = `https://www.forgottenrunes.com/api/art/wizards/${charData.id}.png`;
-        break;
-      case WARRIOR_CONTRACT.toLowerCase():
-        imageUrl = `https://portal.forgottenrunes.com/api/warriors/img/${charData.id}.png`;
-        break;
-      case BABY_CONTRACT.toLowerCase():
-        imageUrl = `https://www.forgottenrunes.com/api/art/wizards/${charData.id}.png`;
-        break;
-      case SOUL_CONTRACT.toLowerCase():
-        imageUrl = `https://portal.forgottenrunes.com/api/souls/img/${charData.id}`;
-        break;
-    }
+    const imageUrl = getCharacterImageUrl(charData.contract, charData.id);
 
     return (
       <div
         key={`${charData.contract}-${charData.id}`}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          marginBottom: '0.5rem',
-          padding: '0.5rem',
-          backgroundColor: isSelected ? 'rgba(255,215,0,0.3)' : 'transparent',
-          border: isSelected ? '2px solid #FFD700' : '2px solid transparent',
-          cursor: 'pointer',
-        }}
+        className={`
+          flex items-center mb-2 p-2 cursor-pointer
+          ${isSelected ? 'bg-yellow-400/30 border-4 border-yellow-400 blinking-border' : 'border border-transparent'}
+        `}
         onClick={() => {
           setLeftIndex(globalIndex);
           setPaneFocus('left');
         }}
-        className={`
-          flex items-center mb-2 px-2 py-1 cursor-pointer border-2
-          ${isSelected ? 'border-yellow-400 bg-yellow-300/20' : 'border-transparent bg-transparent'}
-          transition-colors
-        `}
       >
         <img
           src={imageUrl}
           alt={`Character ${charData.id}`}
-          style={{
-            width: '50px',
-            height: '50px',
-            objectFit: 'contain',
-            marginRight: '1rem',
-          }}
+          className="w-[60px] h-[60px] object-contain mr-4"
         />
-        <div style={{ color: '#fff' }}>
+        <div className="text-[#333d02] font-[MekMono] uppercase text-xl">
           {getContractLabel(charData.contract)} #{charData.id}
         </div>
+        <style jsx>{`
+          @keyframes borderBlink {
+            0% { border-color: #facc15; }
+            50% { border-color: transparent; }
+            100% { border-color: #facc15; }
+          }
+          .blinking-border {
+            animation: borderBlink 1s ease-in-out infinite;
+          }
+        `}</style>
       </div>
     );
   }
@@ -198,16 +200,21 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose }) => {
     return (
       <div
         key={item}
-        style={{
-          margin: '0.5rem 0',
-          border: isSelected ? '2px solid #FFD700' : '1px solid #666',
-          padding: '0.5rem',
-          cursor: 'default',
-          backgroundColor: isSelected
-            ? 'rgba(255,215,0,0.3)'
-            : 'rgba(255,255,255,0.05)',
-        }}
+        className={`
+          my-2 p-2 cursor-default text-center font-[MekMono] uppercase text-xl
+          ${isSelected ? 'border-4 border-yellow-400 bg-yellow-400/30 blinking-border' : 'border-4 border-[#333d02] bg-white/5'}
+        `}
       >
+        <style jsx>{`
+          @keyframes borderBlink {
+            0% { border-color: #facc15; }
+            50% { border-color: transparent; }
+            100% { border-color: #facc15; }
+          }
+          .blinking-border {
+            animation: borderBlink 1s ease-in-out infinite;
+          }
+        `}</style>
         {item}
       </div>
     );
@@ -216,101 +223,59 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose }) => {
   function renderSelectedCharacter() {
     if (!selectedCharacter) {
       return (
-        <div style={{ marginTop: '1rem' }}>
+        <div className="mt-4 text-center uppercase text-lg text-[#333d02]">
           <strong>No character selected</strong>
         </div>
       );
     }
     const label = getContractLabel(selectedCharacter.contract);
     return (
-      <div style={{ marginTop: '1rem' }}>
-        <strong>Currently Selected:</strong> {label} #{selectedCharacter.id}
+      <div className="mt-4 text-center text-[#333d02] uppercase text-lg">
+        <strong>Currently Selected:<br/></strong> {label} #{selectedCharacter.id}
       </div>
     );
   }
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <div
-        style={{
-          width: '90%',
-          height: '90%',
-          background: 'rgba(0,0,0,0.8)',
-          border: '2px solid #FFF',
-          display: 'flex',
-          flexDirection: 'row',
-          overflow: 'hidden',
-        }}
-      >
+    <div className="w-full h-full flex items-center justify-center bg-[#697c01] relative">
+      <div className="w-[90%] h-[90%] flex flex-row gap-8 overflow-hidden relative">
         {/* Left half: character list */}
-        <div
-          style={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <h2
-            style={{
-              textAlign: 'center',
-              color: '#fff',
-              margin: '1rem 0',
-            }}
-          >
+        <div className="w-1/2 flex flex-col border-4 border-[#333d02]">
+          <h2 className="text-center text-[#333d02] my-4 text-xl uppercase">
             Character Select
           </h2>
           {/* The scrollable list container */}
-          <div
-            style={{
-              flex: 1,
-              overflowY: 'auto',
-              padding: '0 1rem',
-            }}
-          >
+          <div className="flex-1 overflow-hidden px-4">
             {currentItems.map((_, idx) => {
               const globalIndex = startIndex + idx;
               return renderCharacterRow(idx, globalIndex);
             })}
           </div>
-
-          {/* Pagination */}
-          <div style={{ textAlign: 'center', color: '#fff', margin: '0.5rem' }}>
-            Page {currentPage + 1} / {totalPages}
+          {/* Pagination indicator */}
+          <div className="blinking-title flex justify-center items-center text-[#333d02] my-2">
+            <FaAngleDown />
           </div>
         </div>
 
         {/* Right half: sub menu */}
-        <div
-          style={{
-            flex: 1,
-            borderLeft: '1px solid #fff',
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '1rem',
-            color: '#fff',
-          }}
-        >
-          <h2
-            style={{
-              textAlign: 'center',
-              marginBottom: '1rem',
-            }}
-          >
+        <div className="w-1/2 flex flex-col p-4 text-[#333d02] border-4 border-[#333d02]">
+          <h2 className="text-center mb-4 text-xl uppercase">
             Sub Menu
           </h2>
-          {/* Submenu items */}
           {subMenuItems.map((item, i) => renderSubMenuItem(item, i))}
 
-          {/* Display currently selected character info */}
           {renderSelectedCharacter()}
+
+          {/* Show selected character image right below */}
+          {selectedCharacter && (
+            <div className="mt-2 flex justify-center">
+              <img
+                src={getCharacterImageUrl(selectedCharacter.contract, selectedCharacter.id)}
+                alt="Selected"
+                className="w-[70px] h-[70px] object-contain border-2 border-[#333d02] bg-white"
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
