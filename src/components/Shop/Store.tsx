@@ -1,42 +1,60 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCharacter } from '../../context/CharacterContext';
-import CharacterPreview from './CharacterPreview';
 import { useGlobalControls } from '../../hooks/useGlobalControls';
 import { useRouter } from 'next/router';
+import CharacterPreview from './CharacterPreview';
 
 interface StoreItem {
   name: string;
   path: string;
 }
 
-interface Focusable {
-  type: 'EXIT' | 'TAB' | 'ITEM' | 'PAGINATION_PREV' | 'PAGINATION_NEXT';
-  label: string;
-  name?: string;
-  index?: number;
-}
-
 export default function Store() {
   const router = useRouter();
   const { selectedCharacter, updateCharacterAttributes } = useCharacter();
-  const [activeTab, setActiveTab] = useState('eye_accessories');
-  const [items, setItems] = useState<{ [key: string]: StoreItem[] }>({});
+
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  // Tab data
+  const storeTabs = ['eye_accessories', 'body', 'prop', 'hats', 'tops', 'bottoms'];
+  const [tabIndex, setTabIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState(storeTabs[0]);
+
+  // Store items
+  const [items, setItems] = useState<{ [key: string]: StoreItem[] }>({
+    eye_accessories: [],
+    body: [],
+    prop: [],
+    hats: [],
+    tops: [],
+    bottoms: [],
+  });
+
+  // Pagination
+  const itemsPerPage = 9;
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Single dimension array
-  const [focusIndex, setFocusIndex] = useState(0);
+  // Pane focus: "tabs" or "items"
+  const [paneFocus, setPaneFocus] = useState<'tabs' | 'items'>('tabs');
+  // Within "items" pane, track which item index is selected
+  // The last 2 indexes represent "Prev" and "Next" in pagination
+  const [itemsFocusIndex, setItemsFocusIndex] = useState(0);
 
-  const itemsPerPage = 12;
-  const columns = 3;
-  const categories = ['eye_acc', 'body', 'prop', 'hats', 'tops', 'bottoms'];
-
-  // Load store items
   useEffect(() => {
-    if (!selectedCharacter?.contract) return;
-    fetch(`/api/store/outfits?contract=${selectedCharacter.contract}`)
-      .then(r => r.json())
-      .then(data => {
+    setActiveTab(storeTabs[tabIndex]);
+    setCurrentPage(1);
+    setItemsFocusIndex(0);
+  }, [tabIndex]);
+
+  // Fetch store outfits
+  useEffect(() => {
+    if (!selectedCharacter) return;
+    const { contract } = selectedCharacter;
+    if (!contract) return;
+
+    fetch(`/api/store/outfits?contract=${contract}`)
+      .then((response) => response.json())
+      .then((data) => {
         setItems({
           eye_accessories: data.head || [],
           body: data.body || [],
@@ -46,421 +64,293 @@ export default function Store() {
           bottoms: data.bottoms || [],
         });
       })
-      .catch(e => {
-        console.error(e);
+      .catch((error) => {
+        console.error('Error fetching store items:', error);
         setErrorMessage('Failed to fetch store items.');
       });
   }, [selectedCharacter]);
 
-  // Ensure certain attributes exist
-  useEffect(() => {
-    if (!selectedCharacter?.attributes) return;
-    const needed = ['tops', 'bottoms', 'hats'];
-    let updated = [...selectedCharacter.attributes];
-    let changed = false;
-
-    const normalize = (x: string) => x.replace(/\s+/g, '_').toLowerCase();
-
-    needed.forEach(t => {
-      const lower = normalize(t);
-      const hasIt = updated.some(a => normalize(a.trait_type) === lower);
-      if (!hasIt) {
-        updated.push({ trait_type: t, value: 'none', filename: null });
-        changed = true;
-      }
-    });
-
-    if (changed) updateCharacterAttributes(updated);
-  }, [selectedCharacter, updateCharacterAttributes]);
-
-  // Equip logic
-  const normalizeTraitType = useCallback((traitType: string) => {
+  function normalizeTraitType(traitType: string) {
     return traitType.replace(/\s+/g, '_').toLowerCase();
-  }, []);
-
-  function equipTrait(attributes: any[], category: string, newValue: string) {
-    const bodyTrait = attributes.find(a => normalizeTraitType(a.trait_type) === 'body');
-    const isOnesie = typeof bodyTrait?.value === 'string' && bodyTrait.value.endsWith('_onesie');
-    const cat = normalizeTraitType(category);
-
-    const unify = (traitType: string, val: string) => {
-      const idx = attributes.findIndex(a => normalizeTraitType(a.trait_type) === normalizeTraitType(traitType));
-      if (idx >= 0) {
-        attributes[idx] = { ...attributes[idx], value: val };
-      }
-    };
-
-    // If equipping top/bottom, remove onesie
-    if (cat === 'tops' || cat === 'bottoms') {
-      if (isOnesie) {
-        unify('body', 'none');
-        // revert head if it ends with _onesie
-        const headIndex = attributes.findIndex(a => normalizeTraitType(a.trait_type) === 'head');
-        if (headIndex >= 0) {
-          let hv = attributes[headIndex].value;
-          if (typeof hv === 'string' && hv.endsWith('_onesie')) {
-            hv = hv.replace('_onesie', '');
-            attributes[headIndex] = { ...attributes[headIndex], value: hv };
-          }
-        }
-      }
-      unify('body', 'none');
-    } else if (cat === 'body') {
-      const isNowOnesie = newValue.endsWith('_onesie');
-      if (isNowOnesie) {
-        unify('tops', 'none');
-        unify('bottoms', 'none');
-        unify('hats', 'none');
-        const headIndex = attributes.findIndex(a => normalizeTraitType(a.trait_type) === 'head');
-        if (headIndex >= 0) {
-          let hv = attributes[headIndex].value;
-          if (typeof hv === 'string' && !hv.endsWith('_onesie')) {
-            attributes[headIndex] = { ...attributes[headIndex], value: `${hv}_onesie`.toLowerCase() };
-          }
-        }
-      }
-    } else if (cat === 'hats' && isOnesie) {
-      return attributes; // can't equip hats if onesie
-    }
-
-    // set item
-    const itemIndex = attributes.findIndex(a => normalizeTraitType(a.trait_type) === cat);
-    if (itemIndex >= 0) {
-      attributes[itemIndex] = { ...attributes[itemIndex], value: newValue };
-    }
-    return attributes;
   }
 
-  const handleItemClick = useCallback((category: string, itemName: string) => {
-    if (!selectedCharacter?.attributes) return;
+  // Equip logic
+  function handleItemClick(category: string, itemName: string) {
     try {
+      if (!selectedCharacter?.attributes) {
+        setErrorMessage('Selected character or attributes are missing.');
+        return;
+      }
       const newValue = itemName.replace(/\s+/g, '_').toLowerCase();
-      const updated = equipTrait([...selectedCharacter.attributes], category, newValue);
-      // remove duplicates
-      const unique = updated.filter((a, i, self) => i === self.findIndex(tt => tt.trait_type === a.trait_type));
-      updateCharacterAttributes(unique);
-    } catch (err) {
-      console.error(err);
-    }
-  }, [selectedCharacter, updateCharacterAttributes, normalizeTraitType]);
+      const normalizedCategory = normalizeTraitType(category);
+      let updatedAttributes = [...selectedCharacter.attributes];
 
-  // Pagination
+      // Check for onesie logic
+      const bodyTrait = updatedAttributes.find((attr) => normalizeTraitType(attr.trait_type) === 'body');
+      const isOnesieEquipped =
+        bodyTrait?.value &&
+        typeof bodyTrait.value === 'string' &&
+        bodyTrait.value.endsWith('_onesie');
+
+      // If equipping top/bottom, remove onesie
+      if (normalizedCategory === 'tops' || normalizedCategory === 'bottoms') {
+        if (isOnesieEquipped) {
+          updatedAttributes = updatedAttributes.map((attr) => {
+            const type = normalizeTraitType(attr.trait_type);
+            if (type === 'body') {
+              return { ...attr, value: 'none' };
+            }
+            if (type === 'head') {
+              const baseVal = (attr.original_value || attr.value) as string;
+              return { ...attr, value: baseVal.replace('_onesie', '').toLowerCase() };
+            }
+            return attr;
+          });
+        }
+      } else if (normalizedCategory === 'body') {
+        // If equipping a onesie, remove top, bottom, hats
+        const isNewItemOnesie = newValue.endsWith('_onesie');
+        if (isNewItemOnesie) {
+          updatedAttributes = updatedAttributes.map((attr) => {
+            const type = normalizeTraitType(attr.trait_type);
+            if (type === 'tops' || type === 'bottoms' || type === 'hats') {
+              return { ...attr, value: 'none' };
+            }
+            if (type === 'head') {
+              const baseVal = (attr.original_value || attr.value) as string;
+              return { ...attr, value: `${baseVal.replace('_onesie','')}_onesie`.toLowerCase() };
+            }
+            return attr;
+          });
+        }
+      } else if (normalizedCategory === 'hats' && isOnesieEquipped) {
+        console.error('Cannot equip hats while wearing a onesie!');
+        return;
+      }
+
+      // Apply the new equipment piece
+      updatedAttributes = updatedAttributes.map((attr) => {
+        if (normalizeTraitType(attr.trait_type) === normalizedCategory) {
+          return { ...attr, value: newValue };
+        }
+        return attr;
+      });
+
+      // Deduplicate
+      const uniqueUpdatedAttributes = updatedAttributes.filter(
+        (attr, index, self) => index === self.findIndex((t) => t.trait_type === attr.trait_type),
+      );
+
+      updateCharacterAttributes(uniqueUpdatedAttributes);
+    } catch (error) {
+      console.error('Error equipping item:', error);
+      setErrorMessage('Error equipping item.');
+    }
+  }
+
   function getAllItems() {
     return items[activeTab] || [];
   }
+
   function getDisplayedItems() {
-    const start = (currentPage - 1) * itemsPerPage;
-    return getAllItems().slice(start, start + itemsPerPage);
+    const all = getAllItems();
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return all.slice(startIndex, startIndex + itemsPerPage);
   }
+
   const displayedItems = getDisplayedItems();
   const totalPages = Math.ceil(getAllItems().length / itemsPerPage);
 
-  // Update pagination handlers to loop
-  const handlePrevPage = () => {
-    setCurrentPage(p => p > 1 ? p - 1 : totalPages);
-  };
-
-  const handleNextPage = () => {
-    setCurrentPage(p => p < totalPages ? p + 1 : 1);
-  };
-
-  // Update onAction case
-  const onAction = () => {
-    const currentF = focusable[focusIndex];
-    if (!currentF) return;
-    switch (currentF.type) {
-      case 'EXIT':
-        router.push('/');
-        break;
-      case 'TAB':
-        setActiveTab(currentF.name!);
-        setCurrentPage(1);
-        break;
-      case 'PAGINATION_PREV':
-        handlePrevPage();
-        break;
-      case 'PAGINATION_NEXT':
-        handleNextPage();
-        break;
-      case 'ITEM':
-        handleItemClick(activeTab, currentF.name!);
-        break;
-      default:
-        break;
-    }
-  };
-
-  // Build focus array
-  function buildFocusable(): Focusable[] {
-    const arr: Focusable[] = [];
-    arr.push({ type: 'EXIT', label: 'Exit' });
-    categories.forEach(cat => {
-      arr.push({ type: 'TAB', label: cat.replace(/_/g, ' '), name: cat });
-    });
-    arr.push({ type: 'PAGINATION_PREV', label: 'Prev Page' });
-    displayedItems.forEach((item, idx) => {
-      arr.push({ type: 'ITEM', label: item.name, name: item.name, index: idx });
-    });
-    arr.push({ type: 'PAGINATION_NEXT', label: 'Next Page' });
-    return arr;
+  function handlePrevPage() {
+    if (totalPages < 1) return;
+    setCurrentPage((prev) => (prev > 1 ? prev - 1 : totalPages));
+    setItemsFocusIndex(0);
   }
-  const focusable = buildFocusable();
 
-  // Move selection with arrow keys
+  function handleNextPage() {
+    if (totalPages < 1) return;
+    setCurrentPage((prev) => (prev < totalPages ? prev + 1 : 1));
+    setItemsFocusIndex(0);
+  }
+
+  // Hook for WASD/arrow key input
   useGlobalControls({
     onUp: () => {
-      const currentF = focusable[focusIndex];
-      if (currentF?.type === 'ITEM') {
-        // Move up a row
-        const row = Math.floor((currentF.index ?? 0) / columns);
-        if (row > 0) {
-          const newIndex = (currentF.index ?? 0) - columns;
-          const newF = focusable.findIndex(f => f.type === 'ITEM' && f.index === newIndex);
-          if (newF >= 0) {
-            setFocusIndex(newF);
-            return;
-          }
-        } else {
-          // jump to pagination or tabs
-          // If row = 0, let's move up to pagination prev
-          const prevFocus = focusable.findIndex(f => f.type === 'PAGINATION_PREV');
-          if (prevFocus >= 0) {
-            setFocusIndex(prevFocus);
-            return;
-          }
-        }
-      } else if (currentF?.type === 'PAGINATION_PREV' || currentF?.type === 'PAGINATION_NEXT') {
-        // jump to tabs
-        const firstTabIndex = focusable.findIndex(f => f.type === 'TAB');
-        if (firstTabIndex >= 0) setFocusIndex(firstTabIndex);
-        return;
-      } else if (currentF?.type === 'TAB') {
-        // move up to exit if not already exit
-        const exitIndex = focusable.findIndex(f => f.type === 'EXIT');
-        if (exitIndex >= 0) setFocusIndex(exitIndex);
-        return;
+      if (paneFocus === 'tabs') {
+        // move tabIndex up
+        setTabIndex((prev) => (prev - 1 + storeTabs.length) % storeTabs.length);
+      } else {
+        // items
+        setItemsFocusIndex((prev) => Math.max(0, prev - 1));
       }
-      // fallback
-      setFocusIndex(prev => Math.max(0, prev - 1));
     },
     onDown: () => {
-      const currentF = focusable[focusIndex];
-      if (currentF?.type === 'EXIT') {
-        // move down to first tab
-        const firstTabIndex = focusable.findIndex(f => f.type === 'TAB');
-        if (firstTabIndex >= 0) setFocusIndex(firstTabIndex);
-        return;
-      } else if (currentF?.type === 'TAB') {
-        // move to pagination
-        const prevFocus = focusable.findIndex(f => f.type === 'PAGINATION_PREV');
-        if (prevFocus >= 0) {
-          setFocusIndex(prevFocus);
-          return;
-        }
-      } else if (currentF?.type === 'PAGINATION_PREV' || currentF?.type === 'PAGINATION_NEXT') {
-        // move to first row of items if any
-        if (displayedItems.length > 0) {
-          const newF = focusable.findIndex(f => f.type === 'ITEM' && f.index === 0);
-          if (newF >= 0) {
-            setFocusIndex(newF);
-            return;
-          }
-        }
-      } else if (currentF?.type === 'ITEM') {
-        // move down a row if possible
-        const row = Math.floor((currentF.index ?? 0) / columns);
-        const newIndex = (currentF.index ?? 0) + columns;
-        if (newIndex < displayedItems.length) {
-          const newF = focusable.findIndex(f => f.type === 'ITEM' && f.index === newIndex);
-          if (newF >= 0) {
-            setFocusIndex(newF);
-            return;
+      if (paneFocus === 'tabs') {
+        // move tabIndex down
+        setTabIndex((prev) => (prev + 1) % storeTabs.length);
+      } else {
+        // items
+        const lastIndex = displayedItems.length + 1; // +2 for pagination, zero-based => +1 for last
+        setItemsFocusIndex((prev) => Math.min(lastIndex, prev + 1));
+      }
+    },
+    onLeft: () => {},
+    onRight: () => {},
+    onAction: () => {
+      // Enter or Space
+      if (paneFocus === 'tabs') {
+        // Switch to items focus
+        setPaneFocus('items');
+        setItemsFocusIndex(0);
+      } else {
+        // We are in items
+        if (itemsFocusIndex < displayedItems.length) {
+          const item = displayedItems[itemsFocusIndex];
+          if (item?.name) {
+            // Equip item upon action
+            handleItemClick(activeTab, item.name);
           }
         } else {
-          // if can't, move to pagination next
-          const nextFocus = focusable.findIndex(f => f.type === 'PAGINATION_NEXT');
-          if (nextFocus >= 0) setFocusIndex(nextFocus);
-          return;
-        }
-      }
-      // fallback
-      setFocusIndex(prev => Math.min(focusable.length - 1, prev + 1));
-    },
-    onLeft: () => {
-      const currentF = focusable[focusIndex];
-      if (currentF?.type === 'ITEM') {
-        if ((currentF.index ?? 0) % columns !== 0) {
-          const newIndex = (currentF.index ?? 0) - 1;
-          const newF = focusable.findIndex(f => f.type === 'ITEM' && f.index === newIndex);
-          if (newF >= 0) {
-            setFocusIndex(newF);
-            return;
+          // pagination
+          const isPrev = (itemsFocusIndex === displayedItems.length);
+          if (isPrev) {
+            handlePrevPage();
+          } else {
+            handleNextPage();
           }
         }
       }
-      setFocusIndex(prev => Math.max(0, prev - 1));
     },
-    onRight: () => {
-      const currentF = focusable[focusIndex];
-      if (currentF?.type === 'ITEM') {
-        if (((currentF.index ?? 0) + 1) % columns !== 0) {
-          const newIndex = (currentF.index ?? 0) + 1;
-          if (newIndex < displayedItems.length) {
-            const newF = focusable.findIndex(f => f.type === 'ITEM' && f.index === newIndex);
-            if (newF >= 0) {
-              setFocusIndex(newF);
-              return;
-            }
-          }
-        }
+    onSecondary: () => {
+      // "q" or "e" => user goes back to tabs
+      if (paneFocus === 'items') {
+        setPaneFocus('tabs');
       }
-      setFocusIndex(prev => Math.min(focusable.length - 1, prev + 1));
     },
-    onAction: onAction,
     onEscape: () => {
       router.push('/');
-    }
+    },
   });
 
-  // Also allow click with mouse
-  const handleTabClick = (tab: string) => {
-    setActiveTab(tab);
-    setCurrentPage(1);
-    // find that tab in focusable
-    const ix = focusable.findIndex(f => f.type === 'TAB' && f.name === tab);
-    if (ix >= 0) setFocusIndex(ix);
-  };
-
-  const handleItemMouseClick = (itemName: string) => {
-    handleItemClick(activeTab, itemName);
-  };
-
-  const handleClickExit = useCallback(() => {
-    router.push('/');
-  }, [router]);
-
-  const displayedFocusType = focusable[focusIndex]?.type;
-  const displayedFocusName = focusable[focusIndex]?.name;
-  const displayedFocusItemIndex = focusable[focusIndex]?.index;
-
   return (
-    <div className="py-4 flex items-center justify-center bg-[#697c01]">
-      <div className="w-[100%] h-[100%] flex flex-col gap-2">
-        {/* Left panel */}
-        <div className="flex flex-col items-center">
-          <div className="origin-top-left">
-            <CharacterPreview />
+    <div className="flex flex-col w-full h-full bg-[#697c01]">
+
+      {/* TOP BAR: Character Preview */}
+      <div className="border-b-4 border-[#333d02] px-8 py-6 flex justify-center">
+        <div className="w-[75%] max-w-[850px] border-4 border-[#333d02] bg-[#333d02]/10 p-4">
+          <CharacterPreview />
+        </div>
+      </div>
+
+      {/* BOTTOM: Store UI */}
+      <div className="flex-1 flex flex-col items-center p-6 overflow-y-auto">
+        <h2 className="text-center text-4xl font-bold uppercase text-[#333d02] mb-6 font-[MekMono]">
+          Store
+        </h2>
+
+        {errorMessage && (
+          <div className="bg-red-400 text-white p-2 rounded my-2">
+            {errorMessage}
           </div>
-          <div className="w-full flex flex-row justify-between">
-          <div className="text-[#333d02] text-xl uppercase font-[MekMono]">
-            <strong>Dubloons:</strong> 999
-          </div>
-          <button
-            onClick={handleClickExit}
-            className="font-[MekMono] uppercase text-xl text-[#333d02]"
-          >
-            Exit
-          </button>
-          </div>
+        )}
+
+        {/* Tabs */}
+        <div className="flex flex-row space-x-6 mb-6">
+          {storeTabs.map((tab, idx) => {
+            const isFocusedTab = (paneFocus === 'tabs' && tabIndex === idx);
+            const isActiveTab = (activeTab === tab);
+            return (
+              <div
+                key={tab}
+                className={`
+                  uppercase border-4 px-4 py-2 text-xl cursor-pointer 
+                  font-[MekMono] text-[#333d02]
+                  ${isActiveTab ? 'bg-white/5' : 'bg-transparent'}
+                  ${isFocusedTab ? 'border-yellow-400 blinking-border' : 'border-[#333d02]'}
+                `}
+              >
+                {tab.replace(/_/g, ' ')}
+              </div>
+            );
+          })}
         </div>
 
-        {/* Right panel */}
-        <div className=" flex flex-col border-4 border-[#333d02]">
-          {errorMessage && (
-            <div className="text-red-500 mb-2 p-2">{errorMessage}</div>
-          )}
-
-          {/* Tabs */}
-          <div className="flex gap-1 p-2">
-            {categories.map(tab => {
-              const isSelected = (displayedFocusType === 'TAB' && displayedFocusName === tab);
-              const active = (tab === activeTab);
+        {/* Items + Pagination */}
+        <div className="w-full max-w-[1200px] flex flex-col">
+          <div className="grid grid-cols-3 gap-6">
+            {displayedItems.map((item, i) => {
+              const isFocused = (paneFocus === 'items' && itemsFocusIndex === i);
               return (
                 <div
-                  key={tab}
-                  onClick={() => handleTabClick(tab)}
+                  key={`${item.name}-${i}`}
                   className={`
-                    flex-1 p-2 text-center cursor-pointer font-[MekMono] uppercase text-[#333d02]
-                    ${isSelected ? 'border-4 border-yellow-400 bg-yellow-400/30 blinking-border' : ''}
-                    ${active && !isSelected ? 'border-4 border-[#333d02] bg-white/5' : ''}
-                    ${!active && !isSelected ? 'border-4 border-[#333d02] bg-transparent' : ''}
+                    flex flex-col items-center p-4 border-4 border-[#333d02]
+                    cursor-pointer text-[#333d02] bg-white/5
+                    ${isFocused ? 'border-yellow-400 blinking-border' : ''}
                   `}
                 >
-                  {tab.replace(/_/g, ' ')}
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Items Grid */}
-          <div className="flex-1 grid grid-cols-3 gap-2 p-2 bg-[#333d02]/10 overflow-y-auto min-h-0">
-            {displayedItems.map((item, idx) => {
-              const isSelected = (
-                displayedFocusType === 'ITEM' &&
-                displayedFocusItemIndex === idx
-              );
-              return (
-                <div
-                  key={item.path + idx}
-                  className={`
-                    flex flex-col items-center justify-center p-2 cursor-pointer
-                    ${isSelected ? 'border-4 border-yellow-400 bg-yellow-400/30 blinking-border' : 'border-4 border-[#333d02] bg-white/5'}
-                  `}
-                  onClick={() => handleItemMouseClick(item.name)}
-                >
-                  <span className="text-[#333d02] mb-1 text-sm text-center font-[MekMono] w-[150px] truncate uppercase">
-                    {item.name.replace(/_/g, ' ')}
-                  </span>
                   <img
                     src={item.path}
                     alt={item.name}
-                    className="w-16 h-16 object-contain mb-1"
+                    className="w-24 h-24 object-contain mb-3"
                   />
-                  <button className="bg-[#333d02] text-[#697c01] border-none px-2 py-1 cursor-pointer text-sm font-[MekMono] uppercase">
-                    Buy for 10g
-                  </button>
+                  <div className="text-lg uppercase font-bold font-[MekMono]">
+                    {item.name.replace(/_/g, ' ')}
+                  </div>
+                  <div className="text-md font-[MekMono]">
+                    Price: 10 Dubloons
+                  </div>
                 </div>
               );
             })}
           </div>
 
           {/* Pagination */}
-          <div className="flex items-center justify-center gap-4 p-2">
-            <button
-              onClick={handlePrevPage}
+          <div className="flex flex-row items-center justify-center space-x-6 mt-6">
+            {/* PREV */}
+            <div
               className={`
-                px-3 py-2 font-[MekMono] uppercase text-[#333d02]
-                ${displayedFocusType === 'PAGINATION_PREV' ? 'border-4 border-yellow-400 bg-yellow-400/30 blinking-border' : 'border-4 border-[#333d02] bg-white/5'}
+                px-6 py-2 border-4 border-[#333d02] cursor-pointer 
+                bg-white/5 text-[#333d02] font-[MekMono] text-xl uppercase
+                ${paneFocus === 'items' && itemsFocusIndex === displayedItems.length 
+                  ? 'border-yellow-400 blinking-border' 
+                  : ''
+                }
               `}
             >
               Prev
-            </button>
-            <span className="text-[#333d02] font-[MekMono]">
-              {currentPage} / {totalPages || 1}
-            </span>
-            <button
-              onClick={handleNextPage}
+            </div>
+            <div className="text-[#333d02] font-[MekMono] text-xl">
+              Page {currentPage} / {totalPages || 1}
+            </div>
+            {/* NEXT */}
+            <div
               className={`
-                px-3 py-2 font-[MekMono] uppercase text-[#333d02]
-                ${displayedFocusType === 'PAGINATION_NEXT' ? 'border-4 border-yellow-400 bg-yellow-400/30 blinking-border' : 'border-4 border-[#333d02] bg-white/5'}
+                px-6 py-2 border-4 border-[#333d02] cursor-pointer 
+                bg-white/5 text-[#333d02] font-[MekMono] text-xl uppercase
+                ${paneFocus === 'items' && itemsFocusIndex === displayedItems.length + 1 
+                  ? 'border-yellow-400 blinking-border' 
+                  : ''
+                }
               `}
             >
               Next
-            </button>
+            </div>
           </div>
         </div>
-
-        <style jsx>{`
-          @keyframes borderBlink {
-            0% { border-color: #facc15; }
-            50% { border-color: transparent; }
-            100% { border-color: #facc15; }
-          }
-          .blinking-border {
-            animation: borderBlink 1s ease-in-out infinite;
-          }
-        `}</style>
       </div>
+
+      {/* Blinking border animation */}
+      <style jsx>{`
+        @keyframes borderBlink {
+          0% { border-color: #facc15; }
+          50% { border-color: transparent; }
+          100% { border-color: #facc15; }
+        }
+        .blinking-border {
+          animation: borderBlink 1s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 }

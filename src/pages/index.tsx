@@ -2,31 +2,29 @@ import React, { useState, useEffect, KeyboardEvent } from 'react';
 import dynamic from 'next/dynamic';
 import { useGlobalControls } from '../hooks/useGlobalControls';
 
-// We no longer import the placeholder GameInterface
-// import dynamic from 'next/dynamic'; -> already used above
-
-// We'll import RuniverseAdventure instead:
 const PhaserGame = dynamic(() => import('../components/PhaserGame'), { ssr: false });
-// Replacing placeholder with the real RuniverseAdventure
 const RuniverseAdventure = dynamic(() => import('../components/Game/RuniverseAdventure'), { ssr: false });
-
 const CharacterSelect = dynamic(() => import('../components/CharacterSelect'), { ssr: false });
 const RuniverseMap = dynamic(() => import('../components/RuniverseMap'), { ssr: false });
 const CharacterCreation = dynamic(() => import('../components/Game/CharacterCreation'), { ssr: false });
+
+// NEW: import the VillagerCreator
+const VillagerCreator = dynamic(() => import('../components/VillagerCreator').then(mod => ({ default: mod.VillagerCreator })), { ssr: false });
 
 export default function HomePage() {
   // Menu navigation
   const [showCharacterSelect, setShowCharacterSelect] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  
+
   // Overlays
   const [showMap, setShowMap] = useState(false);
   const [showCharacterCreation, setShowCharacterCreation] = useState(false);
-  // Let's rename this to showAdventure
   const [showAdventure, setShowAdventure] = useState(false);
 
-  // Menu items
+  // NEW: show/hide the VillagerCreator overlay
+  const [showVillagerCreator, setShowVillagerCreator] = useState(false);
+
   const options = [
     'Start Game',
     'Characters',
@@ -42,9 +40,7 @@ export default function HomePage() {
 
     function handleKeyDown(e: KeyboardEvent) {
       const key = e.key.toLowerCase();
-
-      // If an overlay is open or the game is started, skip menu nav
-      if (showCharacterSelect || showMap || showCharacterCreation || showAdventure || gameStarted) {
+      if (showCharacterSelect || showMap || showCharacterCreation || showAdventure || gameStarted || showVillagerCreator) {
         return;
       }
 
@@ -88,13 +84,15 @@ export default function HomePage() {
     showMap,
     showCharacterCreation,
     showAdventure,
-    gameStarted
+    gameStarted,
+    showVillagerCreator
   ]);
 
-  // For closure via ESC in each overlay
   useGlobalControls({
     onEscape: () => {
-      if (showCharacterSelect) setShowCharacterSelect(false);
+      // If any overlay is open, close it
+      if (showVillagerCreator) setShowVillagerCreator(false);
+      else if (showCharacterSelect) setShowCharacterSelect(false);
       else if (showMap) setShowMap(false);
       else if (showCharacterCreation) setShowCharacterCreation(false);
       else if (showAdventure) setShowAdventure(false);
@@ -146,17 +144,29 @@ export default function HomePage() {
             !showMap &&
             !showCharacterCreation &&
             !showAdventure &&
+            !showVillagerCreator &&
             renderMenu()}
 
           {/* PHASER GAME */}
-          {gameStarted && !showCharacterSelect && !showMap && !showCharacterCreation && !showAdventure && (
-            <PhaserGame />
+          {gameStarted &&
+            !showCharacterSelect &&
+            !showMap &&
+            !showCharacterCreation &&
+            !showAdventure &&
+            !showVillagerCreator && (
+              <PhaserGame />
           )}
 
           {/* Character Select Overlay */}
           {showCharacterSelect && (
             <div className="absolute top-0 left-0 w-full h-full bg-black/75">
-              <CharacterSelect onClose={() => setShowCharacterSelect(false)} />
+              <CharacterSelect
+                onClose={() => setShowCharacterSelect(false)}
+                onOpenVillagerCreator={() => {
+                  setShowVillagerCreator(true);
+                  setShowCharacterSelect(false);
+                }}
+              />
             </div>
           )}
 
@@ -183,6 +193,13 @@ export default function HomePage() {
           {showAdventure && (
             <div className="absolute top-0 left-0 w-full h-full bg-black/85">
               <RuniverseAdventure />
+            </div>
+          )}
+
+          {/* Villager Creator Overlay */}
+          {showVillagerCreator && (
+            <div className="absolute top-0 left-0 w-full h-full bg-black/85">
+              <VillagerCreator onClose={() => setShowVillagerCreator(false)} />
             </div>
           )}
         </div>

@@ -1,19 +1,17 @@
 import React, {
   useState,
   useEffect,
-  useCallback,
-  KeyboardEvent,
   FC
 } from 'react';
 import { useCharacter } from '../../context/CharacterContext';
 import { useGlobalControls } from '../../hooks/useGlobalControls';
 
 type FormData = {
-  selectedTraits: string[]; // Up to 10
-  selectedBackstory: string; // one of the suggested or custom
+  selectedTraits: string[];
+  selectedBackstory: string;
   customBackstory: string;
-  motivation: string; // from suggestions or custom
-  selectedSkills: string[]; // Up to 5
+  motivation: string;
+  selectedSkills: string[];
 };
 
 const TRAIT_OPTIONS = [
@@ -55,13 +53,12 @@ const SKILL_OPTIONS = [
 type TabType = 'Traits' | 'Backstory' | 'Motivation' | 'Skills';
 const TABS: TabType[] = ['Traits', 'Backstory', 'Motivation', 'Skills'];
 
+const MAX_TRAITS = 10;
+
 const CharacterCreation: FC = () => {
   const { selectedCharacter, updateCharacterAttributes, updateConsciousId } = useCharacter();
-  // Which tab is active
   const [tabIndex, setTabIndex] = useState<number>(0);
-  // Focus: 'left' for tabs, 'right' for tab content
   const [paneFocus, setPaneFocus] = useState<'left' | 'right'>('left');
-  // Highlight index for the items in the content area
   const [contentIndex, setContentIndex] = useState<number>(0);
 
   const [formData, setFormData] = useState<FormData>({
@@ -72,7 +69,6 @@ const CharacterCreation: FC = () => {
     selectedSkills: []
   });
 
-  // On load, retrieve existing attributes
   useEffect(() => {
     if (!selectedCharacter?.attributes) return;
 
@@ -103,7 +99,6 @@ const CharacterCreation: FC = () => {
     });
   }, [selectedCharacter]);
 
-  // Auto-save formData into character attributes
   useEffect(() => {
     const finalTraits = formData.selectedTraits.join(',');
     const finalBackstory =
@@ -125,7 +120,6 @@ const CharacterCreation: FC = () => {
     updateCharacterAttributes
   ]);
 
-  // Data for the currently active tab
   function getTabData(): string[] {
     switch (TABS[tabIndex]) {
       case 'Traits': return TRAIT_OPTIONS;
@@ -136,7 +130,6 @@ const CharacterCreation: FC = () => {
     }
   }
 
-  // Is custom text input relevant to this tab?
   function isCustomOptionSelected(): boolean {
     const activeTab = TABS[tabIndex];
     if (activeTab === 'Backstory' && formData.selectedBackstory === 'custom') {
@@ -152,7 +145,6 @@ const CharacterCreation: FC = () => {
     return false;
   }
 
-  // Selection handlers
   function handleToggleTrait(trait: string) {
     setFormData(prev => {
       const inList = prev.selectedTraits.includes(trait);
@@ -162,8 +154,8 @@ const CharacterCreation: FC = () => {
           selectedTraits: prev.selectedTraits.filter(t => t !== trait)
         };
       } else {
-        if (prev.selectedTraits.length >= 10) {
-          alert('You can select up to 10 traits.');
+        if (prev.selectedTraits.length >= MAX_TRAITS) {
+          alert(`You have reached the maximum of ${MAX_TRAITS} traits.`);
           return prev;
         }
         return {
@@ -245,7 +237,6 @@ const CharacterCreation: FC = () => {
     }
   }
 
-  // Submit final
   async function handleCreateCharacter() {
     try {
       const response = await fetch('/api/consciousnft/character', {
@@ -277,14 +268,12 @@ const CharacterCreation: FC = () => {
     }
   }
 
-  // Move to next tab or finalize on the last tab
   function handlePressE() {
     if (tabIndex < TABS.length - 1) {
       setTabIndex(tabIndex + 1);
       setPaneFocus('left');
       setContentIndex(0);
     } else {
-      // If on the last tab, do a final save or submission
       handleCreateCharacter();
     }
   }
@@ -295,10 +284,8 @@ const CharacterCreation: FC = () => {
     },
     onUp: () => {
       if (paneFocus === 'left') {
-        // Move between tabs
         setTabIndex(prev => Math.max(0, prev - 1));
       } else {
-        // Move selection in content
         setContentIndex(prev => Math.max(0, prev - 1));
       }
     },
@@ -322,16 +309,13 @@ const CharacterCreation: FC = () => {
     },
     onA: () => {
       if (paneFocus === 'left') {
-        // Switch to right pane on tab select
         setPaneFocus('right');
         setContentIndex(0);
       } else {
-        // Toggle the item
         handleSelectItem(contentIndex);
       }
     },
     onB: () => {
-      // Go back to tabs from content
       if (paneFocus === 'right') {
         setPaneFocus('left');
       }
@@ -339,7 +323,6 @@ const CharacterCreation: FC = () => {
     onE: handlePressE
   });
 
-  // Tab button rendering
   function renderTabButtons() {
     return (
       <div className="flex flex-col p-4 space-y-4">
@@ -355,7 +338,7 @@ const CharacterCreation: FC = () => {
                 setContentIndex(0);
               }}
               className={`
-                text-left px-3 py-1 font-ocra text-sm border-2 rounded-md transition-colors
+                text-left px-3 py-1 font-ocra text-sm border-2 rounded-md
                 ${isFocused ? 'border-yellow-400 bg-yellow-300/20' : 'border-transparent bg-gray-700'}
                 ${isSelectedTab ? 'font-bold text-white' : 'text-gray-300'}
               `}
@@ -368,52 +351,64 @@ const CharacterCreation: FC = () => {
     );
   }
 
-  // Main content rendering
   function renderTabContent() {
     const data = getTabData();
     const activeTab = TABS[tabIndex];
 
+    // For traits, let's do a 3-column grid
+    const gridClass =
+      activeTab === 'Traits'
+        ? 'grid grid-cols-3 gap-2'
+        : 'grid grid-cols-1 gap-2';
+
     return (
       <div className="flex flex-col w-full p-4 space-y-2 overflow-y-auto h-full">
-        {/* Title for the tab */}
         <h2 className="font-ocra text-xl text-white mb-2">
           {activeTab}
         </h2>
-        {data.map((item, i) => {
-          // Check if item is selected
-          let selected = false;
-          if (activeTab === 'Traits') {
-            selected = formData.selectedTraits.includes(item);
-          } else if (activeTab === 'Backstory') {
-            selected = formData.selectedBackstory === item;
-          } else if (activeTab === 'Motivation') {
-            selected = formData.motivation === item;
-          } else if (activeTab === 'Skills') {
-            selected = formData.selectedSkills.includes(item);
-          }
 
-          const isFocused = (paneFocus === 'right') && (contentIndex === i);
-          return (
-            <button
-              key={`${activeTab}-${item}-${i}`}
-              onClick={() => {
-                setContentIndex(i);
-                setPaneFocus('right');
-                handleSelectItem(i);
-              }}
-              className={`
-                w-full px-2 py-1 text-left text-sm rounded-md border-2 transition-colors
-                ${isFocused ? 'border-yellow-400 bg-yellow-300/20' : 'border-transparent bg-gray-700/20'}
-                flex items-center justify-between
-              `}
-            >
-              <span>{item === 'custom' ? 'Custom...' : item}</span>
-              {selected && <span className="text-yellow-400 font-bold">✔</span>}
-            </button>
-          );
-        })}
+        {activeTab === 'Traits' && (
+          <div className="mb-2 text-white text-sm">
+            Selected {formData.selectedTraits.length} / {MAX_TRAITS}
+          </div>
+        )}
 
-        {/* If custom is selected for backstory or motivation, show input */}
+        <div className={gridClass}>
+          {data.map((item, i) => {
+            const isFocused = (paneFocus === 'right') && (contentIndex === i);
+            let selected = false;
+            if (activeTab === 'Traits') {
+              selected = formData.selectedTraits.includes(item);
+            } else if (activeTab === 'Backstory') {
+              selected = formData.selectedBackstory === item;
+            } else if (activeTab === 'Motivation') {
+              selected = formData.motivation === item;
+            } else if (activeTab === 'Skills') {
+              selected = formData.selectedSkills.includes(item);
+            }
+
+            return (
+              <button
+                key={`${activeTab}-${item}-${i}`}
+                onClick={() => {
+                  setContentIndex(i);
+                  setPaneFocus('right');
+                  handleSelectItem(i);
+                }}
+                className={`
+                  w-full px-2 py-1 text-left text-sm rounded-md border-2
+                  ${isFocused ? 'border-yellow-400 bg-yellow-300/20' : 'border-transparent bg-gray-700/20'}
+                  flex items-center justify-between
+                  ${selected ? 'bg-green-600/50' : ''}
+                `}
+              >
+                <span>{item === 'custom' ? 'Custom...' : item}</span>
+                {selected && <span className="text-yellow-400 font-bold">✔</span>}
+              </button>
+            );
+          })}
+        </div>
+
         {isCustomOptionSelected() && activeTab === 'Backstory' && (
           <textarea
             value={formData.customBackstory}
@@ -421,9 +416,10 @@ const CharacterCreation: FC = () => {
             placeholder="Write your custom backstory..."
             className="mt-2 border border-gray-700 rounded-lg p-2 w-full h-24
                        bg-gray-800 text-white text-sm focus:outline-none focus:ring
-                       focus:ring-yellow-500 transition-all"
+                       focus:ring-yellow-500"
           />
         )}
+
         {isCustomOptionSelected() && activeTab === 'Motivation' && (
           <input
             type="text"
@@ -431,7 +427,7 @@ const CharacterCreation: FC = () => {
             onChange={(e) => handleMotivationInput(e.target.value)}
             placeholder="Enter your custom motivation..."
             className="mt-2 border border-gray-700 rounded p-2 bg-gray-800 text-white
-                       text-sm focus:outline-none focus:ring focus:ring-yellow-500 transition-all"
+                       text-sm focus:outline-none focus:ring focus:ring-yellow-500"
           />
         )}
       </div>
@@ -453,7 +449,6 @@ const CharacterCreation: FC = () => {
 
         {/* Right Pane: Content */}
         <div className="flex flex-col w-2/3 h-full">
-          {/* Display selected character (if any) at top */}
           {selectedCharacter && (
             <div className="text-center text-[#333d02] py-2 border-b-4 border-[#333d02]">
               {selectedCharacter.image && (
@@ -469,32 +464,19 @@ const CharacterCreation: FC = () => {
             </div>
           )}
 
-          {/* Main content */}
           <div className="flex-1 overflow-y-auto">
             {renderTabContent()}
           </div>
 
-          {/* Footer: E to Save/Next or final create */}
           <div className="p-3 border-t-4 border-[#333d02] flex justify-center">
             <button
               onClick={handlePressE}
-              className="border-4 border-[#333d02] text-[#333d02] font-[MekMono] uppercase text-md px-6 py-2 hover:bg-yellow-400/30 transition-colors"
+              className="border-4 border-[#333d02] text-[#333d02] font-[MekMono] uppercase text-md px-6 py-2 hover:bg-yellow-400/30"
             >
               {tabIndex < TABS.length - 1 ? 'Next (E)' : 'Finalize (E)'}
             </button>
           </div>
         </div>
-
-        <style jsx>{`
-          @keyframes borderBlink {
-            0% { border-color: #facc15; }
-            50% { border-color: transparent; }
-            100% { border-color: #facc15; }
-          }
-          .blinking-border {
-            animation: borderBlink 1s ease-in-out infinite;
-          }
-        `}</style>
       </div>
     </div>
   );
