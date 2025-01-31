@@ -5,6 +5,7 @@ import { useGlobalControls } from '../hooks/useGlobalControls';
 const PhaserGame = dynamic(() => import('../components/PhaserGame'), { ssr: false });
 const RuniverseAdventure = dynamic(() => import('../components/Game/RuniverseAdventure'), { ssr: false });
 const CharacterSelect = dynamic(() => import('../components/CharacterSelect'), { ssr: false });
+const Mint = dynamic(() => import('../components/Mint'), { ssr: false });
 const RuniverseMap = dynamic(() => import('../components/RuniverseMap'), { ssr: false });
 const CharacterCreation = dynamic(() => import('../components/Game/CharacterCreation'), { ssr: false });
 
@@ -21,15 +22,16 @@ export default function HomePage() {
   const [showMap, setShowMap] = useState(false);
   const [showCharacterCreation, setShowCharacterCreation] = useState(false);
   const [showAdventure, setShowAdventure] = useState(false);
-
-  // NEW: show/hide the VillagerCreator overlay
+  const [showMint, setShowMint] = useState(false);
   const [showVillagerCreator, setShowVillagerCreator] = useState(false);
 
+  // Menu items
   const options = [
     'Start Game',
     'Characters',
     'Character Creation',
     'Runiverse Adventure',
+    'Mint',
     'Map',
     'Options',
     'Credits',
@@ -40,7 +42,7 @@ export default function HomePage() {
 
     function handleKeyDown(e: KeyboardEvent) {
       const key = e.key.toLowerCase();
-      if (showCharacterSelect || showMap || showCharacterCreation || showAdventure || gameStarted || showVillagerCreator) {
+      if (showCharacterSelect || showMap || showCharacterCreation || showAdventure || gameStarted || showVillagerCreator || showMint) {
         return;
       }
 
@@ -66,6 +68,9 @@ export default function HomePage() {
           case 'Runiverse Adventure':
             setShowAdventure(true);
             break;
+          case 'Mint':
+            setShowMint(true);
+            break;
           default:
             console.log(`Selected: ${currentOption}`);
             break;
@@ -84,6 +89,7 @@ export default function HomePage() {
     showMap,
     showCharacterCreation,
     showAdventure,
+    showMint,
     gameStarted,
     showVillagerCreator
   ]);
@@ -96,6 +102,7 @@ export default function HomePage() {
       else if (showMap) setShowMap(false);
       else if (showCharacterCreation) setShowCharacterCreation(false);
       else if (showAdventure) setShowAdventure(false);
+      else if (showMint) setShowMint(false);
       else if (gameStarted) setGameStarted(false);
     }
   });
@@ -113,17 +120,19 @@ export default function HomePage() {
         }
       `}</style>
 
-      <div className="flex flex-row justify-center items-center h-[30%] my-[400px] mx-auto w-[90%] flex-wrap">
+      <div className="h-full mx-auto w-[90%] flex items-end">
+        <div className="flex flex-row justify-center items-center flex-wrap">
         {options.map((option, index) => (
           <div
             key={option}
-            className={`m-[0.3rem_0] uppercase text-2xl flex justify-center items-center font-['MekMono'] w-1/2
+            className={`m-[0.3rem_0] uppercase text-xl flex justify-center items-center font-['MekMono'] w-1/2
               ${selectedIndex === index ? 'font-bold text-yellow-400' : 'text-white'}
               ${selectedIndex === index ? 'blinking-title' : ''}`}
           >
             {option}
           </div>
         ))}
+        </div>
       </div>
     </div>
   );
@@ -144,6 +153,7 @@ export default function HomePage() {
             !showMap &&
             !showCharacterCreation &&
             !showAdventure &&
+            !showMint &&
             !showVillagerCreator &&
             renderMenu()}
 
@@ -152,7 +162,7 @@ export default function HomePage() {
             !showCharacterSelect &&
             !showMap &&
             !showCharacterCreation &&
-            !showAdventure &&
+            !showAdventure && !showMint &&
             !showVillagerCreator && (
               <PhaserGame />
           )}
@@ -193,6 +203,12 @@ export default function HomePage() {
           {showAdventure && (
             <div className="absolute top-0 left-0 w-full h-full bg-black/85">
               <RuniverseAdventure />
+            </div>
+          )}
+
+          {showMint && (
+            <div className="absolute top-0 left-0 w-full h-full bg-black/85">
+              <Mint />
             </div>
           )}
 
