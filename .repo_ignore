@@ -25,4 +25,4 @@
 
 **/*.meta
 **/package-lock.json
-**/public
+**/public/characters

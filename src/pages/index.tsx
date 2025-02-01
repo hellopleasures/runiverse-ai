@@ -2,6 +2,7 @@ import React, { useState, useEffect, KeyboardEvent } from 'react';
 import dynamic from 'next/dynamic';
 import { useGlobalControls } from '../hooks/useGlobalControls';
 
+// Import dynamic components
 const PhaserGame = dynamic(() => import('../components/PhaserGame'), { ssr: false });
 const RuniverseAdventure = dynamic(() => import('../components/Game/RuniverseAdventure'), { ssr: false });
 const CharacterSelect = dynamic(() => import('../components/CharacterSelect'), { ssr: false });
@@ -9,8 +10,8 @@ const Mint = dynamic(() => import('../components/Mint'), { ssr: false });
 const RuniverseMap = dynamic(() => import('../components/RuniverseMap'), { ssr: false });
 const CharacterCreation = dynamic(() => import('../components/Game/CharacterCreation'), { ssr: false });
 
-// NEW: import the VillagerCreator
-const VillagerCreator = dynamic(() => import('../components/VillagerCreator').then(mod => ({ default: mod.VillagerCreator })), { ssr: false });
+// Updated dynamic import for VillagerCreator using default export
+const VillagerCreator = dynamic(() => import('../components/VillagerCreator'), { ssr: false });
 
 export default function HomePage() {
   // Menu navigation
@@ -122,16 +123,16 @@ export default function HomePage() {
 
       <div className="h-full mx-auto w-[90%] flex items-end">
         <div className="flex flex-row justify-center items-center flex-wrap">
-        {options.map((option, index) => (
-          <div
-            key={option}
-            className={`m-[0.3rem_0] uppercase text-xl flex justify-center items-center font-['MekMono'] w-1/2
+          {options.map((option, index) => (
+            <div
+              key={option}
+              className={`m-[0.3rem_0] uppercase text-xl flex justify-center items-center font-['MekMono'] w-1/2
               ${selectedIndex === index ? 'font-bold text-yellow-400' : 'text-white'}
               ${selectedIndex === index ? 'blinking-title' : ''}`}
-          >
-            {option}
-          </div>
-        ))}
+            >
+              {option}
+            </div>
+          ))}
         </div>
       </div>
     </div>
