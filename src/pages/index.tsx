@@ -126,7 +126,7 @@ export default function HomePage() {
           {options.map((option, index) => (
             <div
               key={option}
-              className={`m-[0.3rem_0] uppercase text-xl flex justify-center items-center font-['MekMono'] w-1/2
+              className={`m-[0.3rem_0] uppercase text-[16px] flex justify-center items-center font-['MekMono'] w-1/2
               ${selectedIndex === index ? 'font-bold text-yellow-400' : 'text-white'}
               ${selectedIndex === index ? 'blinking-title' : ''}`}
             >
@@ -140,14 +140,14 @@ export default function HomePage() {
 
   return (
     <div className="w-full h-screen flex justify-center items-center bg-[#2d2d2d] overflow-hidden">
-      <div className="relative w-auto h-full max-h-full aspect-[144/240] flex justify-center items-center">
+      <div className="relative w-[1000px] h-[800px] aspect-[144/240] flex justify-center items-center">
         <img
           src="/RuneBoys/original.png"
           alt="Gameboy Frame"
           className="absolute w-full h-full object-contain [image-rendering:pixelated]"
         />
 
-        <div className="absolute top-[8%] left-[8.75%] w-[82.5%] aspect-square flex items-center justify-center overflow-hidden bg-black">
+        <div className="absolute top-[10%] left-[31.75%] w-[370px] h-[365px] aspect-square flex items-center justify-center overflow-hidden bg-black">
           {/* MAIN MENU */}
           {!gameStarted &&
             !showCharacterSelect &&

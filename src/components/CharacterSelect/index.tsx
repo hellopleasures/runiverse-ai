@@ -166,7 +166,7 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose, onOpenVillagerCrea
         key={`${charData.contract}-${charData.id}`}
         className={`
           flex items-center mb-2 p-2 cursor-pointer
-          ${isSelected ? 'bg-yellow-400/30 border-4 border-yellow-400 blinking-border' : 'border border-transparent'}
+          ${isSelected ? 'bg-yellow-400/30 border-2 border-yellow-400 blinking-border' : 'border border-transparent'}
         `}
         onClick={() => {
           setLeftIndex(globalIndex);
@@ -176,9 +176,9 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose, onOpenVillagerCrea
         <img
           src={imageUrl}
           alt={`Character ${charData.id}`}
-          className="w-[60px] h-[60px] object-contain mr-4"
+          className="w-[40px] h-[40px] object-contain mr-4"
         />
-        <div className="text-[#333d02] font-[MekMono] uppercase text-xl">
+        <div className="text-[#333d02] font-[MekMono] uppercase text-[12px]">
           {getContractLabel(charData.contract)} #{charData.id}
         </div>
         <style jsx>{`
@@ -201,8 +201,8 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose, onOpenVillagerCrea
       <div
         key={item}
         className={`
-          my-2 p-2 cursor-default text-center font-[MekMono] uppercase text-xl
-          ${isSelected ? 'border-4 border-yellow-400 bg-yellow-400/30 blinking-border' : 'border-4 border-[#333d02] bg-white/5'}
+          my-1 cursor-default text-center font-[MekMono] uppercase text-[12px]
+          ${isSelected ? 'border-2 border-yellow-400 bg-yellow-400/30 blinking-border' : 'border-2 border-[#333d02] bg-white/5'}
         `}
       >
         <style jsx>{`
@@ -223,14 +223,14 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose, onOpenVillagerCrea
   function renderSelectedCharacter() {
     if (!selectedCharacter) {
       return (
-        <div className="mt-4 text-center uppercase text-lg text-[#333d02]">
+        <div className="mt-1 text-center uppercase text-[12px] text-[#333d02]">
           <strong>No character selected</strong>
         </div>
       );
     }
     const label = getContractLabel(selectedCharacter.contract);
     return (
-      <div className="mt-4 text-center text-[#333d02] uppercase text-lg">
+      <div className="mt-1 text-center text-[#333d02] uppercase text-[12px]">
         <strong>Currently Selected:<br/></strong> {label} #{selectedCharacter.id}
       </div>
     );
@@ -238,14 +238,14 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose, onOpenVillagerCrea
 
   return (
     <div className="w-full h-full flex items-center justify-center bg-[#697c01] relative">
-      <div className="w-[90%] h-[90%] flex flex-row gap-8 overflow-hidden relative">
+      <div className="w-full h-full p-2 flex flex-row gap-4 overflow-hidden relative">
         {/* Left half: character list */}
-        <div className="w-1/2 flex flex-col border-4 border-[#333d02]">
-          <h2 className="text-center text-[#333d02] my-4 text-xl uppercase">
+        <div className="w-1/2 flex flex-col border-2 border-[#333d02]">
+          <h2 className="text-center text-[#333d02] my-2 text-[12px] uppercase">
             Character Select
           </h2>
           {/* The scrollable list container */}
-          <div className="flex-1 overflow-hidden px-4">
+          <div className="flex-1 overflow-hidden px-2">
             {currentItems.map((_, idx) => {
               const globalIndex = startIndex + idx;
               return renderCharacterRow(idx, globalIndex);
@@ -258,8 +258,8 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose, onOpenVillagerCrea
         </div>
 
         {/* Right half: sub menu */}
-        <div className="w-1/2 flex flex-col p-4 text-[#333d02] border-4 border-[#333d02]">
-          <h2 className="text-center mb-4 text-xl uppercase">
+        <div className="w-1/2 flex flex-col p-2 text-[#333d02] border-2 border-[#333d02]">
+          <h2 className="text-center mb-1 text-[12px] uppercase">
             Sub Menu
           </h2>
           {subMenuItems.map((item, i) => renderSubMenuItem(item, i))}

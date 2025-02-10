@@ -326,7 +326,7 @@ const CharacterCreation: FC = () => {
 
   function renderTabButtons() {
     return (
-      <div className="flex flex-col p-4 space-y-4">
+      <div className="flex flex-col p-1 space-y-2">
         {TABS.map((tab, idx) => {
           const isSelectedTab = idx === tabIndex;
           const isFocused = paneFocus === 'left' && isSelectedTab;
@@ -339,9 +339,8 @@ const CharacterCreation: FC = () => {
                 setContentIndex(0);
               }}
               className={`
-                text-left px-3 py-1 font-ocra text-sm border-2 rounded-md
-                ${isFocused ? 'border-yellow-400 bg-yellow-300/20' : 'border-transparent bg-gray-700'}
-                ${isSelectedTab ? 'font-bold text-white' : 'text-gray-300'}
+                text-left p-1 font-ocra text-[10px] text-[#333d02] border-2 uppercase border-[#333d02]
+                ${isFocused ? 'border-yellow-400 bg-yellow-300/20' : 'border-2 '}
               `}
             >
               {tab}
@@ -363,13 +362,13 @@ const CharacterCreation: FC = () => {
         : 'grid grid-cols-1 gap-2';
 
     return (
-      <div className="flex flex-col w-full p-4 space-y-2 overflow-y-auto h-full">
-        <h2 className="font-ocra text-xl text-white mb-2">
+      <div className="flex flex-col w-full p-2 space-y-1 overflow-y-auto h-full">
+        <h2 className="font-ocra text-[14px] uppercase leading-none text-[#333d02]">
           {activeTab}
         </h2>
 
         {activeTab === 'Traits' && (
-          <div className="mb-2 text-white text-sm">
+          <div className="mb-1 leading-none text-[#333d02] text-[12px] uppercase">
             Selected {formData.selectedTraits.length} / {MAX_TRAITS}
           </div>
         )}
@@ -397,8 +396,8 @@ const CharacterCreation: FC = () => {
                   handleSelectItem(i);
                 }}
                 className={`
-                  w-full px-2 py-1 text-left text-sm rounded-md border-2
-                  ${isFocused ? 'border-yellow-400 bg-yellow-300/20' : 'border-transparent bg-gray-700/20'}
+                  w-full p-1 text-left text-[9px] text-[#333d02] uppercase border-2
+                  ${isFocused ? 'border-yellow-400 bg-yellow-300/20' : 'border-[#333d02]'}
                   flex items-center justify-between
                   ${selected ? 'bg-green-600/50' : ''}
                 `}
@@ -416,7 +415,7 @@ const CharacterCreation: FC = () => {
             onChange={(e) => handleCustomBackstoryChange(e.target.value)}
             placeholder="Write your custom backstory..."
             className="mt-2 border border-gray-700 rounded-lg p-2 w-full h-24
-                       bg-gray-800 text-white text-sm focus:outline-none focus:ring
+                       bg-gray-800 text-[#333d02] text-sm focus:outline-none focus:ring
                        focus:ring-yellow-500"
           />
         )}
@@ -427,7 +426,7 @@ const CharacterCreation: FC = () => {
             value={formData.motivation}
             onChange={(e) => handleMotivationInput(e.target.value)}
             placeholder="Enter your custom motivation..."
-            className="mt-2 border border-gray-700 rounded p-2 bg-gray-800 text-white
+            className="mt-2 border border-gray-700 rounded p-2 bg-gray-800 text-[#333d02]
                        text-sm focus:outline-none focus:ring focus:ring-yellow-500"
           />
         )}
@@ -438,11 +437,11 @@ const CharacterCreation: FC = () => {
   return (
     <div className="w-full h-full bg-[#697c01] flex items-center justify-center">
       <div 
-        className="w-11/12 h-5/6 max-w-4xl border-4 border-[#333d02] bg-[#697c01] flex flex-row overflow-hidden"
+        className="w-11/12 h-5/6 max-w-4xl border-2 border-[#333d02] bg-[#697c01] flex flex-row overflow-hidden"
       >
         {/* Left Pane: Tab list */}
-        <div className="w-1/3 h-full border-r-4 border-[#333d02] flex flex-col">
-          <h2 className="font-[MekMono] text-center text-[#333d02] mt-2 mb-2 text-xl uppercase">
+        <div className="w-1/3 h-full border-r-2 border-[#333d02] flex flex-col">
+          <h2 className="font-[MekMono] text-center text-[#333d02] mt-2 text-[14px] leading-none uppercase">
             Character Creation
           </h2>
           {renderTabButtons()}
@@ -451,15 +450,15 @@ const CharacterCreation: FC = () => {
         {/* Right Pane: Content */}
         <div className="flex flex-col w-2/3 h-full">
           {selectedCharacter && (
-            <div className="text-center text-[#333d02] py-2 border-b-4 border-[#333d02]">
+            <div className="text-center text-[#333d02] py-2 border-b-2 border-[#333d02]">
               {selectedCharacter.image && (
                 <img
                   src={selectedCharacter.image}
                   alt={selectedCharacter.name}
-                  className="mx-auto w-16 h-16 border-4 border-[#333d02] object-cover rounded-full mb-2"
+                  className="mx-auto w-10 h-10 border-2 border-[#333d02] object-cover rounded-full mb-2"
                 />
               )}
-              <h2 className="font-[MekMono] text-lg uppercase">
+              <h2 className="font-[MekMono] text-[14px] uppercase">
                 {selectedCharacter.name || 'Unnamed Hero'}
               </h2>
             </div>
@@ -469,10 +468,10 @@ const CharacterCreation: FC = () => {
             {renderTabContent()}
           </div>
 
-          <div className="p-3 border-t-4 border-[#333d02] flex justify-center">
+          <div className="p-1 border-t-2 border-[#333d02] flex justify-center">
             <button
               onClick={handlePressE}
-              className="border-4 border-[#333d02] text-[#333d02] font-[MekMono] uppercase text-md px-6 py-2 hover:bg-yellow-400/30"
+              className="border-2 border-[#333d02] text-[#333d02] font-[MekMono] uppercase text-[12px] px-2 py-1  hover:bg-yellow-400/30"
             >
               {tabIndex < TABS.length - 1 ? 'Next (E)' : 'Finalize (E)'}
             </button>

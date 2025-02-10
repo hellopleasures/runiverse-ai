@@ -1,8 +1,9 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect, useRef } from 'react';
 import { useGlobalControls } from '../hooks/useGlobalControls';
 
 const Mint: FC = () => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const menuItems = [
     { 
@@ -62,6 +63,19 @@ const Mint: FC = () => {
 
   ];
 
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (container && container.children[0]) {
+      const selectedElement = container.children[0].children[selectedIndex];
+      if (selectedElement) {
+        selectedElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest'
+        });
+      }
+    }
+  }, [selectedIndex]);
+
   useGlobalControls({
     onUp: () => {
       setSelectedIndex(prev => Math.max(0, prev - 1));
@@ -75,31 +89,43 @@ const Mint: FC = () => {
   });
 
   return (
-    <div className="h-full flex flex-col bg-[#697c01] flex items-center justify-center">
-      <h1 className="text-2xl font-bold text-[#333d02] uppercase p-2">Community Collection</h1>
-      <div className="grid grid-cols-2 gap-4 overflow-y-auto">
-        {menuItems.map((item, index) => (
-          <div
-            key={index}
-            className={`
-              flex flex-col w-full h-full transition-colors flex items-center cursor-pointer p-4 gap-2 
-              ${selectedIndex === index ? 'border-4 border-yellow-400 bg- yellow-300/20' : '  bg-yellow-300/20'}
-            `}
-            onClick={() => window.location.href = item.link}
-          >
-            <div className="w-24 h-24">
-              <img 
-                src={item.image} 
-                alt={item.title}
-                className="w-full h-full object-cover rounded-md"
-              />
+    <div className="h-full flex flex-col bg-[#697c01] items-center p-2 overflow-y-auto scrollbar-hide">
+      <h1 className="text-[22px] font-['MekMono'] text-[#333d02] uppercase  border-[#333d02] w-full text-center">
+        Community Collection
+      </h1>
+      <div 
+        ref={scrollContainerRef}
+        className="flex-1 w-full "
+      >
+        <div className="grid grid-cols-2 gap-2 p-2">
+          {menuItems.map((item, index) => (
+            <div
+              key={index}
+              className={`
+                group flex flex-col items-center cursor-pointer p-2
+                transition-all duration-150 hover:border-yellow-400
+                ${selectedIndex === index ? 'border-yellow-400 border-2 bg-yellow-300/20' : 'bg-yellow-300/10 border-yellow-300'}
+              `}
+              onClick={() => (window.location.href = item.link)}
+            >
+              <div className="w-20 h-20 mb-1 rounded-sm">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="w-full text-center">
+                <span className="block font-['MekMono'] text-[14px] text-[#333d02] uppercase leading-none tracking-tighter">
+                  {item.title}
+                </span>
+                <span className="block font-['MekMono'] text-[14px] text-[#333d02] uppercase mt-1 leading-none tracking-tighter">
+                  {item.description}
+                </span>
+              </div>
             </div>
-            <div className="flex flex-col flex-1">
-              <span className="text-[#333d02] text-center font-['MekMono'] text-xl tracking-tighter uppercase leading-none font-medium">{item.title}</span>
-              <span className="text-[#333d02] text-center  text-sm truncate  text-lg tracking-tighter uppercase font-['MekMono']">{item.description}</span>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

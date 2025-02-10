@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { useGlobalControls } from '../hooks/useGlobalControls';
 
 type VillagerAssets = {
@@ -60,6 +60,9 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
    */
   const [filteredHeads, setFilteredHeads] = useState<string[]>([]);
   const [filteredEyes, setFilteredEyes] = useState<string[]>([]);
+
+  // Add this ref for the scroll container
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // on mount, fetch the villager assets
   useEffect(() => {
@@ -236,24 +239,44 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
     },
   });
 
+  // Add this effect to handle scroll position
+  useEffect(() => {
+    if (containerRef.current) {
+      const children = containerRef.current.children;
+      if (selectedCategoryIndex < children.length) {
+        const child = children[selectedCategoryIndex] as HTMLElement;
+        child.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+        });
+      }
+    }
+  }, [selectedCategoryIndex]);
+
   // Render logic
   return (
-    <div className="p-4 bg-gray-900 min-h-screen flex flex-col items-center relative">
+    <div className="p-4 bg-[#697c01] min-h-screen flex flex-col items-center relative">
       {onClose && (
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 z-10 text-white bg-red-600 px-2 py-1 rounded"
+          className="absolute top-2 right-2 z-10 text-white border-2 border-[#333d02] bg-red-500 uppercase text-[12px] py-1 px-2"
         >
-          Close
+          X
         </button>
       )}
+        <button
+          onClick={saveVillager}
+          className="absolute top-2 left-2 z-10 text-white border-2 border-[#333d02] bg-green-500 uppercase text-[12px] py-1 px-2"
+        >
+          O
+        </button>
 
-      <h1 className="text-3xl font-bold text-white mb-8">Villager Creator</h1>
+      <h1 className="text-[24px] text-[#333d02] uppercase font-['MekMono'] font-bold">Villager Creator</h1>
 
       {/* Character Preview */}
       <div
-        className="character-preview relative w-72 h-72 mx-auto bg-white border border-gray-700 rounded-lg"
-        style={{ width: '300px', height: '300px' }}
+        className="character-preview relative w-52 h-52 mx-auto bg-white border border-gray-700"
+        style={{ width: '120px', height: '120px' }}
       >
         <img src={selectedParts.background} alt="background" className="absolute w-full h-full object-contain" />
         <img src={selectedParts.bottoms} alt="bottoms" className="absolute w-full h-full object-contain" />
@@ -265,27 +288,30 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
       </div>
 
       {/* Category List + Buttons */}
-      <div className="selectors flex flex-col items-center mt-4 space-y-2">
+      <div 
+        ref={containerRef}
+        className="selectors grid grid-cols-2 items-center mt-2 space-2 gap-1 h-[80px] overflow-y-auto no-scrollbar"
+      >
         {visibleCategories.map((cat, idx) => {
           // highlight if idx === selectedCategoryIndex
           const isSelected = idx === selectedCategoryIndex;
           return (
             <div
               key={cat}
-              className={`selector flex items-center justify-between w-64 my-1 ${
+              className={`selector flex items-center border-2 border-[#333d02] justify-between w-full  p-0.5 text-[12px] uppercase font-['MekMono'] ${
                 isSelected ? 'bg-gray-700' : ''
               }`}
             >
               <button
                 onClick={() => cycleCategory(cat, -1)}
-                className="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-500"
+                className="px-2 py-1 border-2 border-[#697c01] text-white"
               >
                 ◀
               </button>
               <span className="mx-2 text-white uppercase">{cat}</span>
               <button
                 onClick={() => cycleCategory(cat, 1)}
-                className="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-500"
+                className="px-2 py-1   text-white border-2 border-[#697c01]"
               >
                 ▶
               </button>
@@ -295,16 +321,16 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
       </div>
 
       {/* Skin Tones */}
-      <div className="skin-tone-selector flex justify-center mt-4 space-x-2">
-        <label className="text-white mr-2">Skin Tone: </label>
+      <div className="skin-tone-selector flex justify-center items-center mt-4 space-x-2">
+        <label className="text-[#333d02] text-[12px] mr-2 uppercase font-['MekMono']">Skin Tone: </label>
         {['dark', 'odd', 'med', 'light'].map((tone) => (
           <button
             key={tone}
             onClick={() => setSkinTone(tone)}
-            className={`px-3 py-1 rounded ${
+            className={`px-3 py-1 text-[12px] uppercase font-['MekMono'] text-[#333d02] ${
               skinTone === tone
                 ? 'bg-blue-600 text-white'
-                : 'bg-gray-700 text-white hover:bg-gray-600'
+                : 'border-2 border-[#333d02]'
             }`}
           >
             {tone}
@@ -313,16 +339,16 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
       </div>
 
       {/* Eye Colors */}
-      <div className="skin-tone-selector flex justify-center mt-4 space-x-2">
-        <label className="text-white mr-2">Eye Color: </label>
+      <div className="skin-tone-selector flex justify-center items-center mt-4 space-x-2">
+      <label className="text-[#333d02] text-[12px] mr-2 uppercase font-['MekMono']">Eye Color: </label>
         {['blue', 'green', 'brown'].map((color) => (
           <button
             key={color}
             onClick={() => setEyeColor(color)}
-            className={`px-3 py-1 rounded ${
+            className={`px-3 py-1 text-[12px] uppercase font-['MekMono'] text-[#333d02] ${
               eyeColor === color
                 ? 'bg-blue-600 text-white'
-                : 'bg-gray-700 text-white hover:bg-gray-600'
+                : 'border-2 border-[#333d02]'
             }`}
           >
             {color}
@@ -330,14 +356,7 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
         ))}
       </div>
 
-      <div className="flex justify-center mt-4">
-        <button
-          onClick={saveVillager}
-          className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-500"
-        >
-          Save Villager
-        </button>
-      </div>
+      
     </div>
   );
-}
+} 

@@ -149,7 +149,7 @@ export default function RuniverseMap({
 
       {/* Player */}
       <div
-        className="absolute bg-red-500 z-10"
+        className="absolute border-yellow-600 border-2 bg-[#697c01]/50 z-10"
         style={{
           top: playerRenderY,
           left: playerRenderX,
@@ -159,7 +159,7 @@ export default function RuniverseMap({
       />
 
       {/* Tile info overlay */}
-      <div className="absolute top-2 right-2 w-[180px] max-h-[50%] bg-black text-white p-2 z-50 text-xs overflow-y-auto border border-neutral-600 rounded">
+      <div className="absolute bg-[#697c01] top-2 right-2 w-[180px] max-h-[50%] text-white p-2 z-50 text-xs overflow-y-auto border-2 border-yellow-300/40">
         <h3 className="m-0 mb-1.5">Current Tile</h3>
         <p className="m-0">
           <strong>Coords:</strong> ({playerPos.x}, {playerPos.y})

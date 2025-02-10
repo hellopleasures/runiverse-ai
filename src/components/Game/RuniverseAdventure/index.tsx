@@ -296,68 +296,76 @@ const RuniverseAdventure: React.FC = () => {
   };
 
   return (
-    <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-start text-white overflow-y-auto">
-      <h1 className="font-atirose uppercase text-4xl font-bold mt-2 tracking-wide text-center">
-        Runiverse Adventure
-      </h1>
+    <div className="w-full h-full bg-[#697c01] flex items-center justify-center">
+      <div className="w-11/12 h-5/6 max-w-4xl border-2 border-[#333d02] bg-[#697c01] flex flex-col overflow-hidden">
+        <h1 className="font-[MekMono] text-center text-[#333d02] mt-2 text-[22px] leading-none uppercase">
+          Runiverse Adventure
+        </h1>
 
-      {!selectedCharacter && <CharacterCreation />}
+        {!selectedCharacter && <CharacterCreation />}
 
-      {selectedCharacter && !adventure && (
-        <div className="flex flex-col items-center gap-3 my-4">
-          <h2 className="font-vcr text-2xl text-center font-semibold">Selected Character</h2>
-          <div className="flex flex-col items-center">
-            <img
-              src={selectedCharacter.image}
-              alt={selectedCharacter.name}
-              className="w-16 h-16 rounded-full mb-2"
-            />
-            <span className="font-vcr text-2xl">{selectedCharacter.name}</span>
-          </div>
+        {selectedCharacter && !adventure && (
+          <div className="flex flex-col items-center gap-1">
+            <div className="text-center text-[#333d02] py-2">
+              <h2 className="font-[MekMono] text-[14px] uppercase mb-1">Selected Character</h2>
+              <img
+                src={selectedCharacter.image}
+                alt={selectedCharacter.name}
+                className="mx-auto w-16 h-16 border-2 border-[#333d02] object-cover rounded-full mb-1"
+              />
+              <span className="font-[MekMono] text-[14px] uppercase">
+                {selectedCharacter.name}
+              </span>
+            </div>
 
-          <div className="flex flex-col items-center w-[300px] mt-4">
-            <h2 className="font-upheav tracking-wide text-2xl font-semibold mb-2">Select a Story</h2>
-            <select
-              value={selectedStory}
-              onChange={(e) => setSelectedStory(e.target.value)}
-              className="w-full p-2 rounded text-black font-vcr text-lg"
+            <div className="w-full px-4">
+              <h2 className="font-[MekMono] text-[14px] text-center uppercase text-[#333d02] mb-1">
+                Select a Story
+              </h2>
+              <select
+                value={selectedStory}
+                onChange={(e) => setSelectedStory(e.target.value)}
+                className="w-full p-2 border-2 border-[#333d02] text-[#333d02] font-ocra text-[10px] uppercase bg-transparent"
+              >
+                <option value="">Select a story</option>
+                {Array.isArray(stories) && stories.length > 0 ? (
+                  stories.map((story) => (
+                    <option key={story.id} value={story.id}>{story.title || `Story ${story.id}`}</option>
+                  ))
+                ) : (
+                  <option disabled>No stories available</option>
+                )}
+              </select>
+            </div>
+
+            <button
+              onClick={handleStartAdventure}
+              disabled={!selectedCharacter || !selectedStory || loading}
+              className="border-2 border-[#333d02] text-[#333d02] font-[MekMono] uppercase text-[12px] px-2 py-1 mt-1 hover:bg-yellow-400/30"
             >
-              <option value="">Select a story</option>
-              {Array.isArray(stories) && stories.length > 0 ? (
-                stories.map((story) => (
-                  <option key={story.id} value={story.id}>{story.title || `Story ${story.id}`}</option>
-                ))
-              ) : (
-                <option disabled>No stories available</option>
-              )}
-            </select>
+              {loading ? 'Starting...' : 'Start Adventure'}
+            </button>
           </div>
+        )}
 
-          <button
-            onClick={handleStartAdventure}
-            disabled={!selectedCharacter || !selectedStory || loading}
-            className={styles.pixels_button + " mt-4"}
-          >
-            {loading ? 'Starting...' : 'Start Adventure'}
-          </button>
-        </div>
-      )}
+        {error && (
+          <div className="text-[#333d02] uppercase font-ocra text-[12px] p-2 text-center">
+            {error}
+          </div>
+        )}
 
-      {error && (
-        <div className="text-red-500 font-vcr mt-4">
-          {error}
-        </div>
-      )}
-
-      {adventure && (
-        <GameInterface
-          storyText={gameState.storyText}
-          options={gameState.options}
-          continueAvailable={true}
-          onOptionClick={handleOptionClick}
-          onContinue={handleContinueAdventure}
-        />
-      )}
+        {adventure && (
+          <div className="flex-1 overflow-hidden">
+            <GameInterface
+              storyText={gameState.storyText}
+              options={gameState.options}
+              continueAvailable={true}
+              onOptionClick={handleOptionClick}
+              onContinue={handleContinueAdventure}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
