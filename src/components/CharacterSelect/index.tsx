@@ -5,7 +5,8 @@ import React, {
   useCallback,
   KeyboardEvent,
 } from 'react';
-import { useCharacter } from '../../context/CharacterContext';
+import { useCharacter } from '../../context/CharacterContext.tsx'; 
+// ^^^ FIXED: path appended '.tsx'
 import { useGlobalControls } from '../../hooks/useGlobalControls';
 import { FaAngleDown } from "react-icons/fa";
 
@@ -49,7 +50,6 @@ interface CharacterData {
   contract: string;
 }
 
-// We'll keep subMenuItems but replace "Villager Creator" usage
 const subMenuItems = [
   'Villager Creator',
   'Items',
@@ -61,9 +61,17 @@ const subMenuItems = [
 
 type PaneFocus = 'left' | 'right';
 
-interface CharacterSelectProps {
+export interface CharacterSelectProps {
   onClose: () => void;
   onOpenVillagerCreator?: () => void;
+  id?: string;
+  contract?: string;
+  onSelect?: (character: { id: string; contract: string }) => void;
+  isSelected?: boolean;
+  className?: string;
+}
+
+interface CharacterSelectPropsInternal extends CharacterSelectProps {
 }
 
 const CHARACTERS: CharacterData[] = [
@@ -80,7 +88,7 @@ const CHARACTERS: CharacterData[] = [
   { id: '106', contract: WIZARD_CONTRACT },
 ];
 
-const CharacterSelect: FC<CharacterSelectProps> = ({ onClose, onOpenVillagerCreator }) => {
+const CharacterSelect: FC<CharacterSelectPropsInternal> = ({ onClose, onOpenVillagerCreator }) => {
   const { setSelectedCharacter, selectedCharacter } = useCharacter();
   const [paneFocus, setPaneFocus] = useState<PaneFocus>('left');
   const [leftIndex, setLeftIndex] = useState(0);
@@ -127,12 +135,10 @@ const CharacterSelect: FC<CharacterSelectProps> = ({ onClose, onOpenVillagerCrea
         } else if (key === ' ' || key === 'enter') {
           const selected = subMenuItems[rightIndex];
           if (selected === 'Villager Creator') {
-            // Instead of router.push, call our callback to open overlay
             if (onOpenVillagerCreator) {
               onOpenVillagerCreator();
             }
           } else if (selected === 'Store') {
-            // We'll keep store as router push if needed, or do something else
             window.location.href = '/store';
           } else if (selected === 'Equip') {
             window.location.href = '/equip';

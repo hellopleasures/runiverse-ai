@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import CharacterSelect from '../CharacterSelect';
-import { useUserTokens } from '@reservoir0x/reservoir-kit-ui';
-import { useAccount } from 'wagmi';
+import React, { FC, useState } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useCharacter } from '../../context/CharacterContext';
-import styles from "@/app/pixelbutton.module.css"
-import Link from 'next/link'
+import { useCharacter } from '../../context/CharacterContext.tsx'; 
+// ^^^ FIXED: Updated import path to include '.tsx' and correct relative level
 
 enum EquipScreen {
   CharacterSelection,
@@ -14,22 +10,26 @@ enum EquipScreen {
   Portal,
 }
 
-const CONTRACT_TO_COLLECTION_MAP: Record<string, string> = {
-  '0x521f9c7505005cfa19a8e5786a9c3c9c9f5e6f42': 'wizards',
-  '0x4b1e130ae84c97b931ffbe91ead6b1da16993d45': 'babies',
-  '0x9690b63eb85467be5267a3603f770589ab12dc95': 'warriors',
-  '0x251b5f14a825c537ff788604ea1b58e49b70726f': 'souls',
-};
+// A static placeholder array of tokens (removed reservoir kit usage).
+const tokensPlaceholder = [
+  {
+    token: {
+      tokenId: '1234',
+      contract: '0x521f9c7505005cfa19a8e5786a9c3c9c9f5e6f42' // Wizard contract
+    }
+  },
+  {
+    token: {
+      tokenId: '999',
+      contract: '0x9690b63eb85467be5267a3603f770589ab12dc95' // Warrior contract
+    }
+  }
+];
 
-const CharacterMenu: React.FC = () => {
-  const { address: accountAddress } = useAccount();
+const CharacterMenu: FC = () => {
   const { selectedCharacter, setSelectedCharacter } = useCharacter();
   const [equipScreen, setEquipScreen] = useState<EquipScreen>(EquipScreen.CharacterSelection);
   const [showNewButton, setShowNewButton] = useState(false);
-
-  const { data: tokens } = useUserTokens(accountAddress ?? '', {
-    collectionsSetId: 'bf781912648d9b6c1e0148bc991dceefc09f47fc9050ae8421414e8e33077100',
-  });
 
   const handleCharacterSelect = (character: { id: string; contract: string }) => {
     console.log('Character selected:', character);
@@ -43,24 +43,34 @@ const CharacterMenu: React.FC = () => {
 
   const handleNewButtonClick = () => {
     console.log('New button clicked!');
-    // Add your new button functionality here
+    // Additional functionality can be added here if needed
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center mx-auto p-6">
       {equipScreen === EquipScreen.CharacterSelection && (
-        <div className="">
-          <h2 className="text-5xl font-bold text-white text-center mb-8 font-atirose uppercase tracking-wide mt-10">Choose your<br/> Adventurer</h2>
+        <div>
+          <h2 className="text-5xl font-bold text-white text-center mb-8 font-atirose uppercase tracking-wide mt-10">
+            Choose your
+            <br />
+            Adventurer
+          </h2>
           <div className="py-6 flex justify-center flex-row flex-wrap gap-3">
-            {tokens?.map((token, i) => (
-              <CharacterSelect
-                id={token?.token?.tokenId ?? ''}
-                contract={token?.token?.contract ?? ''}
+            {tokensPlaceholder.map((token, i) => (
+              <div
                 key={i}
-                onSelect={handleCharacterSelect}
-                isSelected={selectedCharacter?.id === token?.token?.tokenId}
-                className={`cursor-pointer transition-transform transform hover:scale-105`}
-              />
+                className="cursor-pointer transition-transform transform hover:scale-105"
+                onClick={() => handleCharacterSelect({
+                  id: token?.token?.tokenId ?? '',
+                  contract: token?.token?.contract ?? '',
+                })}
+              >
+                {/* Placeholder for each character card */}
+                <div className="text-white">
+                  {`ID: ${token?.token?.tokenId ?? ''}`}
+                  {` - Contract: ${token?.token?.contract ?? ''}`}
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -68,7 +78,7 @@ const CharacterMenu: React.FC = () => {
 
       <div className="mt-8 text-center space-y-4">
         <ConnectButton.Custom>
-          {({ account, chain, openChainModal, openConnectModal, mounted }) => {
+          {({ account, chain, openChainModal, openConnectModal, openAccountModal, mounted }) => {
             const ready = mounted && 'loading';
             const connected = ready && account && chain && 'authenticated';
 
@@ -126,30 +136,30 @@ const CharacterMenu: React.FC = () => {
 
         {showNewButton && (
           <div className="flex gap-3">
-            <Link href="/trainer">
-            <button
-              onClick={handleNewButtonClick}
-              className="text-md text-black font-ocra uppercase py-2 px-4 rounded-xl bg-yellow hover:bg-blue-600 transition-colors"
-            >
-              Agent Trainer
-            </button>
-          </Link>
-          <Link href="/char_creation">
-            <button
-              onClick={handleNewButtonClick}
-              className="text-md text-black font-ocra uppercase py-2 px-4 rounded-xl bg-yellow hover:bg-blue-600 transition-colors"
-            >
-             Character Editor
-            </button>
-          </Link>
-           <Link href="/game">
-            <button
-              onClick={handleNewButtonClick}
-              className="text-md text-black font-ocra uppercase py-2 px-4 rounded-xl bg-yellow hover:bg-blue-600 transition-colors"
-            >
-              Play The Game
-            </button>
-          </Link>
+            <a href="/trainer">
+              <button
+                onClick={handleNewButtonClick}
+                className="text-md text-black font-ocra uppercase py-2 px-4 rounded-xl bg-yellow hover:bg-blue-600 transition-colors"
+              >
+                Agent Trainer
+              </button>
+            </a>
+            <a href="/char_creation">
+              <button
+                onClick={handleNewButtonClick}
+                className="text-md text-black font-ocra uppercase py-2 px-4 rounded-xl bg-yellow hover:bg-blue-600 transition-colors"
+              >
+                Character Editor
+              </button>
+            </a>
+            <a href="/game">
+              <button
+                onClick={handleNewButtonClick}
+                className="text-md text-black font-ocra uppercase py-2 px-4 rounded-xl bg-yellow hover:bg-blue-600 transition-colors"
+              >
+                Play The Game
+              </button>
+            </a>
           </div>
         )}
       </div>

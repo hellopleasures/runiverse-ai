@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createCanvas, loadImage } from 'canvas';
-import { getCharacterType } from '@/utils/contractTypes';
+import { getCharacterType } from '../../../../utils/contractTypes';
 import path from 'path';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

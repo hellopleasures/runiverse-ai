@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CharacterPreview from '../Shop/CharacterPreview';
-import { useCharacter } from '@/context/CharacterContext';
+import { useCharacter } from '../../../context/CharacterContext.tsx';
 import { Tab } from '@headlessui/react';
 
 // Update categories to match Store

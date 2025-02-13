@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import fs from 'fs';
 import path from 'path';
 import { IncomingForm } from 'formidable';
-import { getCharacterType } from '@/utils/contractTypes';
+import { getCharacterType } from '../../../../utils/contractTypes';
 
 export const config = {
   api: {

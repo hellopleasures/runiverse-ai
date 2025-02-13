@@ -1,485 +1,367 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   useState,
   useEffect,
-  FC
+  useMemo,
+  useRef
 } from 'react';
-import { useCharacter } from '../../context/CharacterContext';
 import { useGlobalControls } from '../../hooks/useGlobalControls';
+import { useCharacter } from '../../context/CharacterContext.tsx'; 
+// ^^^ FIXED: Updated path to '.tsx'
 
-type FormData = {
-  selectedTraits: string[];
-  selectedBackstory: string;
-  customBackstory: string;
-  motivation: string;
-  selectedSkills: string[];
+type VillagerAssets = {
+  background?: string[];
+  bottoms?: string[];
+  tops?: string[];
+  hair?: string[];
+  facial_hair?: string[];
+  heads?: string[];
+  eyes?: string[];
+  [key: string]: string[] | undefined;
 };
 
-const TRAIT_OPTIONS = [
-  'Brave', 'Cunning', 'Wise', 'Devout', 'Chaotic', 'Kind',
-  'Noble', 'Savage', 'Stoic', 'Wanderer', 'Merciful', 'Furious',
-  'Ambitious', 'Loyal', 'Mischievous', 'Heroic'
+interface VillagerCreatorProps {
+  onClose?: () => void;
+}
+
+interface CurrentIndexes {
+  [key: string]: number;
+}
+
+interface SelectedParts {
+  [key: string]: string;
+}
+
+/**
+ * This array defines the categories we can cycle through with up/down WASD,
+ * in the order they appear on screen.
+ */
+const CATEGORY_ORDER = [
+  'background',
+  'bottoms',
+  'tops',
+  'hair',
+  'facial_hair',
+  'head',
+  'eyes',
 ];
 
-const BACKSTORY_OPTIONS = [
-  'Grew up in a small farming village, discovered ancient ruins nearby',
-  'Orphaned by a dragon attack, vowed revenge',
-  'Son of a blacksmith who forged legendary blades',
-  'Raised by traveling merchants, accustomed to trade routes',
-  'Exiled noble who lost their birthright',
-  'Apprentice to a powerful wizard, parted ways after a feud',
-  'Part of a secret order that guards hidden artifacts',
-  'Survivor of a cataclysmic event, seeking answers',
-  'Runaway aristocrat disguised as a commoner',
-  'Cursed by an unknown entity, searching for redemption',
-  'custom'
-];
+export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
+  // basic state
+  const [skinTone, setSkinTone] = useState('light');
+  const [eyeColor, setEyeColor] = useState('blue');
 
-const MOTIVATION_PRESETS = [
-  'Wealth and glory',
-  'Knowledge of ancient magic',
-  'Reclaim a lost homeland',
-  'Break a family curse',
-  'Protect the powerless',
-  'Find a legendary artifact',
-  'custom'
-];
+  // loaded assets from /api/villager-assets
+  const [assets, setAssets] = useState<VillagerAssets>({});
 
-const SKILL_OPTIONS = [
-  'Swordsmanship', 'Archery', 'Alchemy', 'Stealth', 'Diplomacy',
-  'Arcana', 'Smithing', 'Bardic Performance', 'Herbalism', 'Riding',
-  'Navigation', 'Lockpicking', 'Enchanting', 'Brewing'
-];
+  // track the currently selected category for WASD up/down
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
 
-type TabType = 'Traits' | 'Backstory' | 'Motivation' | 'Skills';
-const TABS: TabType[] = ['Traits', 'Backstory', 'Motivation', 'Skills'];
+  // store the current asset index for each category
+  const [currentIndexes, setCurrentIndexes] = useState<CurrentIndexes>({});
+  // store the actual chosen (displayed) part for each category
+  const [selectedParts, setSelectedParts] = useState<SelectedParts>({});
 
-const MAX_TRAITS = 10;
+  /**
+   * We also keep track of "filteredHeads" so we only cycle through heads that match the current skin tone.
+   * Similarly for "filteredEyes", we only cycle eyes that match the current head # and eyeColor.
+   */
+  const [filteredHeads, setFilteredHeads] = useState<string[]>([]);
+  const [filteredEyes, setFilteredEyes] = useState<string[]>([]);
 
-const CharacterCreation: FC = () => {
-  const { selectedCharacter, updateCharacterAttributes, updateConsciousId } = useCharacter();
-  const [tabIndex, setTabIndex] = useState<number>(0);
-  const [paneFocus, setPaneFocus] = useState<'left' | 'right'>('left');
-  const [contentIndex, setContentIndex] = useState<number>(0);
+  // Add this ref for the scroll container
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const [formData, setFormData] = useState<FormData>({
-    selectedTraits: [],
-    selectedBackstory: '',
-    customBackstory: '',
-    motivation: '',
-    selectedSkills: []
-  });
-
+  // on mount, fetch the villager assets
   useEffect(() => {
-    if (!selectedCharacter?.attributes) return;
+    async function fetchAssets() {
+      try {
+        const res = await fetch('/api/villager-assets');
+        const data: VillagerAssets = await res.json();
+        // set them
+        setAssets(data);
 
-    const getValue = (key: string) => {
-      if (!selectedCharacter?.attributes) return '';
-      const found = selectedCharacter.attributes.find(attr => attr.trait_type === key);
-      return found?.value || '';
-    };
+        // init indexes for each category to 0
+        const initIndexes: CurrentIndexes = {};
+        CATEGORY_ORDER.forEach((cat) => { initIndexes[cat] = 0; });
+        setCurrentIndexes(initIndexes);
 
-    const existingTraits = getValue('traits');
-    const existingBackstory = getValue('backstory');
-    const existingMotivation = getValue('motivation');
-    const existingSkills = getValue('skills');
+        // pick the first item for each category if available
+        const initParts: SelectedParts = {};
+        for (const cat of CATEGORY_ORDER) {
+          const arr = data[cat];
+          if (arr && arr.length > 0) initParts[cat] = arr[0];
+          else initParts[cat] = '';
+        }
+        setSelectedParts(initParts);
+      } catch (err) {
+        console.error('Error fetching villager assets:', err);
+      }
+    }
 
-    setFormData({
-      selectedTraits:
-        typeof existingTraits === 'string' && existingTraits
-          ? existingTraits.split(',')
-          : [],
-      selectedBackstory:
-        typeof existingBackstory === 'string' ? existingBackstory : '',
-      customBackstory: '',
-      motivation:
-        typeof existingMotivation === 'string' ? existingMotivation : '',
-      selectedSkills:
-        typeof existingSkills === 'string' && existingSkills
-          ? existingSkills.split(',')
-          : []
-    });
-  }, [selectedCharacter]);
+    fetchAssets();
+  }, []);
 
+  /**
+   * filter heads by the chosen skinTone, e.g. head_1_light.png or so.
+   */
   useEffect(() => {
-    const finalTraits = formData.selectedTraits.join(',');
-    const finalBackstory =
-      formData.selectedBackstory === 'custom'
-        ? formData.customBackstory
-        : formData.selectedBackstory;
-    const finalMotivation = formData.motivation;
-    const finalSkills = formData.selectedSkills.join(',');
-
-    const newAttributes = [
-      { trait_type: 'traits', value: finalTraits, filename: null },
-      { trait_type: 'backstory', value: finalBackstory, filename: null },
-      { trait_type: 'motivation', value: finalMotivation, filename: null },
-      { trait_type: 'skills', value: finalSkills, filename: null }
-    ];
-    updateCharacterAttributes(newAttributes);
-  }, [
-    formData,
-    updateCharacterAttributes
-  ]);
-
-  function getTabData(): string[] {
-    switch (TABS[tabIndex]) {
-      case 'Traits': return TRAIT_OPTIONS;
-      case 'Backstory': return BACKSTORY_OPTIONS;
-      case 'Motivation': return MOTIVATION_PRESETS;
-      case 'Skills': return SKILL_OPTIONS;
-      default: return [];
+    if (!assets.heads || assets.heads.length === 0) {
+      setFilteredHeads([]);
+      return;
     }
-  }
+    // filter for those that have `_${skinTone}.`
+    const headsForTone = assets.heads.filter((h: string) =>
+      h.toLowerCase().includes(`_${skinTone}.`)
+    );
+    setFilteredHeads(headsForTone);
+  }, [assets.heads, skinTone]);
 
-  function isCustomOptionSelected(): boolean {
-    const activeTab = TABS[tabIndex];
-    if (activeTab === 'Backstory' && formData.selectedBackstory === 'custom') {
-      return true;
+  /**
+   * Once we pick a head, we look for eyes that match that head number plus the eyeColor.
+   * We'll store them in filteredEyes, so we only cycle among those that match.
+   */
+  useEffect(() => {
+    if (!assets.eyes || assets.eyes.length === 0) {
+      setFilteredEyes([]);
+      return;
     }
-    if (
-      activeTab === 'Motivation' &&
-      !!formData.motivation &&
-      !MOTIVATION_PRESETS.includes(formData.motivation)
-    ) {
-      return true;
+    const currentHead = selectedParts.head;
+    if (!currentHead) {
+      setFilteredEyes([]);
+      return;
     }
-    return false;
-  }
-
-  function handleToggleTrait(trait: string) {
-    setFormData(prev => {
-      const inList = prev.selectedTraits.includes(trait);
-      if (inList) {
-        return {
-          ...prev,
-          selectedTraits: prev.selectedTraits.filter(t => t !== trait)
-        };
-      } else {
-        if (prev.selectedTraits.length >= MAX_TRAITS) {
-          alert(`You have reached the maximum of ${MAX_TRAITS} traits.`);
-          return prev;
-        }
-        return {
-          ...prev,
-          selectedTraits: [...prev.selectedTraits, trait]
-        };
-      }
-    });
-  }
-
-  function handleSelectBackstory(backstory: string) {
-    setFormData(prev => ({
-      ...prev,
-      selectedBackstory: backstory,
-      ...(backstory !== 'custom' ? { customBackstory: '' } : {})
-    }));
-  }
-
-  function handleCustomBackstoryChange(value: string) {
-    setFormData(prev => ({
-      ...prev,
-      customBackstory: value,
-      selectedBackstory: 'custom'
-    }));
-  }
-
-  function handleSelectMotivation(motivation: string) {
-    setFormData(prev => ({
-      ...prev,
-      motivation
-    }));
-  }
-
-  function handleMotivationInput(value: string) {
-    setFormData(prev => ({
-      ...prev,
-      motivation: value
-    }));
-  }
-
-  function handleToggleSkill(skill: string) {
-    setFormData(prev => {
-      const inList = prev.selectedSkills.includes(skill);
-      if (inList) {
-        return {
-          ...prev,
-          selectedSkills: prev.selectedSkills.filter(s => s !== skill)
-        };
-      } else {
-        if (prev.selectedSkills.length >= 5) {
-          alert('You can select up to 5 skills.');
-          return prev;
-        }
-        return {
-          ...prev,
-          selectedSkills: [...prev.selectedSkills, skill]
-        };
-      }
-    });
-  }
-
-  function handleSelectItem(index: number) {
-    const tab = TABS[tabIndex];
-    const data = getTabData();
-    const item = data[index] || '';
-    switch (tab) {
-      case 'Traits':
-        handleToggleTrait(item);
-        break;
-      case 'Backstory':
-        handleSelectBackstory(item);
-        break;
-      case 'Motivation':
-        handleSelectMotivation(item);
-        break;
-      case 'Skills':
-        handleToggleSkill(item);
-        break;
-    }
-  }
-
-  async function handleCreateCharacter() {
-    try {
-      const response = await fetch('/api/consciousnft/character', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: selectedCharacter?.name,
-          backstory:
-            formData.selectedBackstory === 'custom'
-              ? formData.customBackstory
-              : formData.selectedBackstory,
-          motivation: formData.motivation
-        })
-      });
-
-      const responseText = await response.text();
-      if (!response.ok) {
-        throw new Error(`Server error: ${response.status} - ${responseText}`);
-      }
-
-      const result = JSON.parse(responseText);
-      if (result.characterId) {
-        updateConsciousId(result.characterId);
-      }
-      alert('Character info submitted!');
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Error submitting character info!');
-    }
-  }
-
-  function handlePressE() {
-    if (tabIndex < TABS.length - 1) {
-      setTabIndex(tabIndex + 1);
-      setPaneFocus('left');
-      setContentIndex(0);
+    // find a pattern like: head_2_light => "2"
+    const match = currentHead.match(/head_(\d+)_/);
+    if (!match) {
+      // no match => can't filter by #, so let's just filter by eyeColor
+      const eyesByColor = assets.eyes.filter((eye: string) =>
+        eye.toLowerCase().includes(`_${eyeColor}.`)
+      );
+      setFilteredEyes(eyesByColor);
     } else {
-      handleCreateCharacter();
+      const headNum = match[1];
+      const eyesMatching = assets.eyes.filter((eye: string) =>
+        eye.toLowerCase().includes(`_${headNum}_`) &&
+        eye.toLowerCase().includes(`_${eyeColor}.`)
+      );
+      setFilteredEyes(eyesMatching);
     }
+  }, [assets.eyes, selectedParts.head, eyeColor]);
+
+  /**
+   * We'll store the "visible categories" in a memo, so that if "head" is not valid or empty, we skip it, etc.
+   * But for now let's assume all categories exist in the UI.
+   */
+  const visibleCategories = useMemo(() => CATEGORY_ORDER, []);
+
+  /**
+   * Re-sync selectedParts.head to the first item in filteredHeads if the user changes skintone or the array changes.
+   */
+  useEffect(() => {
+    // if we have a non-empty array, update the selectedParts with the first item
+    if (filteredHeads.length > 0) {
+      setSelectedParts((prev) => ({ ...prev, head: filteredHeads[0] }));
+      setCurrentIndexes((prev) => ({ ...prev, head: 0 }));
+    } else {
+      setSelectedParts((prev) => ({ ...prev, head: '' }));
+      setCurrentIndexes((prev) => ({ ...prev, head: 0 }));
+    }
+  }, [filteredHeads]);
+
+  /**
+   * Similarly, re-sync selectedParts.eyes when filteredEyes changes
+   */
+  useEffect(() => {
+    if (filteredEyes.length > 0) {
+      setSelectedParts((prev) => ({ ...prev, eyes: filteredEyes[0] }));
+      setCurrentIndexes((prev) => ({ ...prev, eyes: 0 }));
+    } else {
+      setSelectedParts((prev) => ({ ...prev, eyes: '' }));
+      setCurrentIndexes((prev) => ({ ...prev, eyes: 0 }));
+    }
+  }, [filteredEyes]);
+
+  /**
+   * A function that cycles left or right for a given category.
+   * We'll do special logic for 'head' and 'eyes' so we use filteredHeads / filteredEyes if relevant.
+   */
+  function cycleCategory(cat: string, direction: number) {
+    let arr: string[] | undefined = assets[cat];
+    // if it's head, use filteredHeads
+    if (cat === 'head') {
+      arr = filteredHeads;
+    } else if (cat === 'eyes') {
+      arr = filteredEyes;
+    }
+    if (!arr || arr.length === 0) return;
+
+    setCurrentIndexes((prev) => {
+      const length = arr!.length;
+      const newIdx = (prev[cat] + direction + length) % length;
+      return { ...prev, [cat]: newIdx };
+    });
+    setSelectedParts((prevState) => {
+      const length = arr!.length;
+      const newIdx = (currentIndexes[cat] + direction + length) % length;
+      return { ...prevState, [cat]: arr![newIdx] };
+    });
   }
 
+  /**
+   * Save function
+   */
+  function saveVillager() {
+    const metadata = {
+      ...selectedParts,
+      skinTone,
+      eyeColor,
+    };
+    console.log('Villager metadata:', metadata);
+    // TODO: handle your saving logic
+  }
+
+  /**
+   * We define WASD controls:
+   * - Up => selectedCategoryIndex - 1
+   * - Down => selectedCategoryIndex + 1
+   * - Left => cycleCategory(visibleCategories[selectedCategoryIndex], -1)
+   * - Right => cycleCategory(visibleCategories[selectedCategoryIndex], +1)
+   * - Escape => close if onClose
+   */
   useGlobalControls({
-    onEscape: () => {
-      // Possibly close overlay or do nothing
-    },
     onUp: () => {
-      if (paneFocus === 'left') {
-        setTabIndex(prev => Math.max(0, prev - 1));
-      } else {
-        setContentIndex(prev => Math.max(0, prev - 1));
-      }
+      setSelectedCategoryIndex((prev) => (prev - 1 + visibleCategories.length) % visibleCategories.length);
     },
     onDown: () => {
-      if (paneFocus === 'left') {
-        setTabIndex(prev => Math.min(TABS.length - 1, prev + 1));
-      } else {
-        const data = getTabData();
-        setContentIndex(prev => Math.min(data.length - 1, prev + 1));
-      }
+      setSelectedCategoryIndex((prev) => (prev + 1) % visibleCategories.length);
     },
     onLeft: () => {
-      if (paneFocus === 'right') {
-        setPaneFocus('left');
-      }
+      cycleCategory(visibleCategories[selectedCategoryIndex], -1);
     },
     onRight: () => {
-      if (paneFocus === 'left') {
-        setPaneFocus('right');
-      }
+      cycleCategory(visibleCategories[selectedCategoryIndex], 1);
     },
-    onA: () => {
-      if (paneFocus === 'left') {
-        setPaneFocus('right');
-        setContentIndex(0);
-      } else {
-        handleSelectItem(contentIndex);
-      }
+    onEscape: () => {
+      if (onClose) onClose();
     },
-    onB: () => {
-      if (paneFocus === 'right') {
-        setPaneFocus('left');
-      }
-    },
-    onE: handlePressE
   });
 
-  function renderTabButtons() {
-    return (
-      <div className="flex flex-col p-1 space-y-2">
-        {TABS.map((tab, idx) => {
-          const isSelectedTab = idx === tabIndex;
-          const isFocused = paneFocus === 'left' && isSelectedTab;
+  // Add this effect to handle scroll position
+  useEffect(() => {
+    if (containerRef.current) {
+      const children = containerRef.current.children;
+      if (selectedCategoryIndex < children.length) {
+        const child = children[selectedCategoryIndex] as HTMLElement;
+        child.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+        });
+      }
+    }
+  }, [selectedCategoryIndex]);
+
+  // Render logic
+  return (
+    <div className="p-4 bg-[#697c01] min-h-screen flex flex-col items-center relative">
+      {onClose && (
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-2 z-10 text-white border-2 border-[#333d02] bg-red-500 uppercase text-[12px] py-1 px-2"
+        >
+          X
+        </button>
+      )}
+      <button
+        onClick={saveVillager}
+        className="absolute top-2 left-2 z-10 text-white border-2 border-[#333d02] bg-green-500 uppercase text-[12px] py-1 px-2"
+      >
+        O
+      </button>
+
+      <h1 className="text-[24px] text-[#333d02] uppercase font-['MekMono'] font-bold">Villager Creator</h1>
+
+      {/* Character Preview */}
+      <div
+        className="character-preview relative w-52 h-52 mx-auto bg-white border border-gray-700"
+        style={{ width: '120px', height: '120px' }}
+      >
+        <img src={selectedParts.background} alt="background" className="absolute w-full h-full object-contain" />
+        <img src={selectedParts.bottoms} alt="bottoms" className="absolute w-full h-full object-contain" />
+        <img src={selectedParts.tops} alt="tops" className="absolute w-full h-full object-contain" />
+        <img src={selectedParts.head} alt="head" className="absolute w-full h-full object-contain" />
+        <img src={selectedParts.eyes} alt="eyes" className="absolute w-full h-full object-contain" />
+        <img src={selectedParts.facial_hair} alt="facial hair" className="absolute w-full h-full object-contain" />
+        <img src={selectedParts.hair} alt="hair" className="absolute w-full h-full object-contain" />
+      </div>
+
+      {/* Category List + Buttons */}
+      <div 
+        ref={containerRef}
+        className="selectors grid grid-cols-2 items-center mt-2 space-2 gap-1 h-[80px] overflow-y-auto no-scrollbar"
+      >
+        {visibleCategories.map((cat, idx) => {
+          const isSelected = idx === selectedCategoryIndex;
           return (
-            <button
-              key={tab}
-              onClick={() => {
-                setTabIndex(idx);
-                setPaneFocus('left');
-                setContentIndex(0);
-              }}
-              className={`
-                text-left p-1 font-ocra text-[10px] text-[#333d02] border-2 uppercase border-[#333d02]
-                ${isFocused ? 'border-yellow-400 bg-yellow-300/20' : 'border-2 '}
-              `}
+            <div
+              key={cat}
+              className={`selector flex items-center border-2 border-[#333d02] justify-between w-full  p-0.5 text-[12px] uppercase font-['MekMono'] ${
+                isSelected ? 'bg-gray-700' : ''
+              }`}
             >
-              {tab}
-            </button>
+              <button
+                onClick={() => cycleCategory(cat, -1)}
+                className="px-2 py-1 border-2 border-[#697c01] text-white"
+              >
+                ◀
+              </button>
+              <span className="mx-2 text-white uppercase">{cat}</span>
+              <button
+                onClick={() => cycleCategory(cat, 1)}
+                className="px-2 py-1   text-white border-2 border-[#697c01]"
+              >
+                ▶
+              </button>
+            </div>
           );
         })}
       </div>
-    );
-  }
 
-  function renderTabContent() {
-    const data = getTabData();
-    const activeTab = TABS[tabIndex];
-
-    // For traits, let's do a 3-column grid
-    const gridClass =
-      activeTab === 'Traits'
-        ? 'grid grid-cols-3 gap-2'
-        : 'grid grid-cols-1 gap-2';
-
-    return (
-      <div className="flex flex-col w-full p-2 space-y-1 overflow-y-auto h-full">
-        <h2 className="font-ocra text-[14px] uppercase leading-none text-[#333d02]">
-          {activeTab}
-        </h2>
-
-        {activeTab === 'Traits' && (
-          <div className="mb-1 leading-none text-[#333d02] text-[12px] uppercase">
-            Selected {formData.selectedTraits.length} / {MAX_TRAITS}
-          </div>
-        )}
-
-        <div className={gridClass}>
-          {data.map((item, i) => {
-            const isFocused = (paneFocus === 'right') && (contentIndex === i);
-            let selected = false;
-            if (activeTab === 'Traits') {
-              selected = formData.selectedTraits.includes(item);
-            } else if (activeTab === 'Backstory') {
-              selected = formData.selectedBackstory === item;
-            } else if (activeTab === 'Motivation') {
-              selected = formData.motivation === item;
-            } else if (activeTab === 'Skills') {
-              selected = formData.selectedSkills.includes(item);
-            }
-
-            return (
-              <button
-                key={`${activeTab}-${item}-${i}`}
-                onClick={() => {
-                  setContentIndex(i);
-                  setPaneFocus('right');
-                  handleSelectItem(i);
-                }}
-                className={`
-                  w-full p-1 text-left text-[9px] text-[#333d02] uppercase border-2
-                  ${isFocused ? 'border-yellow-400 bg-yellow-300/20' : 'border-[#333d02]'}
-                  flex items-center justify-between
-                  ${selected ? 'bg-green-600/50' : ''}
-                `}
-              >
-                <span>{item === 'custom' ? 'Custom...' : item}</span>
-                {selected && <span className="text-yellow-400 font-bold">✔</span>}
-              </button>
-            );
-          })}
-        </div>
-
-        {isCustomOptionSelected() && activeTab === 'Backstory' && (
-          <textarea
-            value={formData.customBackstory}
-            onChange={(e) => handleCustomBackstoryChange(e.target.value)}
-            placeholder="Write your custom backstory..."
-            className="mt-2 border border-gray-700 rounded-lg p-2 w-full h-24
-                       bg-gray-800 text-[#333d02] text-sm focus:outline-none focus:ring
-                       focus:ring-yellow-500"
-          />
-        )}
-
-        {isCustomOptionSelected() && activeTab === 'Motivation' && (
-          <input
-            type="text"
-            value={formData.motivation}
-            onChange={(e) => handleMotivationInput(e.target.value)}
-            placeholder="Enter your custom motivation..."
-            className="mt-2 border border-gray-700 rounded p-2 bg-gray-800 text-[#333d02]
-                       text-sm focus:outline-none focus:ring focus:ring-yellow-500"
-          />
-        )}
+      {/* Skin Tones */}
+      <div className="skin-tone-selector flex justify-center items-center mt-4 space-x-2">
+        <label className="text-[#333d02] text-[12px] mr-2 uppercase font-['MekMono']">Skin Tone: </label>
+        {['dark', 'odd', 'med', 'light'].map((tone) => (
+          <button
+            key={tone}
+            onClick={() => setSkinTone(tone)}
+            className={`px-3 py-1 text-[12px] uppercase font-['MekMono'] text-[#333d02] ${
+              skinTone === tone
+                ? 'bg-blue-600 text-white'
+                : 'border-2 border-[#333d02]'
+            }`}
+          >
+            {tone}
+          </button>
+        ))}
       </div>
-    );
-  }
 
-  return (
-    <div className="w-full h-full bg-[#697c01] flex items-center justify-center">
-      <div 
-        className="w-11/12 h-5/6 max-w-4xl border-2 border-[#333d02] bg-[#697c01] flex flex-row overflow-hidden"
-      >
-        {/* Left Pane: Tab list */}
-        <div className="w-1/3 h-full border-r-2 border-[#333d02] flex flex-col">
-          <h2 className="font-[MekMono] text-center text-[#333d02] mt-2 text-[14px] leading-none uppercase">
-            Character Creation
-          </h2>
-          {renderTabButtons()}
-        </div>
-
-        {/* Right Pane: Content */}
-        <div className="flex flex-col w-2/3 h-full">
-          {selectedCharacter && (
-            <div className="text-center text-[#333d02] py-2 border-b-2 border-[#333d02]">
-              {selectedCharacter.image && (
-                <img
-                  src={selectedCharacter.image}
-                  alt={selectedCharacter.name}
-                  className="mx-auto w-10 h-10 border-2 border-[#333d02] object-cover rounded-full mb-2"
-                />
-              )}
-              <h2 className="font-[MekMono] text-[14px] uppercase">
-                {selectedCharacter.name || 'Unnamed Hero'}
-              </h2>
-            </div>
-          )}
-
-          <div className="flex-1 overflow-y-auto">
-            {renderTabContent()}
-          </div>
-
-          <div className="p-1 border-t-2 border-[#333d02] flex justify-center">
-            <button
-              onClick={handlePressE}
-              className="border-2 border-[#333d02] text-[#333d02] font-[MekMono] uppercase text-[12px] px-2 py-1  hover:bg-yellow-400/30"
-            >
-              {tabIndex < TABS.length - 1 ? 'Next (E)' : 'Finalize (E)'}
-            </button>
-          </div>
-        </div>
+      {/* Eye Colors */}
+      <div className="skin-tone-selector flex justify-center items-center mt-4 space-x-2">
+      <label className="text-[#333d02] text-[12px] mr-2 uppercase font-['MekMono']">Eye Color: </label>
+        {['blue', 'green', 'brown'].map((color) => (
+          <button
+            key={color}
+            onClick={() => setEyeColor(color)}
+            className={`px-3 py-1 text-[12px] uppercase font-['MekMono'] text-[#333d02] ${
+              eyeColor === color
+                ? 'bg-blue-600 text-white'
+                : 'border-2 border-[#333d02]'
+            }`}
+          >
+            {color}
+          </button>
+        ))}
       </div>
     </div>
   );
-};
-
-export default CharacterCreation;
+}
