@@ -138,16 +138,143 @@ export default function HomePage() {
     </div>
   );
 
+  const anyOverlayOpen = showCharacterSelect || showMap || showCharacterCreation || showAdventure || gameStarted || showVillagerCreator || showMint;
+
   return (
     <div className="w-full h-screen flex justify-center items-center bg-[#2d2d2d] overflow-hidden">
       <div className="relative w-[1000px] h-[800px] aspect-[144/240] flex justify-center items-center">
         <img
-          src="/RuneBoys/original.png"
+          src="/RuneBoys/original_body_2.png"
           alt="Gameboy Frame"
           className="absolute w-full h-full object-contain [image-rendering:pixelated]"
         />
+        <img
+          src="/RuneBoys/down_2.png"
+          alt="Gameboy Frame"
+          className="absolute [image-rendering:pixelated] mt-[481px] mr-[306px] w-[33.5px] w-10 z-10"
+          onClick={() => {
+            if (anyOverlayOpen) {
+              const event = new Event('keydown', { bubbles: true });
+              (event as any).key = 'ArrowDown';
+              window.dispatchEvent(event);
+            } else {
+              setSelectedIndex(prev => (prev + 1) % options.length);
+            }
+          }}
+        />
+        <img 
+          src="/RuneBoys/left_2.png"
+          alt="Gameboy Frame"
+          className="absolute [image-rendering:pixelated] mt-[416px] mr-[375px] w-[41px] z-10"
+          onClick={() => {
+            if (anyOverlayOpen) {
+              const event = new Event('keydown', { bubbles: true });
+              (event as any).key = 'ArrowLeft';
+              window.dispatchEvent(event);
+            } else {
+              setSelectedIndex(prev => (prev - 1 + options.length) % options.length);
+            }
+          }}
+        />
+        <img
+          src="/RuneBoys/center_2.png"
+          alt="Gameboy Frame"
+          className="absolute [image-rendering:pixelated] mt-[416px] mr-[308px] w-[27.5px] z-10"
+          onClick={() => {
+            if (anyOverlayOpen) {
+              const event = new Event('keydown', { bubbles: true });
+              (event as any).key = 'Enter';
+              window.dispatchEvent(event);
+            }
+            else if (!showMap && !showCharacterCreation && !showAdventure && !gameStarted && !showVillagerCreator && !showMint) {
+              const currentOption = options[selectedIndex];
+              switch (currentOption) {
+                case 'Start Game': setGameStarted(true); break;
+                case 'Characters': setShowCharacterSelect(true); break;
+                case 'Map': setShowMap(true); break;
+                case 'Character Creation': setShowCharacterCreation(true); break;
+                case 'Runiverse Adventure': setShowAdventure(true); break;
+                case 'Mint': setShowMint(true); break;
+                default: console.log(`Selected: ${currentOption}`);
+              }
+            }
+          }}
+        />
+        <img
+          src="/RuneBoys/up_2.png"
+          alt="Gameboy Frame"
+          className="absolute [image-rendering:pixelated] mt-[352px] mr-[313px] w-8 z-10"
+          onClick={() => {
+            if (anyOverlayOpen) {
+              const event = new Event('keydown', { bubbles: true });
+              (event as any).key = 'ArrowUp';
+              window.dispatchEvent(event);
+            } else {
+              setSelectedIndex(prev => (prev - 1 + options.length) % options.length);
+            }
+          }}
+        />
+        <img
+          src="/RuneBoys/right_2.png"
+          alt="Gameboy Frame"
+          className="absolute [image-rendering:pixelated] mt-[422px] mr-[245.8px] w-[35px] z-10"
+          onClick={() => {
+            if (anyOverlayOpen) {
+              const event = new Event('keydown', { bubbles: true });
+              (event as any).key = 'ArrowRight';
+              window.dispatchEvent(event);
+            } else {
+              setSelectedIndex(prev => (prev + 1) % options.length);
+            }
+          }}
+        />
+        <img 
+          src="/RuneBoys/A_2.png"
+          alt="Gameboy Frame"
+          className="absolute [image-rendering:pixelated] mt-[430px] ml-[320px] w-[60px] z-10"
+          onClick={() => {
+            if (anyOverlayOpen) {
+              const event = new Event('keydown', { bubbles: true });
+              (event as any).key = 'Enter';
+              window.dispatchEvent(event);
+            }
+            else if (!showMap && !showCharacterCreation && !showAdventure && !gameStarted && !showVillagerCreator && !showMint) {
+              const currentOption = options[selectedIndex];
+              switch (currentOption) {
+                case 'Start Game': setGameStarted(true); break;
+                case 'Characters': setShowCharacterSelect(true); break;
+                case 'Map': setShowMap(true); break;
+                case 'Character Creation': setShowCharacterCreation(true); break;
+                case 'Runiverse Adventure': setShowAdventure(true); break;
+                case 'Mint': setShowMint(true); break;
+                default: console.log(`Selected: ${currentOption}`);
+              }
+            }
+          }}
+        />
+        <img 
+          src="/RuneBoys/B_2.png"
+          alt="Gameboy Frame"
+          className="absolute [image-rendering:pixelated] mt-[500px] ml-[185px] w-[60px] z-10"
+          onClick={() => {
+            // Simulate Escape key press for any open overlay
+            const event = new Event('keydown', { bubbles: true });
+            (event as any).key = 'Escape';  // Change to Escape
+            window.dispatchEvent(event);
+          }}
+        />
+        <img
+          src="/RuneBoys/select_2.png"
+          alt="Gameboy Frame"
+          className="absolute [image-rendering:pixelated] mt-[680px] mr-[155px] w-[80px] z-10"
+        />
+        <img
+          src="/RuneBoys/start_2.png"
+          alt="Gameboy Frame"
+          className="absolute [image-rendering:pixelated] mt-[680px] ml-[65px] w-[80px] z-10"
+        />
 
-        <div className="absolute top-[10%] left-[31.75%] w-[370px] h-[365px] aspect-square flex items-center justify-center overflow-hidden bg-black">
+        <div className="absolute top-[10%]  w-[370px] h-[365px] aspect-square flex items-center justify-center overflow-hidden bg-black">
           {/* MAIN MENU */}
           {!gameStarted &&
             !showCharacterSelect &&
