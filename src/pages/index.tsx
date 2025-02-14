@@ -1,4 +1,5 @@
-import React, { useState, useEffect, KeyboardEvent } from 'react';
+import React, { useState, useEffect } from 'react';
+import type { KeyboardEvent } from 'react';
 import dynamic from 'next/dynamic';
 import { useGlobalControls } from '../hooks/useGlobalControls';
 
