@@ -45,7 +45,7 @@ type PaneFocus =
 
 /** Check if a trait is image-based for a 2-col grid (except hair). */
 function isImageTrait(trait: string) {
-  if (trait === 'skinTone' || trait === 'eyeColor' || trait === 'hair') return false;
+  if (trait === 'skinTone' || trait === 'eyeColor') return false;
   return true;
 }
 
@@ -118,6 +118,7 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
             initParts[cat] = arr.length > 0 ? arr[0] : '';
           }
         });
+        initParts.facial_hair = 'beard_0.png'; // Changed from hair_0.png
         setSelectedParts(initParts);
       } catch (err) {
         console.error('Error fetching villager assets:', err);
@@ -157,6 +158,21 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
     }
     if (trait === 'hair') {
       return []; // we do hair sub-menus
+    }
+    if (trait === 'facial_hair') {
+      return [
+        'beard_0.png',        // Default clean-shaven
+        'beard_black.png',
+        'beard_blonde.png',
+        'beard_blue.png',
+        'beard_brown.png',
+        'beard_orange.png',
+        'mustache_black.png',
+        'mustache_blonde.png',
+        'mustache_blue.png',
+        'mustache_brown.png',
+        'mustache_orange.png'
+      ];
     }
     const realKey = trait === 'facial_hair' ? 'facial_hair' : trait;
     return assets[realKey] || [];
@@ -401,9 +417,12 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
   const selectedValue = selectedParts[currentTraitKey] || '';
 
   function getAssetUrl(trait: string, item: string) {
-    if (!isImageTrait(trait)) return '';
-    if (item === 'none' || item === 'hair_0.png') return '';
-    return item;
+    if (!isImageTrait(trait)) return null;
+    if (item === 'none') return null;
+
+    // Use the item directly as it matches filenames
+    const filename = item.split('/').pop() || item;
+    return `/assets/villagers/${trait}/${filename}`;
   }
 
   function getPreviewLabel(): string {
@@ -598,12 +617,12 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
             className="relative bg-white border border-gray-700"
             style={{ width: '160px', height: '160px' }}
           >
-            <img src={selectedParts.background} alt="bg" className="absolute w-full h-full object-contain" />
-            <img src={selectedParts.bottoms} alt="bottoms" className="absolute w-full h-full object-contain" />
-            <img src={selectedParts.tops} alt="tops" className="absolute w-full h-full object-contain" />
-            <img src={selectedParts.head} alt="head" className="absolute w-full h-full object-contain" />
-            <img src={selectedParts.hair} alt="hair" className="absolute w-full h-full object-contain" />
-            <img src={selectedParts.facial_hair} alt="facial_hair" className="absolute w-full h-full object-contain" />
+            {selectedParts.background && <img src={getAssetUrl('background', selectedParts.background)} alt="bg" className="absolute w-full h-full object-contain" />}
+            {selectedParts.bottoms && <img src={getAssetUrl('bottoms', selectedParts.bottoms)} alt="bottoms" className="absolute w-full h-full object-contain" />}
+            {selectedParts.tops && <img src={getAssetUrl('tops', selectedParts.tops)} alt="tops" className="absolute w-full h-full object-contain" />}
+            {selectedParts.head && <img src={getAssetUrl('head', selectedParts.head)} alt="head" className="absolute w-full h-full object-contain" />}
+            {selectedParts.hair && <img src={getAssetUrl('hair', selectedParts.hair)} alt="hair" className="absolute w-full h-full object-contain" />}
+            {selectedParts.facial_hair && <img src={getAssetUrl('facial_hair', selectedParts.facial_hair)} alt="facial_hair" className="absolute w-full h-full object-contain" />}
           </div>
           <div className="mt-2 text-center text-[11px] uppercase font-['MekMono'] leading-tight max-w-[160px] break-words">
             <p className="mb-1">Value:</p>
