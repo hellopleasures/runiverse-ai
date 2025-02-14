@@ -173,7 +173,7 @@ export default function HomePage() {
         Force 9:16 aspect ratio for the shell, scale it to fit the screen,
         center it with a max width so it remains crisp.
       */}
-      <div className="relative max-w-[480px] w-full h-full aspect-[9/16] flex items-center justify-center">
+      <div className="relative max-w-[400px] w-full h-full aspect-[9/16] flex items-center justify-center">
         {/* The shell image as the background */}
         <img
           src="/RuneBoys/shell_9_16.png"
@@ -185,14 +185,13 @@ export default function HomePage() {
         {/*
           The "screen" area inside the shell:
           We'll approximate the position so it lines up with the black area on shell_9_16.png
-          (making it bigger so it takes more of the grey area).
         */}
         <div
           className="absolute"
           style={{
-            top: '15%',
-            left: '6%',
-            width: '88%',
+            top: '13%',
+            left: '12%',
+            width: '76%',
             aspectRatio: '1',
             backgroundColor: 'black',
             overflow: 'hidden',
@@ -263,7 +262,7 @@ export default function HomePage() {
           )}
         </div>
 
-        {/* DPAD / A / B / Select / Start */}
+        {/* DPAD / A / B / Select / Start - repositions to match new shell */}
         {/* Up */}
         <img
           src="/RuneBoys/up_2.png"
@@ -271,7 +270,7 @@ export default function HomePage() {
           className="absolute z-10 cursor-pointer"
           style={{
             width: '10%',
-            top: '65%',
+            top: '60%',
             left: '16%',
             imageRendering: 'pixelated',
           }}
@@ -292,7 +291,7 @@ export default function HomePage() {
           className="absolute z-10 cursor-pointer"
           style={{
             width: '10%',
-            top: '72%',
+            top: '74%',
             left: '16%',
             imageRendering: 'pixelated',
           }}
@@ -313,8 +312,8 @@ export default function HomePage() {
           className="absolute z-10 cursor-pointer"
           style={{
             width: '10%',
-            top: '69%',
-            left: '8%',
+            top: '67%',
+            left: '10%',
             imageRendering: 'pixelated',
           }}
           onClick={() => {
@@ -334,8 +333,8 @@ export default function HomePage() {
           className="absolute z-10 cursor-pointer"
           style={{
             width: '10%',
-            top: '69%',
-            left: '25%',
+            top: '67%',
+            left: '22%',
             imageRendering: 'pixelated',
           }}
           onClick={() => {
@@ -348,15 +347,15 @@ export default function HomePage() {
           }}
         />
 
-        {/* DPad center */}
+        {/* DPad center (for "action" on gamepad) */}
         <img
           src="/RuneBoys/center_2.png"
           alt="DPad Center"
           className="absolute z-10 cursor-pointer"
           style={{
             width: '8%',
-            top: '69%',
-            left: '17%',
+            top: '67%',
+            left: '16%',
             imageRendering: 'pixelated',
           }}
           onClick={() => {
@@ -365,14 +364,14 @@ export default function HomePage() {
           }}
         />
 
-        {/* Button A - moved down */}
+        {/* Button A */}
         <img
           src="/RuneBoys/A_2.png"
           alt="A Button"
           className="absolute z-10 cursor-pointer"
           style={{
             width: '12%',
-            top: '67%',
+            top: '64%',
             right: '17%',
             imageRendering: 'pixelated',
           }}
@@ -382,14 +381,14 @@ export default function HomePage() {
           }}
         />
 
-        {/* Button B - moved down */}
+        {/* Button B */}
         <img
           src="/RuneBoys/B_2.png"
           alt="B Button"
           className="absolute z-10 cursor-pointer"
           style={{
             width: '12%',
-            top: '74%',
+            top: '71%',
             right: '25%',
             imageRendering: 'pixelated',
           }}

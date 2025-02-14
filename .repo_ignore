@@ -26,3 +26,4 @@
 **/*.meta
 **/package-lock.json
 **/public/characters
+**/public/assets

@@ -1,17 +1,9 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import { useGlobalControls } from '../hooks/useGlobalControls';
 import { useRouter } from 'next/router';
+import { useGlobalControls } from '../hooks/useGlobalControls';
 
-/**
- * We'll just replicate the runiverse-trail game logic locally.
- * We'll import a new "LocalGame" we copy from runiverse-trail below.
- * For demonstration, let's create "LocalGame" in src/components/Game/LocalGame.tsx
- */
-
-const LocalGame = dynamic(() => import('../components/Game/LocalGame'), {
-  ssr: false
-});
+const PhaserGame = dynamic(() => import('../components/PhaserGame'), { ssr: false });
 
 export default function GamePage() {
   const router = useRouter();
@@ -22,53 +14,149 @@ export default function GamePage() {
     }
   });
 
+  const handleButtonEvent = (eventKey: string) => {
+    const event = new KeyboardEvent('keydown', { key: eventKey });
+    window.dispatchEvent(event);
+  };
+
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100vh',
-        backgroundColor: '#2d2d2d',
-        overflow: 'hidden',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-    >
-      <div
-        style={{
-          position: 'relative',
-          width: 'auto',
-          height: '100%',
-          maxHeight: '100%',
-          aspectRatio: '144 / 240'
-        }}
-      >
+    <div className="w-screen h-screen bg-[#2d2d2d] overflow-hidden flex justify-center items-center">
+      {/* 9:16 shell container */}
+      <div className="relative w-full h-full max-w-[540px] aspect-[9/16] flex items-center justify-center">
+
         <img
-          src="/RuneBoys/original.png"
-          alt="Gameboy Frame"
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            objectFit: 'contain',
-            imageRendering: 'pixelated'
-          }}
+          src="/RuneBoys/shell_9_16.png"
+          alt="9x16 Shell"
+          className="absolute w-full h-full object-contain [image-rendering:pixelated]"
         />
+
+        {/* Square screen area */}
         <div
+          className="absolute bg-black overflow-hidden flex items-center justify-center"
           style={{
-            position: 'absolute',
-            top: '8%',
-            left: '8.75%',
-            width: '82.5%',
-            aspectRatio: '1 / 1',
-            backgroundColor: '#000',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
+            top: '10%',
+            left: '13%',
+            width: '55%',
+            aspectRatio: '1',
           }}
         >
-          <LocalGame />
+          <PhaserGame />
         </div>
+
+        {/* D-Pad Up */}
+        <img
+          src="/RuneBoys/up_2.png"
+          alt="Up Button"
+          className="absolute z-10 cursor-pointer"
+          style={{
+            width: '40px',
+            top: '60%',
+            left: '12%',
+          }}
+          onClick={() => handleButtonEvent('ArrowUp')}
+        />
+
+        {/* D-Pad Down */}
+        <img
+          src="/RuneBoys/down_2.png"
+          alt="Down Button"
+          className="absolute z-10 cursor-pointer"
+          style={{
+            width: '40px',
+            top: '75%',
+            left: '12%',
+          }}
+          onClick={() => handleButtonEvent('ArrowDown')}
+        />
+
+        {/* D-Pad Left */}
+        <img
+          src="/RuneBoys/left_2.png"
+          alt="Left Button"
+          className="absolute z-10 cursor-pointer"
+          style={{
+            width: '40px',
+            top: '68%',
+            left: '7%',
+          }}
+          onClick={() => handleButtonEvent('ArrowLeft')}
+        />
+
+        {/* D-Pad Right */}
+        <img
+          src="/RuneBoys/right_2.png"
+          alt="Right Button"
+          className="absolute z-10 cursor-pointer"
+          style={{
+            width: '40px',
+            top: '68%',
+            left: '17%',
+          }}
+          onClick={() => handleButtonEvent('ArrowRight')}
+        />
+
+        {/* D-Pad Center */}
+        <img
+          src="/RuneBoys/center_2.png"
+          alt="Center Button"
+          className="absolute z-10 cursor-pointer"
+          style={{
+            width: '36px',
+            top: '68%',
+            left: '12%',
+          }}
+          onClick={() => handleButtonEvent('Enter')}
+        />
+
+        {/* Button A */}
+        <img
+          src="/RuneBoys/A_2.png"
+          alt="A Button"
+          className="absolute z-10 cursor-pointer"
+          style={{
+            width: '50px',
+            top: '65%',
+            right: '17%',
+          }}
+          onClick={() => handleButtonEvent('Enter')}
+        />
+
+        {/* Button B */}
+        <img
+          src="/RuneBoys/B_2.png"
+          alt="B Button"
+          className="absolute z-10 cursor-pointer"
+          style={{
+            width: '50px',
+            top: '72%',
+            right: '27%',
+          }}
+          onClick={() => handleButtonEvent('Escape')}
+        />
+
+        {/* Select */}
+        <img
+          src="/RuneBoys/select_2.png"
+          alt="Select Button"
+          className="absolute z-10"
+          style={{
+            width: '40px',
+            bottom: '12%',
+            left: '35%',
+          }}
+        />
+
+        {/* Start */}
+        <img
+          src="/RuneBoys/start_2.png"
+          alt="Start Button"
+          className="absolute z-10"
+          style={{
+            width: '40px',
+            bottom: '12%',
+            left: '45%',
+          }}
+        />
       </div>
     </div>
   );
