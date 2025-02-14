@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-interface UseGlobalControlsOptions {
+export interface UseGlobalControlsOptions {
   onUp?: () => void;
   onDown?: () => void;
   onLeft?: () => void;
@@ -12,6 +12,7 @@ interface UseGlobalControlsOptions {
   onA?: () => void;
   onB?: () => void;
   onE?: () => void;
+  onStart?: () => void;        // ADDED for 'start' button (enter key)
 }
 
 export function useGlobalControls({
@@ -21,7 +22,11 @@ export function useGlobalControls({
   onRight,
   onAction,
   onSecondary,
-  onEscape
+  onEscape,
+  onA,
+  onB,
+  onE,
+  onStart
 }: UseGlobalControlsOptions) {
   const router = useRouter();
 
@@ -54,10 +59,23 @@ export function useGlobalControls({
       // Q/E
       else if (key === 'q' || key === 'e') {
         onSecondary?.();
+        if (key === 'e') {
+          onE?.();
+        }
+      }
+
+      // A/B
+      else if (key === 'a') {
+        onA?.();
+      } else if (key === 'b') {
+        onB?.();
       }
 
       // Enter / Space
-      else if (key === 'enter' || key === ' ') {
+      else if (key === 'enter') {
+        onAction?.();
+        onStart?.(); // Trigger onStart callback as well
+      } else if (key === ' ') {
         onAction?.();
       }
 
@@ -71,5 +89,7 @@ export function useGlobalControls({
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [onUp, onDown, onLeft, onRight, onAction, onSecondary, onEscape]);
+  }, [onUp, onDown, onLeft, onRight, onAction, onSecondary, onEscape, onA, onB, onE, onStart]);
+
+  return null;
 }

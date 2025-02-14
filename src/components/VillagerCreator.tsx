@@ -21,7 +21,7 @@ interface SelectedParts {
 /** Text-based categories that won't have images. */
 const EXTRA_CATEGORIES_DATA: Record<string, string[]> = {
   skinTone: ['light', 'med', 'dark', 'odd'],
-  eyeColor: ['black', 'blue', 'brown', 'green', 'purple']
+  eyeColor: ['black', 'blue', 'brown', 'green', 'purple'],
 };
 
 /** The main categories. We handle 'hair' with a special 3-level approach. */
@@ -29,19 +29,15 @@ const CATEGORY_ORDER = [
   'skinTone',
   'eyeColor',
   'head',
-  'hair',       // special
+  'hair', // special
   'facial_hair',
   'tops',
   'bottoms',
-  'background'
+  'background',
 ];
 
 /** PaneFocus for multi-level approach. */
-type PaneFocus =
-  | 'traits'
-  | 'items'
-  | 'hairStyle'
-  | 'hairColor';
+type PaneFocus = 'traits' | 'items' | 'hairStyle' | 'hairColor';
 
 /** Check if a trait is image-based for a 2-col grid (except hair). */
 function isImageTrait(trait: string) {
@@ -55,14 +51,25 @@ function getSanitizedLabel(item: string): string {
   if (item === 'hair_0.png') return 'No Hair';
 
   let label = item.replace(/\.[^.]+$/, ''); // remove extension
-  label = label.replace(/_/g, ' ');         // underscores => spaces
+  label = label.replace(/_/g, ' '); // underscores => spaces
   label = label.replace(/\b\w/g, c => c.toUpperCase()); // uppercase each word
   return label.trim();
 }
 
 /** The hair style + color lists. */
 const HAIR_STYLES = ['none', 'afro', 'bangs', 'long', 'messy', 'pigtails', 'ponytail', 'wavy'];
-const HAIR_COLORS = ['black', 'blonde', 'blue', 'brown', 'green', 'orange', 'pink', 'purple', 'red', 'white'];
+const HAIR_COLORS = [
+  'black',
+  'blonde',
+  'blue',
+  'brown',
+  'green',
+  'orange',
+  'pink',
+  'purple',
+  'red',
+  'white',
+];
 
 export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
   // Basic states
@@ -88,8 +95,8 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
   const [lastHairColor, setLastHairColor] = useState('black'); // default if user never picked a color
 
   // Refs for scrolling
-  const traitListRef = useRef<HTMLDivElement>(null);
-  const itemListRef = useRef<HTMLDivElement>(null);
+  const traitListRef = useRef<HTMLDivElement | null>(null);
+  const itemListRef = useRef<HTMLDivElement | null>(null);
 
   /** On mount, fetch assets (except hair, which is handled statically). */
   useEffect(() => {
@@ -110,8 +117,7 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
         CATEGORY_ORDER.forEach(cat => {
           if (cat === 'hair') {
             initParts[cat] = 'hair_0.png'; // default to no hair
-          }
-          else if (EXTRA_CATEGORIES_DATA[cat]) {
+          } else if (EXTRA_CATEGORIES_DATA[cat]) {
             initParts[cat] = EXTRA_CATEGORIES_DATA[cat][0] || '';
           } else {
             const arr = data[cat === 'facial_hair' ? 'facial_hair' : cat] || [];
@@ -134,9 +140,7 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
       setFilteredHeads([]);
       return;
     }
-    const headsForTone = assets.heads.filter(h =>
-      h.toLowerCase().includes(`_${skinTone}.`)
-    );
+    const headsForTone = assets.heads.filter(h => h.toLowerCase().includes(`_${skinTone}.`));
     setFilteredHeads(headsForTone);
   }, [assets.heads, skinTone]);
 
@@ -161,7 +165,7 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
     }
     if (trait === 'facial_hair') {
       return [
-        'beard_0.png',        // Default clean-shaven
+        'beard_0.png',
         'beard_black.png',
         'beard_blonde.png',
         'beard_blue.png',
@@ -171,7 +175,7 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
         'mustache_blonde.png',
         'mustache_blue.png',
         'mustache_brown.png',
-        'mustache_orange.png'
+        'mustache_orange.png',
       ];
     }
     const realKey = trait === 'facial_hair' ? 'facial_hair' : trait;
@@ -211,12 +215,10 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
         const startIdx = items.indexOf(currentVal);
         setItemIndex(startIdx >= 0 ? startIdx : 0);
       }
-    }
-    else if (paneFocus === 'items') {
+    } else if (paneFocus === 'items') {
       // finalize => back to traits
       setPaneFocus('traits');
-    }
-    else if (paneFocus === 'hairStyle') {
+    } else if (paneFocus === 'hairStyle') {
       // user picks style
       const style = HAIR_STYLES[hairStyleIndex];
       if (style === 'none') {
@@ -230,8 +232,7 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
         previewHairColor(hairColorIndex, style);
         setPaneFocus('hairColor');
       }
-    }
-    else if (paneFocus === 'hairColor') {
+    } else if (paneFocus === 'hairColor') {
       // finalize => hair_{style}_{color}.png
       const style = HAIR_STYLES[hairStyleIndex];
       const color = HAIR_COLORS[hairColorIndex];
@@ -244,11 +245,9 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
   function handleSecondary() {
     if (paneFocus === 'items') {
       setPaneFocus('traits');
-    }
-    else if (paneFocus === 'hairStyle') {
+    } else if (paneFocus === 'hairStyle') {
       setPaneFocus('traits');
-    }
-    else if (paneFocus === 'hairColor') {
+    } else if (paneFocus === 'hairColor') {
       // go back to hairStyle
       setPaneFocus('hairStyle');
       // revert preview to the style-level highlight
@@ -279,9 +278,10 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
     let newIndex = newRow * columns + newCol;
     if (newIndex >= total) {
       // clamp to last item in that row
-      const lastInRow = rowCount === (newRow + 1)
-        ? total - 1
-        : (newRow + 1) * columns - 1;
+      const lastInRow =
+        rowCount === newRow + 1
+          ? total - 1
+          : (newRow + 1) * columns - 1;
       newIndex = Math.min(newIndex, lastInRow);
     }
 
@@ -351,14 +351,11 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
         scrollIntoView(traitListRef, newIndex, CATEGORY_ORDER.length);
         return newIndex;
       });
-    }
-    else if (paneFocus === 'items') {
+    } else if (paneFocus === 'items') {
       moveItemHighlight(-1, 0);
-    }
-    else if (paneFocus === 'hairStyle') {
+    } else if (paneFocus === 'hairStyle') {
       moveHairStyleHighlight(-1);
-    }
-    else if (paneFocus === 'hairColor') {
+    } else if (paneFocus === 'hairColor') {
       moveHairColorHighlight(-1);
     }
   }
@@ -370,14 +367,11 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
         scrollIntoView(traitListRef, newIndex, CATEGORY_ORDER.length);
         return newIndex;
       });
-    }
-    else if (paneFocus === 'items') {
+    } else if (paneFocus === 'items') {
       moveItemHighlight(1, 0);
-    }
-    else if (paneFocus === 'hairStyle') {
+    } else if (paneFocus === 'hairStyle') {
       moveHairStyleHighlight(1);
-    }
-    else if (paneFocus === 'hairColor') {
+    } else if (paneFocus === 'hairColor') {
       moveHairColorHighlight(1);
     }
   }
@@ -394,7 +388,11 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
     }
   }
 
-  function scrollIntoView(ref: React.RefObject<HTMLDivElement>, idx: number, length: number) {
+  function scrollIntoView(
+    ref: React.RefObject<HTMLDivElement | null>,
+    idx: number,
+    length: number
+  ) {
     if (!ref.current) return;
     const children = ref.current.children;
     const normalized = (idx + length) % length;
@@ -410,7 +408,7 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
     onRight: handleRight,
     onAction: handleAction,
     onSecondary: handleSecondary,
-    onStart: saveVillager
+    onEscape: onClose,
   });
 
   const currentTraitKey = CATEGORY_ORDER[traitIndex];
@@ -419,7 +417,6 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
   function getAssetUrl(trait: string, item: string) {
     if (!isImageTrait(trait)) return null;
     if (item === 'none') return null;
-
     // Use the item directly as it matches filenames
     const filename = item.split('/').pop() || item;
     return `/assets/villagers/${trait}/${filename}`;
@@ -439,23 +436,33 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
         className="flex-1 overflow-y-auto border-2 border-[#333d02] p-2 no-scrollbar absolute inset-0"
       >
         {CATEGORY_ORDER.map((trait, i) => {
-          const isSelected = (i === traitIndex);
+          const isSelected = i === traitIndex;
           const label = getSanitizedLabel(trait);
           return (
             <div
               key={trait}
               className={`
                 mb-1 px-2 py-1 uppercase text-[12px] font-['MekMono'] cursor-default break-all
-                ${isSelected ? 'bg-yellow-400/30 border border-yellow-400 blinking-border' : 'border border-transparent'}
+                ${
+                  isSelected
+                    ? 'bg-yellow-400/30 border border-yellow-400 blinking-border'
+                    : 'border border-transparent'
+                }
               `}
             >
               {label}
               {isSelected && (
                 <style jsx>{`
                   @keyframes borderBlink {
-                    0% { border-color: #facc15; }
-                    50% { border-color: transparent; }
-                    100% { border-color: #facc15; }
+                    0% {
+                      border-color: #facc15;
+                    }
+                    50% {
+                      border-color: transparent;
+                    }
+                    100% {
+                      border-color: #facc15;
+                    }
                   }
                   .blinking-border {
                     animation: borderBlink 1s ease-in-out infinite;
@@ -485,8 +492,8 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
         `}
       >
         {possibleItems.map((item, idx) => {
-          const isSelected = (idx === itemIndex);
-          const src = getAssetUrl(trait, item);
+          const isSelected = idx === itemIndex;
+          const src = getAssetUrl(trait, item) || ''; // fallback
           const label = getSanitizedLabel(item);
           return (
             <div
@@ -512,9 +519,15 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
               {isSelected && (
                 <style jsx>{`
                   @keyframes borderBlink {
-                    0% { border-color: #facc15; }
-                    50% { border-color: transparent; }
-                    100% { border-color: #facc15; }
+                    0% {
+                      border-color: #facc15;
+                    }
+                    50% {
+                      border-color: transparent;
+                    }
+                    100% {
+                      border-color: #facc15;
+                    }
                   }
                   .blinking-border {
                     animation: borderBlink 1s ease-in-out infinite;
@@ -535,26 +548,37 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
         className="flex-1 overflow-y-auto border-2 border-[#333d02] p-2 no-scrollbar absolute inset-0"
       >
         {HAIR_STYLES.map((style, idx) => {
-          const isSelected = (idx === hairStyleIndex);
-          const label = (style === 'none')
-            ? 'No Hair'
-            : style.replace(/\b\w/g, c => c.toUpperCase());
+          const isSelected = idx === hairStyleIndex;
+          const label =
+            style === 'none'
+              ? 'No Hair'
+              : style.replace(/\b\w/g, c => c.toUpperCase());
           return (
             <div
               key={style}
               className={`
                 mb-1 px-2 py-1 uppercase text-[12px] font-['MekMono'] cursor-default break-all
                 border border-transparent
-                ${isSelected ? 'bg-yellow-400/30 border border-yellow-400 blinking-border' : ''}
+                ${
+                  isSelected
+                    ? 'bg-yellow-400/30 border border-yellow-400 blinking-border'
+                    : ''
+                }
               `}
             >
               {label}
               {isSelected && (
                 <style jsx>{`
                   @keyframes borderBlink {
-                    0% { border-color: #facc15; }
-                    50% { border-color: transparent; }
-                    100% { border-color: #facc15; }
+                    0% {
+                      border-color: #facc15;
+                    }
+                    50% {
+                      border-color: transparent;
+                    }
+                    100% {
+                      border-color: #facc15;
+                    }
                   }
                   .blinking-border {
                     animation: borderBlink 1s ease-in-out infinite;
@@ -575,7 +599,7 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
         className="flex-1 overflow-y-auto border-2 border-[#333d02] p-2 no-scrollbar absolute inset-0"
       >
         {HAIR_COLORS.map((color, idx) => {
-          const isSelected = (idx === hairColorIndex);
+          const isSelected = idx === hairColorIndex;
           const label = color.replace(/\b\w/g, c => c.toUpperCase());
           return (
             <div
@@ -583,16 +607,26 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
               className={`
                 mb-1 px-2 py-1 uppercase text-[12px] font-['MekMono'] cursor-default break-all
                 border border-transparent
-                ${isSelected ? 'bg-yellow-400/30 border border-yellow-400 blinking-border' : ''}
+                ${
+                  isSelected
+                    ? 'bg-yellow-400/30 border border-yellow-400 blinking-border'
+                    : ''
+                }
               `}
             >
               {label}
               {isSelected && (
                 <style jsx>{`
                   @keyframes borderBlink {
-                    0% { border-color: #facc15; }
-                    50% { border-color: transparent; }
-                    100% { border-color: #facc15; }
+                    0% {
+                      border-color: #facc15;
+                    }
+                    50% {
+                      border-color: transparent;
+                    }
+                    100% {
+                      border-color: #facc15;
+                    }
                   }
                   .blinking-border {
                     animation: borderBlink 1s ease-in-out infinite;
@@ -617,12 +651,48 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
             className="relative bg-white border border-gray-700"
             style={{ width: '160px', height: '160px' }}
           >
-            {selectedParts.background && <img src={getAssetUrl('background', selectedParts.background)} alt="bg" className="absolute w-full h-full object-contain" />}
-            {selectedParts.bottoms && <img src={getAssetUrl('bottoms', selectedParts.bottoms)} alt="bottoms" className="absolute w-full h-full object-contain" />}
-            {selectedParts.tops && <img src={getAssetUrl('tops', selectedParts.tops)} alt="tops" className="absolute w-full h-full object-contain" />}
-            {selectedParts.head && <img src={getAssetUrl('head', selectedParts.head)} alt="head" className="absolute w-full h-full object-contain" />}
-            {selectedParts.hair && <img src={getAssetUrl('hair', selectedParts.hair)} alt="hair" className="absolute w-full h-full object-contain" />}
-            {selectedParts.facial_hair && <img src={getAssetUrl('facial_hair', selectedParts.facial_hair)} alt="facial_hair" className="absolute w-full h-full object-contain" />}
+            {selectedParts.background && (
+              <img
+                src={getAssetUrl('background', selectedParts.background) || ''}
+                alt="bg"
+                className="absolute w-full h-full object-contain"
+              />
+            )}
+            {selectedParts.bottoms && (
+              <img
+                src={getAssetUrl('bottoms', selectedParts.bottoms) || ''}
+                alt="bottoms"
+                className="absolute w-full h-full object-contain"
+              />
+            )}
+            {selectedParts.tops && (
+              <img
+                src={getAssetUrl('tops', selectedParts.tops) || ''}
+                alt="tops"
+                className="absolute w-full h-full object-contain"
+              />
+            )}
+            {selectedParts.head && (
+              <img
+                src={getAssetUrl('head', selectedParts.head) || ''}
+                alt="head"
+                className="absolute w-full h-full object-contain"
+              />
+            )}
+            {selectedParts.hair && (
+              <img
+                src={getAssetUrl('hair', selectedParts.hair) || ''}
+                alt="hair"
+                className="absolute w-full h-full object-contain"
+              />
+            )}
+            {selectedParts.facial_hair && (
+              <img
+                src={getAssetUrl('facial_hair', selectedParts.facial_hair) || ''}
+                alt="facial_hair"
+                className="absolute w-full h-full object-contain"
+              />
+            )}
           </div>
           <div className="mt-2 text-center text-[11px] uppercase font-['MekMono'] leading-tight max-w-[160px] break-words">
             <p className="mb-1">Value:</p>
