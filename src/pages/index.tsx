@@ -127,7 +127,7 @@ export default function HomePage() {
   // Helper to render the main menu
   function renderMenu() {
     return (
-      <div className="inline-block border-2 border-[#333] w-full items-center h-full p-2 bg-[url('/img/background.png')] bg-cover bg-center">
+      <div className="inline-block border-2 border-[#333] w-full h-full p-2 bg-[url('/img/background.png')] bg-cover bg-center items-center">
         <style jsx>{`
           @keyframes blink {
             0% { opacity: 1; }
@@ -168,14 +168,14 @@ export default function HomePage() {
     showMint;
 
   return (
-    <div className="w-screen h-screen bg-[#2d2d2d] overflow-hidden flex justify-center items-center">
+    <div className="w-screen h-screen bg-[#2d2d2d] overflow-hidden flex items-center justify-center">
       {/*
-        Outer container:
-        Force 9:16 aspect ratio for the shell, scale it to fit the screen,
-        center it with a max width so it remains crisp.
+        Outer container: 
+        We remove "h-full" here so the shell container is only as tall as needed
+        to maintain 9:16 aspect ratio, scaling to fill available space but not forced.
       */}
-      <div className="relative max-w-[480px] w-full h-full aspect-[9/16] flex items-center justify-center">
-        {/* The shell image as the background */}
+      <div className="relative max-w-[480px] w-full aspect-[9/16]">
+        {/* Shell image: absolutely fills the container */}
         <img
           src="/RuneBoys/shell_9_16.png"
           alt="Gameboy Shell 9:16"
@@ -185,15 +185,14 @@ export default function HomePage() {
 
         {/*
           The "screen" area inside the shell:
-          We'll approximate the position so it lines up with the black area on shell_9_16.png
-          (making it bigger so it takes more of the grey area).
+          We'll approximate the position so it lines up with the black area on shell_9_16.png.
         */}
         <div
           className="absolute"
           style={{
-            top: '15%',
-            left: '6%',
-            width: '88%',
+            top: '10%',
+            left: '7%',
+            width: '86%',
             aspectRatio: '1',
             backgroundColor: 'black',
             overflow: 'hidden',
@@ -264,7 +263,7 @@ export default function HomePage() {
           )}
         </div>
 
-        {/* DPAD / A / B / Select / Start */}
+        {/* DPAD / A / B / Select / Start - all absolutely positioned inside the shell container */}
         {/* Up */}
         <img
           src="/RuneBoys/up_2.png"
@@ -272,13 +271,13 @@ export default function HomePage() {
           className="absolute z-10 cursor-pointer"
           style={{
             width: '10%',
-            top: '65%',
+            top: '74%',
             left: '16%',
             imageRendering: 'pixelated',
           }}
           onClick={() => {
             if (anyOverlayOpen) {
-              const event = new KeyboardEvent('keydown', { key: 'ArrowUp' });
+              const event = new window.KeyboardEvent('keydown', { key: 'ArrowUp' });
               window.dispatchEvent(event);
             } else {
               setSelectedIndex(prev => (prev - 1 + options.length) % options.length);
@@ -293,13 +292,13 @@ export default function HomePage() {
           className="absolute z-10 cursor-pointer"
           style={{
             width: '10%',
-            top: '72%',
+            top: '82%',
             left: '16%',
             imageRendering: 'pixelated',
           }}
           onClick={() => {
             if (anyOverlayOpen) {
-              const event = new KeyboardEvent('keydown', { key: 'ArrowDown' });
+              const event = new window.KeyboardEvent('keydown', { key: 'ArrowDown' });
               window.dispatchEvent(event);
             } else {
               setSelectedIndex(prev => (prev + 1) % options.length);
@@ -314,13 +313,13 @@ export default function HomePage() {
           className="absolute z-10 cursor-pointer"
           style={{
             width: '10%',
-            top: '69%',
+            top: '79%',
             left: '8%',
             imageRendering: 'pixelated',
           }}
           onClick={() => {
             if (anyOverlayOpen) {
-              const event = new KeyboardEvent('keydown', { key: 'ArrowLeft' });
+              const event = new window.KeyboardEvent('keydown', { key: 'ArrowLeft' });
               window.dispatchEvent(event);
             } else {
               setSelectedIndex(prev => (prev - 1 + options.length) % options.length);
@@ -335,13 +334,13 @@ export default function HomePage() {
           className="absolute z-10 cursor-pointer"
           style={{
             width: '10%',
-            top: '69%',
+            top: '79%',
             left: '25%',
             imageRendering: 'pixelated',
           }}
           onClick={() => {
             if (anyOverlayOpen) {
-              const event = new KeyboardEvent('keydown', { key: 'ArrowRight' });
+              const event = new window.KeyboardEvent('keydown', { key: 'ArrowRight' });
               window.dispatchEvent(event);
             } else {
               setSelectedIndex(prev => (prev + 1) % options.length);
@@ -356,46 +355,46 @@ export default function HomePage() {
           className="absolute z-10 cursor-pointer"
           style={{
             width: '8%',
-            top: '69%',
+            top: '79%',
             left: '17%',
             imageRendering: 'pixelated',
           }}
           onClick={() => {
-            const event = new KeyboardEvent('keydown', { key: 'Enter' });
+            const event = new window.KeyboardEvent('keydown', { key: 'Enter' });
             window.dispatchEvent(event);
           }}
         />
 
-        {/* Button A - moved down */}
+        {/* Button A */}
         <img
           src="/RuneBoys/A_2.png"
           alt="A Button"
           className="absolute z-10 cursor-pointer"
           style={{
             width: '12%',
-            top: '67%',
-            right: '17%',
+            top: '72%',
+            right: '15%',
             imageRendering: 'pixelated',
           }}
           onClick={() => {
-            const event = new KeyboardEvent('keydown', { key: 'Enter' });
+            const event = new window.KeyboardEvent('keydown', { key: 'Enter' });
             window.dispatchEvent(event);
           }}
         />
 
-        {/* Button B - moved down */}
+        {/* Button B */}
         <img
           src="/RuneBoys/B_2.png"
           alt="B Button"
           className="absolute z-10 cursor-pointer"
           style={{
             width: '12%',
-            top: '74%',
-            right: '25%',
+            top: '77%',
+            right: '35%',
             imageRendering: 'pixelated',
           }}
           onClick={() => {
-            const event = new KeyboardEvent('keydown', { key: 'Escape' });
+            const event = new window.KeyboardEvent('keydown', { key: 'Escape' });
             window.dispatchEvent(event);
           }}
         />
@@ -407,7 +406,7 @@ export default function HomePage() {
           className="absolute z-10 cursor-pointer"
           style={{
             width: '10%',
-            bottom: '12%',
+            bottom: '5%',
             left: '38%',
             imageRendering: 'pixelated',
           }}
@@ -420,7 +419,7 @@ export default function HomePage() {
           className="absolute z-10 cursor-pointer"
           style={{
             width: '10%',
-            bottom: '12%',
+            bottom: '5%',
             left: '52%',
             imageRendering: 'pixelated',
           }}
