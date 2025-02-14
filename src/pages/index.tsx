@@ -268,11 +268,11 @@ export default function HomePage() {
         <img
           src="/RuneBoys/up_2.png"
           alt="Up Button"
-          className="absolute z-10 cursor-pointer"
+          className="absolute z-10 cursor-pointer hover:scale-105 active:scale-95 active:brightness-90 transition-all duration-150"
           style={{
-            width: '10%',
-            top: '74%',
-            left: '16%',
+            width: '9.1%',
+            top: '73.2%',
+            left: '15.8%',
             imageRendering: 'pixelated',
           }}
           onClick={() => {
@@ -289,11 +289,11 @@ export default function HomePage() {
         <img
           src="/RuneBoys/down_2.png"
           alt="Down Button"
-          className="absolute z-10 cursor-pointer"
+          className="absolute z-10 cursor-pointer hover:scale-105 active:scale-95 active:brightness-90 transition-all duration-150"
           style={{
-            width: '10%',
-            top: '82%',
-            left: '16%',
+            width: '10.4%',
+            top: '83.5%',
+            left: '15.8%',
             imageRendering: 'pixelated',
           }}
           onClick={() => {
@@ -310,11 +310,11 @@ export default function HomePage() {
         <img
           src="/RuneBoys/left_2.png"
           alt="Left Button"
-          className="absolute z-10 cursor-pointer"
+          className="absolute z-10 cursor-pointer hover:scale-105 active:scale-95 active:brightness-90 transition-all duration-150"
           style={{
-            width: '10%',
+            width: '12.1%',
             top: '79%',
-            left: '8%',
+            left: '5%',
             imageRendering: 'pixelated',
           }}
           onClick={() => {
@@ -331,11 +331,11 @@ export default function HomePage() {
         <img
           src="/RuneBoys/right_2.png"
           alt="Right Button"
-          className="absolute z-10 cursor-pointer"
+          className="absolute z-10 cursor-pointer hover:scale-105 active:scale-95 active:brightness-90 transition-all duration-150"
           style={{
-            width: '10%',
+            width: '10.8%',
             top: '79%',
-            left: '25%',
+            left: '24.8%',
             imageRendering: 'pixelated',
           }}
           onClick={() => {
@@ -369,7 +369,7 @@ export default function HomePage() {
         <img
           src="/RuneBoys/A_2.png"
           alt="A Button"
-          className="absolute z-10 cursor-pointer"
+          className="absolute z-10 cursor-pointer hover:scale-105 active:scale-95 active:brightness-90 transition-all duration-150"
           style={{
             width: '12%',
             top: '72%',
@@ -386,7 +386,7 @@ export default function HomePage() {
         <img
           src="/RuneBoys/B_2.png"
           alt="B Button"
-          className="absolute z-10 cursor-pointer"
+          className="absolute z-10 cursor-pointer hover:scale-105 active:scale-95 active:brightness-90 transition-all duration-150"
           style={{
             width: '12%',
             top: '77%',
