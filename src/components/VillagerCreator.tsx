@@ -1,404 +1,195 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useGlobalControls } from '../hooks/useGlobalControls';
+import { ConfirmLeaveModal } from './ConfirmLeaveModal';
 
-type VillagerAssets = {
-  background?: string[];
-  bottoms?: string[];
-  tops?: string[];
-  facial_hair?: string[];
-  heads?: string[];
-  [key: string]: string[] | undefined;
-};
+type PaneFocus = 'traits' | 'items';
 
-interface VillagerCreatorProps {
-  onClose?: () => void;
-}
+/** Mark which categories show text vs images. */
+const TEXT_CATEGORIES = ['skinTone','headNumber','eyeColor'] as const;
 
-interface SelectedParts {
-  [key: string]: string;
-}
-
-/** Text-based categories that won't have images. */
-const EXTRA_CATEGORIES_DATA: Record<string, string[]> = {
-  skinTone: ['light', 'med', 'dark', 'odd'],
-  eyeColor: ['black', 'blue', 'brown', 'green', 'purple'],
-};
-
-/** The main categories. We handle 'hair' with a special 3-level approach. */
+/** The main categories in the desired order. */
 const CATEGORY_ORDER = [
   'skinTone',
+  'headNumber',
   'eyeColor',
-  'head',
-  'hair', // special
+  'hairStyle',
+  'hairColor',
   'facial_hair',
   'tops',
   'bottoms',
   'background',
 ];
 
-/** PaneFocus for multi-level approach. */
-type PaneFocus = 'traits' | 'items' | 'hairStyle' | 'hairColor';
+/** Constants for text-based categories. */
+const SKIN_TONES = ['light','med','dark','odd'];
+const HEAD_NUMBERS = ['Head 1','Head 2','Head 3','Head 4'];
+const EYE_COLORS = ['black','blue','brown','green','purple'];
 
-/** Check if a trait is image-based for a 2-col grid (except hair). */
-function isImageTrait(trait: string) {
-  if (trait === 'skinTone' || trait === 'eyeColor') return false;
-  return true;
+/** Hair style/color. */
+const HAIR_STYLES = ['none','afro','bangs','long','messy','pigtails','ponytail','wavy'];
+const HAIR_COLORS = ['black','blonde','blue','brown','green','orange','pink','purple','red','white'];
+
+/** Convert HEAD_NUMBERS label -> numeric string. */
+function parseHeadNumber(label: string): string {
+  // e.g. "Head 2" => "2"
+  const match = label.match(/\d+$/);
+  if (!match) return '1';
+  return match[0];
 }
 
-/** Convert raw filename or category to a nice label. */
-function getSanitizedLabel(item: string): string {
-  if (item === 'none') return 'None';
-  if (item === 'hair_0.png') return 'No Hair';
-
-  let label = item.replace(/\.[^.]+$/, ''); // remove extension
-  label = label.replace(/_/g, ' '); // underscores => spaces
-  label = label.replace(/\b\w/g, c => c.toUpperCase()); // uppercase each word
-  return label.trim();
+/** Check if a category is text or image-based. */
+function isTextCategory(trait: string): boolean {
+  return TEXT_CATEGORIES.includes(trait as any);
 }
 
-/** The hair style + color lists. */
-const HAIR_STYLES = ['none', 'afro', 'bangs', 'long', 'messy', 'pigtails', 'ponytail', 'wavy'];
-const HAIR_COLORS = [
-  'black',
-  'blonde',
-  'blue',
-  'brown',
-  'green',
-  'orange',
-  'pink',
-  'purple',
-  'red',
-  'white',
-];
+interface VillagerAssets {
+  facial_hair?: string[];
+  tops?: string[];
+  bottoms?: string[];
+  background?: string[];
+  [key: string]: string[] | undefined;   // catch-all
+}
 
-export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
-  // Basic states
-  const [skinTone, setSkinTone] = useState('light');
-  const [eyeColor, setEyeColor] = useState('blue');
-  const [assets, setAssets] = useState<VillagerAssets>({});
+interface SelectedParts {
+  // text-based categories
+  skinTone: string;
+  headNumber: string;
+  eyeColor: string;
 
+  // final filenames for head, eyes
+  head?: string;  
+  eyes?: string;
+
+  hairStyle: string;
+  hairColor: string;
+  hair?: string;
+
+  facial_hair?: string;
+  tops?: string;
+  bottoms?: string;
+  background?: string;
+}
+
+export default function VillagerCreator({ onClose }: { onClose?: () => void }) {
+  const [paneFocus, setPaneFocus] = useState<PaneFocus>('traits');
   const [traitIndex, setTraitIndex] = useState(0);
   const [itemIndex, setItemIndex] = useState(0);
 
-  const [paneFocus, setPaneFocus] = useState<PaneFocus>('traits');
-  const [selectedParts, setSelectedParts] = useState<SelectedParts>({});
-
-  // Filtered heads based on skinTone
-  const [filteredHeads, setFilteredHeads] = useState<string[]>([]);
-
-  // hair style + color indexes
-  const [hairStyleIndex, setHairStyleIndex] = useState(0);
-  const [hairColorIndex, setHairColorIndex] = useState(0);
-
-  // We'll track the "last chosen hair color" so that when we highlight a new style,
-  // we can do a live preview with hair_{style}_{lastColor}.png
-  const [lastHairColor, setLastHairColor] = useState('black'); // default if user never picked a color
-
-  // Refs for scrolling
   const traitListRef = useRef<HTMLDivElement | null>(null);
   const itemListRef = useRef<HTMLDivElement | null>(null);
 
-  /** On mount, fetch assets (except hair, which is handled statically). */
+  const [assets, setAssets] = useState<VillagerAssets>({});
+  const [selectedParts, setSelectedParts] = useState<SelectedParts>({
+    skinTone: 'light',
+    headNumber: 'Head 1',
+    eyeColor: 'blue',
+    hairStyle: 'none',
+    hairColor: 'black',
+  });
+
+  const [showConfirm, setShowConfirm] = useState(false);
+
   useEffect(() => {
     async function fetchAssets() {
       try {
         const res = await fetch('/api/villager-assets');
         const data: VillagerAssets = await res.json();
-
-        // ensure "none" for facial hair if not present
         if (data.facial_hair && !data.facial_hair.includes('none')) {
           data.facial_hair.unshift('none');
         }
-
         setAssets(data);
 
-        // init selectedParts
-        const initParts: SelectedParts = {};
-        CATEGORY_ORDER.forEach(cat => {
-          if (cat === 'hair') {
-            initParts[cat] = 'hair_0.png'; // default to no hair
-          } else if (EXTRA_CATEGORIES_DATA[cat]) {
-            initParts[cat] = EXTRA_CATEGORIES_DATA[cat][0] || '';
-          } else {
-            const arr = data[cat === 'facial_hair' ? 'facial_hair' : cat] || [];
-            initParts[cat] = arr.length > 0 ? arr[0] : '';
-          }
-        });
-        initParts.facial_hair = 'beard_0.png'; // Changed from hair_0.png
-        setSelectedParts(initParts);
+        const sp: SelectedParts = { ...selectedParts };
+
+        // default for facial hair, tops, bottoms, background if available
+        sp.facial_hair = data.facial_hair && data.facial_hair.length>0 
+          ? data.facial_hair[0] : 'none';
+        sp.tops = data.tops && data.tops.length>0 ? data.tops[0] : '';
+        sp.bottoms = data.bottoms && data.bottoms.length>0 ? data.bottoms[0] : '';
+        sp.background = data.background && data.background.length>0 ? data.background[0] : '';
+
+        finalizeHeadAndEyes(sp);
+        finalizeHair(sp);
+
+        setSelectedParts(sp);
       } catch (err) {
-        console.error('Error fetching villager assets:', err);
+        console.error('Failed to fetch villager assets:', err);
       }
     }
-
     fetchAssets();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /** Filter heads by skinTone. */
-  useEffect(() => {
-    if (!assets.heads || assets.heads.length === 0) {
-      setFilteredHeads([]);
-      return;
-    }
-    const headsForTone = assets.heads.filter(h => h.toLowerCase().includes(`_${skinTone}.`));
-    setFilteredHeads(headsForTone);
-  }, [assets.heads, skinTone]);
-
-  /** If the selected head is not in filteredHeads, reset it. */
-  useEffect(() => {
-    const currentHead = selectedParts.head;
-    if (filteredHeads.length > 0 && !filteredHeads.includes(currentHead)) {
-      setSelectedParts(prev => ({ ...prev, head: filteredHeads[0] }));
-    }
-  }, [filteredHeads, selectedParts.head]);
-
-  /** getPossibleItemsForTrait => normal items for a trait (except hair). */
-  function getPossibleItemsForTrait(trait: string): string[] {
-    if (trait === 'head') {
-      return filteredHeads;
-    }
-    if (EXTRA_CATEGORIES_DATA[trait]) {
-      return EXTRA_CATEGORIES_DATA[trait];
-    }
-    if (trait === 'hair') {
-      return []; // we do hair sub-menus
-    }
-    if (trait === 'facial_hair') {
-      return [
-        'beard_0.png',
-        'beard_black.png',
-        'beard_blonde.png',
-        'beard_blue.png',
-        'beard_brown.png',
-        'beard_orange.png',
-        'mustache_black.png',
-        'mustache_blonde.png',
-        'mustache_blue.png',
-        'mustache_brown.png',
-        'mustache_orange.png',
-      ];
-    }
-    const realKey = trait === 'facial_hair' ? 'facial_hair' : trait;
-    return assets[realKey] || [];
+  /** Recalc HEAD/EYES from headNumber, skinTone, eyeColor. */
+  function finalizeHeadAndEyes(sp: SelectedParts){
+    const num = parseHeadNumber(sp.headNumber);
+    sp.head = `head_${num}_${sp.skinTone}.png`;
+    sp.eyes = `eyes_${num}_${sp.eyeColor}.png`;
   }
 
-  /** Preview an item in the normal item list. */
-  function previewItemSelection(trait: string, item: string) {
-    setSelectedParts(prev => {
-      const updated = { ...prev, [trait]: item };
-      if (trait === 'skinTone') setSkinTone(item);
-      if (trait === 'eyeColor') setEyeColor(item);
-      return updated;
-    });
-  }
-
-  function saveVillager() {
-    console.log('Villager metadata:', { ...selectedParts, skinTone, eyeColor });
-  }
-
-  /** handleAction => from traits → items/hair, or finalize item → traits, or handle hair style/color. */
-  function handleAction() {
-    if (paneFocus === 'traits') {
-      const trait = CATEGORY_ORDER[traitIndex];
-      if (trait === 'hair') {
-        // go to hairStyle sub menu
-        setPaneFocus('hairStyle');
-        setHairStyleIndex(0);
-        // do an immediate preview for style index 0
-        previewHairStyle(0);
-      } else {
-        // normal items approach
-        setPaneFocus('items');
-        setItemIndex(0);
-        const items = getPossibleItemsForTrait(trait);
-        const currentVal = selectedParts[trait];
-        const startIdx = items.indexOf(currentVal);
-        setItemIndex(startIdx >= 0 ? startIdx : 0);
-      }
-    } else if (paneFocus === 'items') {
-      // finalize => back to traits
-      setPaneFocus('traits');
-    } else if (paneFocus === 'hairStyle') {
-      // user picks style
-      const style = HAIR_STYLES[hairStyleIndex];
-      if (style === 'none') {
-        // finalize => hair_0.png
-        setSelectedParts(prev => ({ ...prev, hair: 'hair_0.png' }));
-        setPaneFocus('traits');
-      } else {
-        // go to hairColor
-        setHairColorIndex(0);
-        // also do an immediate preview for color 0
-        previewHairColor(hairColorIndex, style);
-        setPaneFocus('hairColor');
-      }
-    } else if (paneFocus === 'hairColor') {
-      // finalize => hair_{style}_{color}.png
-      const style = HAIR_STYLES[hairStyleIndex];
-      const color = HAIR_COLORS[hairColorIndex];
-      finalizeHair(style, color);
-      setPaneFocus('traits');
-    }
-  }
-
-  /** B => go back within sub menus, or do nothing in traits. */
-  function handleSecondary() {
-    if (paneFocus === 'items') {
-      setPaneFocus('traits');
-    } else if (paneFocus === 'hairStyle') {
-      setPaneFocus('traits');
-    } else if (paneFocus === 'hairColor') {
-      // go back to hairStyle
-      setPaneFocus('hairStyle');
-      // revert preview to the style-level highlight
-      previewHairStyle(hairStyleIndex);
-    }
-  }
-
-  /** For 2D navigation in items (non-hair). */
-  function moveItemHighlight(deltaRow: number, deltaCol: number) {
-    const trait = CATEGORY_ORDER[traitIndex];
-    const items = getPossibleItemsForTrait(trait);
-    const columns = isImageTrait(trait) ? 2 : 1;
-    const total = items.length;
-    if (total === 0) return;
-
-    const row = Math.floor(itemIndex / columns);
-    const col = itemIndex % columns;
-    const rowCount = Math.ceil(total / columns);
-
-    let newRow = row + deltaRow;
-    let newCol = col + deltaCol;
-
-    if (newRow < 0) newRow = 0;
-    if (newRow >= rowCount) newRow = rowCount - 1;
-    if (newCol < 0) newCol = 0;
-    if (newCol >= columns) newCol = columns - 1;
-
-    let newIndex = newRow * columns + newCol;
-    if (newIndex >= total) {
-      // clamp to last item in that row
-      const lastInRow =
-        rowCount === newRow + 1
-          ? total - 1
-          : (newRow + 1) * columns - 1;
-      newIndex = Math.min(newIndex, lastInRow);
-    }
-
-    previewItemSelection(trait, items[newIndex]);
-    setItemIndex(newIndex);
-    scrollIntoView(itemListRef, newIndex, total);
-  }
-
-  /** hairStyle => single column, immediate preview with last color or black. */
-  function moveHairStyleHighlight(delta: number) {
-    const length = HAIR_STYLES.length;
-    if (length === 0) return;
-    let newIndex = hairStyleIndex + delta;
-    if (newIndex < 0) newIndex = 0;
-    if (newIndex >= length) newIndex = length - 1;
-    setHairStyleIndex(newIndex);
-    scrollIntoView(itemListRef, newIndex, length);
-    previewHairStyle(newIndex);
-  }
-
-  /** hairColor => single column, immediate preview. */
-  function moveHairColorHighlight(delta: number) {
-    const length = HAIR_COLORS.length;
-    if (length === 0) return;
-    let newIndex = hairColorIndex + delta;
-    if (newIndex < 0) newIndex = 0;
-    if (newIndex >= length) newIndex = length - 1;
-    setHairColorIndex(newIndex);
-    scrollIntoView(itemListRef, newIndex, length);
-
-    // preview style + color
-    const style = HAIR_STYLES[hairStyleIndex];
-    previewHairColor(newIndex, style);
-  }
-
-  /** If user highlights a style in the style menu, we do a fallback color => lastHairColor or 'black'. */
-  function previewHairStyle(newStyleIndex: number) {
-    const style = HAIR_STYLES[newStyleIndex];
-    if (style === 'none') {
-      // hair_0
-      setSelectedParts(prev => ({ ...prev, hair: 'hair_0.png' }));
+  /** Recalc HAIR from hairStyle, hairColor. */
+  function finalizeHair(sp: SelectedParts){
+    if(sp.hairStyle==='none'){
+      sp.hair = 'hair_0.png';
     } else {
-      const color = lastHairColor || 'black';
-      const filename = `hair_${style}_${color}.png`;
-      setSelectedParts(prev => ({ ...prev, hair: filename }));
+      sp.hair = `hair_${sp.hairStyle}_${sp.hairColor}.png`;
     }
   }
 
-  /** If user highlights a color in the color menu, we do style + color. */
-  function previewHairColor(newColorIndex: number, style: string) {
-    const color = HAIR_COLORS[newColorIndex];
-    const filename = `hair_${style}_${color}.png`;
-    setSelectedParts(prev => ({ ...prev, hair: filename }));
-  }
-
-  /** finalize hair => store style+color in lastHairColor, set hair, etc. */
-  function finalizeHair(style: string, color: string) {
-    setLastHairColor(color);
-    const filename = `hair_${style}_${color}.png`;
-    setSelectedParts(prev => ({ ...prev, hair: filename }));
-  }
-
+  /** Keyboard controls */
   function handleUp() {
-    if (paneFocus === 'traits') {
+    if (paneFocus==='traits') {
       setTraitIndex(prev => {
-        const newIndex = (prev - 1 + CATEGORY_ORDER.length) % CATEGORY_ORDER.length;
-        scrollIntoView(traitListRef, newIndex, CATEGORY_ORDER.length);
-        return newIndex;
+        const next = (prev -1 + CATEGORY_ORDER.length) % CATEGORY_ORDER.length;
+        scrollIntoView(traitListRef, next, CATEGORY_ORDER.length);
+        return next;
       });
-    } else if (paneFocus === 'items') {
-      moveItemHighlight(-1, 0);
-    } else if (paneFocus === 'hairStyle') {
-      moveHairStyleHighlight(-1);
-    } else if (paneFocus === 'hairColor') {
-      moveHairColorHighlight(-1);
+    } else {
+      moveItemHighlight(-1,0);
     }
   }
-
   function handleDown() {
-    if (paneFocus === 'traits') {
+    if (paneFocus==='traits') {
       setTraitIndex(prev => {
-        const newIndex = (prev + 1) % CATEGORY_ORDER.length;
-        scrollIntoView(traitListRef, newIndex, CATEGORY_ORDER.length);
-        return newIndex;
+        const next = (prev+1) % CATEGORY_ORDER.length;
+        scrollIntoView(traitListRef, next, CATEGORY_ORDER.length);
+        return next;
       });
-    } else if (paneFocus === 'items') {
-      moveItemHighlight(1, 0);
-    } else if (paneFocus === 'hairStyle') {
-      moveHairStyleHighlight(1);
-    } else if (paneFocus === 'hairColor') {
-      moveHairColorHighlight(1);
+    } else {
+      moveItemHighlight(1,0);
     }
   }
-
   function handleLeft() {
-    if (paneFocus === 'items') {
-      moveItemHighlight(0, -1);
+    if (paneFocus==='items') {
+      moveItemHighlight(0,-1);
     }
   }
-
   function handleRight() {
-    if (paneFocus === 'items') {
-      moveItemHighlight(0, 1);
+    if (paneFocus==='items') {
+      moveItemHighlight(0,1);
     }
   }
-
-  function scrollIntoView(
-    ref: React.RefObject<HTMLDivElement | null>,
-    idx: number,
-    length: number
-  ) {
-    if (!ref.current) return;
-    const children = ref.current.children;
-    const normalized = (idx + length) % length;
-    if (normalized < 0 || normalized >= children.length) return;
-    const child = children[normalized] as HTMLElement;
-    child.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  function handleAction() {
+    if (paneFocus==='traits') {
+      setPaneFocus('items');
+      setItemIndex(0);
+      const trait = CATEGORY_ORDER[traitIndex];
+      const arr = getPossibleItems(trait);
+      const currentVal = getCurrentValue(trait);
+      const start = arr.indexOf(currentVal);
+      setItemIndex(start>=0? start:0);
+    } else {
+      // close items
+      setPaneFocus('traits');
+    }
+  }
+  function handleSecondary(){
+    if (paneFocus==='items') {
+      setPaneFocus('traits');
+    }
+  }
+  function handleStart(){
+    saveVillager();
   }
 
   useGlobalControls({
@@ -408,310 +199,277 @@ export default function VillagerCreator({ onClose }: VillagerCreatorProps) {
     onRight: handleRight,
     onAction: handleAction,
     onSecondary: handleSecondary,
+    onB: handleSecondary,
     onEscape: onClose,
+    onStart: handleStart
   });
 
-  const currentTraitKey = CATEGORY_ORDER[traitIndex];
-  const selectedValue = selectedParts[currentTraitKey] || '';
-
-  function getAssetUrl(trait: string, item: string) {
-    if (!isImageTrait(trait)) return null;
-    if (item === 'none') return null;
-    // Use the item directly as it matches filenames
-    const filename = item.split('/').pop() || item;
-    return `/assets/villagers/${trait}/${filename}`;
+  function saveVillager(){
+    console.log('Saving villager: ', selectedParts);
   }
 
-  function getPreviewLabel(): string {
-    return getSanitizedLabel(selectedValue);
+  /** Return array of possible items for a category. */
+  function getPossibleItems(trait: string): string[] {
+    switch(trait){
+      case 'skinTone': return SKIN_TONES;
+      case 'headNumber': return HEAD_NUMBERS;
+      case 'eyeColor': return EYE_COLORS;
+      case 'hairStyle': return HAIR_STYLES;
+      case 'hairColor': return HAIR_COLORS;
+      default:
+        return assets[trait] || [];
+    }
   }
 
-  // The items for non-hair traits
-  const possibleItems = getPossibleItemsForTrait(currentTraitKey);
-
-  function renderTraitList() {
-    return (
-      <div
-        ref={traitListRef}
-        className="flex-1 overflow-y-auto border-2 border-[#333d02] p-2 no-scrollbar absolute inset-0"
-      >
-        {CATEGORY_ORDER.map((trait, i) => {
-          const isSelected = i === traitIndex;
-          const label = getSanitizedLabel(trait);
-          return (
-            <div
-              key={trait}
-              className={`
-                mb-1 px-2 py-1 uppercase text-[12px] font-['MekMono'] cursor-default break-all
-                ${
-                  isSelected
-                    ? 'bg-yellow-400/30 border border-yellow-400 blinking-border'
-                    : 'border border-transparent'
-                }
-              `}
-            >
-              {label}
-              {isSelected && (
-                <style jsx>{`
-                  @keyframes borderBlink {
-                    0% {
-                      border-color: #facc15;
-                    }
-                    50% {
-                      border-color: transparent;
-                    }
-                    100% {
-                      border-color: #facc15;
-                    }
-                  }
-                  .blinking-border {
-                    animation: borderBlink 1s ease-in-out infinite;
-                  }
-                `}</style>
-              )}
-            </div>
-          );
-        })}
-      </div>
-    );
+  /** Return the current string value for a trait in selectedParts. */
+  function getCurrentValue(trait: string): string {
+    return (selectedParts as any)[trait] || '';
   }
 
-  function renderItemsMenu() {
-    // normal items approach for non-hair traits
+  function moveItemHighlight(deltaRow: number, deltaCol: number){
     const trait = CATEGORY_ORDER[traitIndex];
-    const columns = isImageTrait(trait) ? 2 : 1;
-    const gridClass = columns === 2 ? 'grid grid-cols-2 gap-2' : 'block';
+    const items = getPossibleItems(trait);
+    if (!items || items.length===0) return;
 
-    return (
-      <div
-        ref={itemListRef}
-        className={`
-          flex-1 overflow-y-auto border-2 border-[#333d02] p-2 no-scrollbar
-          absolute inset-0
-          ${gridClass}
-        `}
-      >
-        {possibleItems.map((item, idx) => {
-          const isSelected = idx === itemIndex;
-          const src = getAssetUrl(trait, item) || ''; // fallback
-          const label = getSanitizedLabel(item);
-          return (
-            <div
-              key={`${item}-${idx}`}
-              className={`
-                relative flex items-center justify-center 
-                uppercase text-[12px] font-['MekMono'] cursor-default break-all
-                border border-transparent
-                ${isSelected ? 'bg-yellow-400/30 border border-yellow-400 blinking-border' : ''}
-                px-1 py-1
-              `}
-              style={{ minHeight: '48px' }}
-            >
-              {src ? (
-                <img
-                  src={src}
-                  alt={label}
-                  style={{ width: '48px', height: '48px', objectFit: 'contain' }}
-                />
-              ) : (
-                <span>{label}</span>
-              )}
-              {isSelected && (
-                <style jsx>{`
-                  @keyframes borderBlink {
-                    0% {
-                      border-color: #facc15;
-                    }
-                    50% {
-                      border-color: transparent;
-                    }
-                    100% {
-                      border-color: #facc15;
-                    }
-                  }
-                  .blinking-border {
-                    animation: borderBlink 1s ease-in-out infinite;
-                  }
-                `}</style>
-              )}
-            </div>
-          );
-        })}
-      </div>
-    );
+    const columns = isTextCategory(trait)? 1: 2;
+    const total = items.length;
+    const row = Math.floor(itemIndex/columns);
+    const col = itemIndex%columns;
+    let newRow = row+deltaRow;
+    let newCol = col+deltaCol;
+
+    const rowCount = Math.ceil(total/columns);
+    if(newRow<0) newRow=0;
+    if(newRow>=rowCount) newRow=rowCount-1;
+    if(newCol<0) newCol=0;
+    if(newCol>=columns) newCol=columns-1;
+
+    let newIndex = newRow*columns + newCol;
+    if(newIndex>=total){
+      const lastInRow = (rowCount===(newRow+1)) ? (total-1) : ((newRow+1)*columns -1);
+      newIndex = Math.min(newIndex,lastInRow);
+    }
+
+    previewSelection(trait, items[newIndex]);
+    setItemIndex(newIndex);
+    scrollIntoView(itemListRef, newIndex, total);
   }
 
-  function renderHairStyleMenu() {
-    return (
-      <div
-        ref={itemListRef}
-        className="flex-1 overflow-y-auto border-2 border-[#333d02] p-2 no-scrollbar absolute inset-0"
-      >
-        {HAIR_STYLES.map((style, idx) => {
-          const isSelected = idx === hairStyleIndex;
-          const label =
-            style === 'none'
-              ? 'No Hair'
-              : style.replace(/\b\w/g, c => c.toUpperCase());
-          return (
-            <div
-              key={style}
-              className={`
-                mb-1 px-2 py-1 uppercase text-[12px] font-['MekMono'] cursor-default break-all
-                border border-transparent
-                ${
-                  isSelected
-                    ? 'bg-yellow-400/30 border border-yellow-400 blinking-border'
-                    : ''
-                }
-              `}
-            >
-              {label}
-              {isSelected && (
-                <style jsx>{`
-                  @keyframes borderBlink {
-                    0% {
-                      border-color: #facc15;
-                    }
-                    50% {
-                      border-color: transparent;
-                    }
-                    100% {
-                      border-color: #facc15;
-                    }
-                  }
-                  .blinking-border {
-                    animation: borderBlink 1s ease-in-out infinite;
-                  }
-                `}</style>
-              )}
-            </div>
-          );
-        })}
-      </div>
-    );
+  /** Called as user highlights an item in the items pane. */
+  function previewSelection(trait: string, val: string){
+    const sp = {...selectedParts};
+    if(trait==='skinTone'){
+      sp.skinTone = val;
+      finalizeHeadAndEyes(sp);
+    } else if(trait==='headNumber'){
+      sp.headNumber = val;
+      finalizeHeadAndEyes(sp);
+    } else if(trait==='eyeColor'){
+      sp.eyeColor = val;
+      finalizeHeadAndEyes(sp);
+    } else if(trait==='hairStyle'){
+      sp.hairStyle = val;
+      finalizeHair(sp);
+    } else if(trait==='hairColor'){
+      sp.hairColor = val;
+      finalizeHair(sp);
+    } else {
+      // facial_hair, tops, bottoms, background
+      (sp as any)[trait] = val;
+    }
+    setSelectedParts(sp);
   }
 
-  function renderHairColorMenu() {
-    return (
-      <div
-        ref={itemListRef}
-        className="flex-1 overflow-y-auto border-2 border-[#333d02] p-2 no-scrollbar absolute inset-0"
-      >
-        {HAIR_COLORS.map((color, idx) => {
-          const isSelected = idx === hairColorIndex;
-          const label = color.replace(/\b\w/g, c => c.toUpperCase());
-          return (
-            <div
-              key={color}
-              className={`
-                mb-1 px-2 py-1 uppercase text-[12px] font-['MekMono'] cursor-default break-all
-                border border-transparent
-                ${
-                  isSelected
-                    ? 'bg-yellow-400/30 border border-yellow-400 blinking-border'
-                    : ''
-                }
-              `}
-            >
-              {label}
-              {isSelected && (
-                <style jsx>{`
-                  @keyframes borderBlink {
-                    0% {
-                      border-color: #facc15;
-                    }
-                    50% {
-                      border-color: transparent;
-                    }
-                    100% {
-                      border-color: #facc15;
-                    }
-                  }
-                  .blinking-border {
-                    animation: borderBlink 1s ease-in-out infinite;
-                  }
-                `}</style>
-              )}
-            </div>
-          );
-        })}
-      </div>
-    );
+  /**
+   * Scroll the clicked element into view.
+   * Updated to accept ref as RefObject<HTMLDivElement | null>.
+   */
+  function scrollIntoView(ref: React.RefObject<HTMLDivElement | null>, idx: number, length: number) {
+    if (!ref.current) return;
+    if (idx < 0 || idx >= length) return;
+    const child = ref.current.children[idx] as HTMLElement;
+    if (child) child.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
+
+  /** Optional label above the items grid to show which trait is being selected. */
+  function getTraitLabel(trait: string): string {
+    switch(trait){
+      case 'skinTone': return 'Select Your Skin Tone';
+      case 'headNumber': return 'Select a Head #';
+      case 'eyeColor': return 'Select Your Eye Color';
+      case 'hairStyle': return 'Select Your Hairstyle';
+      case 'hairColor': return 'Select Your Hair Color';
+      case 'facial_hair': return 'Facial Hair';
+      case 'tops': return 'Tops / Shirt';
+      case 'bottoms': return 'Bottoms / Pants';
+      case 'background': return 'Background';
+      default: return 'Select an item';
+    }
+  }
+
+  // final preview parts
+  const { head, eyes, hair, facial_hair, tops, bottoms, background } = selectedParts;
 
   return (
     <div className="w-full h-full bg-[#697c01] text-white flex flex-col relative">
-      {/* Main row => left preview, right menu */}
+      {showConfirm && (
+        <ConfirmLeaveModal
+          onConfirm={() => { setShowConfirm(false); if(onClose) onClose(); }}
+          onCancel={()=> setShowConfirm(false)}
+        />
+      )}
+
       <div className="flex-1 flex flex-row overflow-hidden">
-        {/* LEFT: preview */}
-        <div className="flex-1 border-r-2 border-[#333d02] p-2 flex flex-col items-center justify-start">
-          <h1 className="text-[16px] uppercase font-['MekMono'] mb-1">Character Creator</h1>
-          <div
-            className="relative bg-white border border-gray-700"
-            style={{ width: '160px', height: '160px' }}
-          >
-            {selectedParts.background && (
-              <img
-                src={getAssetUrl('background', selectedParts.background) || ''}
-                alt="bg"
-                className="absolute w-full h-full object-contain"
-              />
+        {/* Left side => preview */}
+        <div className="w-[40%] border-r-2 border-[#333d02] p-2 flex flex-col items-center">
+          <h2 className="text-[16px] uppercase font-['MekMono'] mb-2 text-center">Character</h2>
+          <div className="relative bg-white border border-gray-700" style={{width:'160px', height:'160px'}}>
+            {background && (
+              <img src={background} alt="bg" className="absolute w-full h-full object-contain"/>
             )}
-            {selectedParts.bottoms && (
-              <img
-                src={getAssetUrl('bottoms', selectedParts.bottoms) || ''}
-                alt="bottoms"
-                className="absolute w-full h-full object-contain"
-              />
+            {bottoms && (
+              <img src={bottoms} alt="bottoms" className="absolute w-full h-full object-contain"/>
             )}
-            {selectedParts.tops && (
-              <img
-                src={getAssetUrl('tops', selectedParts.tops) || ''}
-                alt="tops"
-                className="absolute w-full h-full object-contain"
-              />
+            {tops && (
+              <img src={tops} alt="tops" className="absolute w-full h-full object-contain"/>
             )}
-            {selectedParts.head && (
-              <img
-                src={getAssetUrl('head', selectedParts.head) || ''}
-                alt="head"
-                className="absolute w-full h-full object-contain"
-              />
+            {head && (
+              <img src={`/assets/villagers/head/${head}`} alt="head" className="absolute w-full h-full object-contain"/>
             )}
-            {selectedParts.hair && (
-              <img
-                src={getAssetUrl('hair', selectedParts.hair) || ''}
-                alt="hair"
-                className="absolute w-full h-full object-contain"
-              />
+            {eyes && (
+              <img src={`/assets/villagers/eyes/${eyes}`} alt="eyes" className="absolute w-full h-full object-contain"/>
             )}
-            {selectedParts.facial_hair && (
-              <img
-                src={getAssetUrl('facial_hair', selectedParts.facial_hair) || ''}
-                alt="facial_hair"
-                className="absolute w-full h-full object-contain"
-              />
+            {hair && (
+              <img src={`/assets/villagers/hair/${hair}`} alt="hair" className="absolute w-full h-full object-contain"/>
             )}
-          </div>
-          <div className="mt-2 text-center text-[11px] uppercase font-['MekMono'] leading-tight max-w-[160px] break-words">
-            <p className="mb-1">Value:</p>
-            <p className="whitespace-pre-wrap break-words">{getPreviewLabel()}</p>
+            {facial_hair && facial_hair!=='none' && (
+              <img src={facial_hair} alt="facial" className="absolute w-full h-full object-contain"/>
+            )}
           </div>
         </div>
 
-        {/* RIGHT: sub menu depends on paneFocus */}
-        <div className="w-[40%] h-full p-2 flex flex-col relative">
-          {paneFocus === 'traits' && renderTraitList()}
-          {paneFocus === 'items' && renderItemsMenu()}
-          {paneFocus === 'hairStyle' && renderHairStyleMenu()}
-          {paneFocus === 'hairColor' && renderHairColorMenu()}
+        {/* Right side => either trait list or items pane */}
+        <div className="w-[60%] h-full p-2 flex flex-col relative">
+          {paneFocus==='traits' ? (
+            <div ref={traitListRef} className="flex-1 overflow-y-auto border-2 border-[#333d02] p-2 no-scrollbar absolute inset-0">
+              {CATEGORY_ORDER.map((trait, i)=>{
+                const isSelected = (i===traitIndex);
+                return (
+                  <div
+                    key={trait}
+                    className={`
+                      mb-1 px-2 py-1 uppercase text-[12px] font-['MekMono'] cursor-default break-all
+                      ${isSelected? 'bg-yellow-400/30 border border-yellow-400 blinking-border':'border border-transparent'}
+                    `}
+                  >
+                    {trait}
+                    {isSelected && (
+                      <style jsx>{`
+                        @keyframes borderBlink {
+                          0% {border-color:#facc15;}
+                          50% {border-color:transparent;}
+                          100% {border-color:#facc15;}
+                        }
+                        .blinking-border { animation: borderBlink 1s ease-in-out infinite; }
+                      `}</style>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            // items pane
+            <div ref={itemListRef} className="flex-1 overflow-y-auto border-2 border-[#333d02] p-2 no-scrollbar absolute inset-0">
+              <h3 className="text-[10px] font-['MekMono'] uppercase text-center mb-2">
+                {getTraitLabel(CATEGORY_ORDER[traitIndex])}
+              </h3>
+              {(() => {
+                const trait = CATEGORY_ORDER[traitIndex];
+                const items = getPossibleItems(trait);
+                if (items.length===0) {
+                  return (
+                    <div className="text-center text-[12px] text-gray-200 italic">
+                      No items available
+                    </div>
+                  );
+                }
+                const columns = isTextCategory(trait)?1:2;
+                const gridClass = (columns===1)? 'block' : 'grid grid-cols-2 gap-2';
+                return (
+                  <div className={gridClass}>
+                    {items.map((val, idx)=>{
+                      const isSelected = idx===itemIndex;
+                      let displayImg = '';
+                      let displayText = '';
+                      if(!isTextCategory(trait)){
+                        // image-based
+                        if(trait==='headNumber'){
+                          // Actually user wants text, but let's skip images for head # => text-based above
+                          displayText = val;
+                        }
+                        else if(trait==='hairStyle'){
+                          if(val==='none') {
+                            displayImg = '/assets/villagers/hair/hair_0.png';
+                          } else {
+                            displayImg = `/assets/villagers/hair/hair_${val}_${selectedParts.hairColor}.png`;
+                          }
+                        }
+                        else if(trait==='hairColor'){
+                          if(selectedParts.hairStyle==='none'){
+                            displayImg = '/assets/villagers/hair/hair_0.png';
+                          } else {
+                            displayImg = `/assets/villagers/hair/hair_${selectedParts.hairStyle}_${val}.png`;
+                          }
+                        }
+                        else {
+                          // facial_hair, tops, bottoms, background
+                          displayImg = val;
+                        }
+                      } 
+                      else {
+                        // text-based (skinTone, headNumber, eyeColor)
+                        displayText = val;
+                      }
+
+                      return (
+                        <div key={val} className={`
+                          relative flex ${columns===2?'flex-col items-center':'items-start'}
+                          cursor-default break-all uppercase text-[12px] font-['MekMono']
+                          px-1 py-1 border border-transparent
+                          ${isSelected?'bg-yellow-400/30 border border-yellow-400 blinking-border':''}
+                        `} style={{minHeight:'48px'}}>
+                          {displayImg ? (
+                            <img
+                              src={displayImg}
+                              alt={val}
+                              style={{width:'48px',height:'48px',objectFit:'contain'}}
+                            />
+                          ) : null}
+                          {displayText? <span>{displayText}</span> : null}
+
+                          {isSelected && (
+                            <style jsx>{`
+                              @keyframes borderBlink {
+                                0% {border-color:#facc15;}
+                                50% {border-color:transparent;}
+                                100% {border-color:#facc15;}
+                              }
+                              .blinking-border { animation: borderBlink 1s ease-in-out infinite;}
+                            `}</style>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Footer */}
       <div className="text-center text-[10px] py-1 border-t-2 border-[#333d02] font-['MekMono'] uppercase">
-        <p>WASD: Move &nbsp;|&nbsp; A: Select &nbsp;|&nbsp; B: Back &nbsp;|&nbsp; Start: Save</p>
+        <p>WASD: Move | A: Select | B: Back | Start: Save</p>
       </div>
     </div>
   );
