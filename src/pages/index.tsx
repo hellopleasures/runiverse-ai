@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import type { KeyboardEvent } from 'react';
 import dynamic from 'next/dynamic';
 import { useGlobalControls } from '../hooks/useGlobalControls';
+import { RoninConnectButton } from '../components/RoninConnectButton';
+import { RoninExtensionConnectButton } from '../components/RoninExtensionConnectButton';
 
 // Dynamic imports
 const PhaserRuneBoy = dynamic(() => import('../components/Game/PhaserRuneBoy').then(mod => mod.PhaserRuneBoy), { ssr: false });
@@ -25,6 +27,7 @@ export default function HomePage() {
   const [showMint, setShowMint] = useState(false);
   const [showVillagerCreator, setShowVillagerCreator] = useState(false);
 
+  // Menu items
   const options = [
     'Start Game',
     'Characters',
@@ -32,8 +35,8 @@ export default function HomePage() {
     'Runiverse Adventure',
     'Mint',
     'Map',
-    'Options',
-    'Credits',
+    'Connect',
+    'Credits', // replaced by RoninExtensionConnectButton
   ];
 
   // Handle keyboard for main menu
@@ -79,6 +82,12 @@ export default function HomePage() {
             break;
           case 'Map':
             setShowMap(true);
+            break;
+          case 'Connect':
+            // "Connect" => already handled by the RoninConnectButton onClick
+            break;
+          case 'Credits':
+            // "Credits" => replaced by extension connect button
             break;
           default:
             console.log(`Selected: ${currentOption}`);
@@ -141,16 +150,50 @@ export default function HomePage() {
 
         <div className="h-full mx-auto w-[90%] flex items-end">
           <div className="flex flex-row justify-center items-center flex-wrap">
-            {options.map((option, index) => (
-              <div
-                key={option}
-                className={`m-[0.3rem_0] uppercase text-[16px] flex justify-center items-center font-['MekMono'] w-1/2
-                  ${selectedIndex === index ? 'font-bold text-yellow-400 blinking-title' : 'text-white'}
-                `}
-              >
-                {option}
-              </div>
-            ))}
+            {options.map((option, index) => {
+              const isSelected = selectedIndex === index;
+
+              // If the item is "Connect" => show the RoninConnectButton
+              if (option === 'Connect') {
+                return (
+                  <div
+                    key="connect"
+                    className={`m-[0.3rem_0] w-1/2 flex justify-center items-center ${
+                      isSelected ? 'blinking-title text-yellow-400' : 'text-white'
+                    }`}
+                  >
+                    <RoninConnectButton />
+                  </div>
+                );
+              }
+
+              // If the item is "Credits" => show the RoninExtensionConnectButton
+              if (option === 'Credits') {
+                return (
+                  <div
+                    key="credits"
+                    className={`m-[0.3rem_0] w-1/2 flex justify-center items-center ${
+                      isSelected ? 'blinking-title text-yellow-400' : 'text-white'
+                    }`}
+                  >
+                    <RoninExtensionConnectButton />
+                  </div>
+                );
+              }
+
+              // Otherwise show normal text
+              return (
+                <div
+                  key={option}
+                  className={`
+                    m-[0.3rem_0] uppercase text-[16px] flex justify-center items-center font-['MekMono'] w-1/2
+                    ${isSelected ? 'font-bold text-yellow-400 blinking-title' : 'text-white'}
+                  `}
+                >
+                  {option}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -169,13 +212,7 @@ export default function HomePage() {
 
   return (
     <div className="w-screen h-screen bg-[#2d2d2d] overflow-hidden flex items-center justify-center">
-      {/*
-        Outer container: 
-        We remove "h-full" here so the shell container is only as tall as needed
-        to maintain 9:16 aspect ratio, scaling to fill available space but not forced.
-      */}
       <div className="relative max-w-[480px] w-full aspect-[9/16]">
-        {/* Shell image: absolutely fills the container */}
         <img
           src="/RuneBoys/shell_9_16.png"
           alt="Gameboy Shell 9:16"
@@ -183,10 +220,6 @@ export default function HomePage() {
           style={{ imageRendering: 'pixelated' }}
         />
 
-        {/*
-          The "screen" area inside the shell:
-          We'll approximate the position so it lines up with the black area on shell_9_16.png.
-        */}
         <div
           className="absolute"
           style={{
@@ -198,7 +231,6 @@ export default function HomePage() {
             overflow: 'hidden',
           }}
         >
-          {/* If no overlay => show main menu. Otherwise, show the relevant overlay or game. */}
           {!gameStarted &&
             !showCharacterSelect &&
             !showMap &&
@@ -206,8 +238,7 @@ export default function HomePage() {
             !showAdventure &&
             !showMint &&
             !showVillagerCreator &&
-            renderMenu()
-          }
+            renderMenu()}
 
           {gameStarted &&
             !showCharacterSelect &&
@@ -219,7 +250,6 @@ export default function HomePage() {
               <PhaserRuneBoy />
           )}
 
-          {/* Overlays */}
           {showCharacterSelect && (
             <div className="absolute inset-0 bg-black/75">
               <CharacterSelect
@@ -263,7 +293,6 @@ export default function HomePage() {
           )}
         </div>
 
-        {/* DPAD / A / B / Select / Start - all absolutely positioned inside the shell container */}
         {/* Up */}
         <img
           src="/RuneBoys/up_2.png"
