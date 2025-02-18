@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@ethersproject/providers": "^5.7.2",
     "@headlessui/react": "^2.2.0",
     "@rainbow-me/rainbowkit": "^2.2.3",
     "@sky-mavis/waypoint": "^4.1.0",

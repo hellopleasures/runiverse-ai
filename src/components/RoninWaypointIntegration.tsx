@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { authorize, parseRedirectUrl, WaypointProvider } from '@sky-mavis/waypoint';
-import { ethers } from 'ethers';
+import { ethers, parseEther } from 'ethers';
+import type { ExternalProvider } from '@ethersproject/providers';
+import { Web3Provider } from '@ethersproject/providers';
 
 interface RoninWaypointProps {
   /**
-   * Called when the user successfully authorizes with Waypoint
-   * This passes the retrieved token back up to the parent
+   * Called when the user successfully authorizes with Waypoint.
+   * This passes the retrieved token back up to the parent.
    */
   onAuthorize?: (token: string) => void;
 }
@@ -13,19 +15,11 @@ interface RoninWaypointProps {
 const RONIN_CHAIN_ID = 2021; // use 2020 for mainnet, 2021 for Saigon testnet
 const clientId = process.env.NEXT_PUBLIC_RONIN_WAYPOINT_CLIENT_ID || '';
 
-/**
- * Displays buttons to:
- *   1) Authorize with Waypoint (popup or redirect flow)
- *   2) Connect wallet => sign or send transactions
- * Also:
- *   - Persists token in localStorage under "ronin_token"
- */
 export function RoninWaypointIntegration({ onAuthorize }: RoninWaypointProps) {
   const [address, setAddress] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
-  // On mount, parse redirect URL (if mode=redirect)
-  // Also check localStorage for an existing token
+  // On mount, parse redirect URL (if mode=redirect) and check localStorage for a token.
   useEffect(() => {
     const parsed = parseRedirectUrl();
     if (parsed && parsed.token) {
@@ -34,7 +28,6 @@ export function RoninWaypointIntegration({ onAuthorize }: RoninWaypointProps) {
       localStorage.setItem('ronin_token', parsed.token);
       onAuthorize?.(parsed.token);
     } else {
-      // see if we have a stored token from a previous session
       const stored = localStorage.getItem('ronin_token');
       if (stored) {
         setToken(stored);
@@ -81,7 +74,10 @@ export function RoninWaypointIntegration({ onAuthorize }: RoninWaypointProps) {
       console.log('Connected address:', result.address);
       setAddress(result.address || null);
 
-      const web3Provider = new ethers.providers.Web3Provider(waypointProvider);
+      // Use the directly imported Web3Provider
+      const web3Provider = new Web3Provider(
+        waypointProvider as unknown as ExternalProvider
+      );
       const signer = web3Provider.getSigner();
 
       // Example: sign a message
@@ -100,6 +96,7 @@ export function RoninWaypointIntegration({ onAuthorize }: RoninWaypointProps) {
       if (!token) {
         throw new Error('No token found. Please authorize first.');
       }
+
       const waypointProvider = WaypointProvider.create({
         clientId,
         chainId: RONIN_CHAIN_ID,
@@ -107,13 +104,15 @@ export function RoninWaypointIntegration({ onAuthorize }: RoninWaypointProps) {
       });
       await waypointProvider.connect();
 
-      const web3Provider = new ethers.providers.Web3Provider(waypointProvider);
+      const web3Provider = new Web3Provider(
+        waypointProvider as unknown as ExternalProvider
+      );
       const signer = web3Provider.getSigner();
       const to = '0x0000000000000000000000000000000000000001';
 
       const tx = await signer.sendTransaction({
         to,
-        value: ethers.utils.parseEther('0.01'),
+        value: parseEther('0.01'),
       });
       console.log('Transaction sent:', tx.hash);
       const receipt = await tx.wait();
