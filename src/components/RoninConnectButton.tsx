@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { authorize } from '@sky-mavis/waypoint';
 
-export function RoninConnectButton() {
+interface Props {
+  onConnect: () => void;
+}
+
+export const RoninConnectButton: React.FC<Props> = ({ onConnect }) => {
   const [connectedAddress, setConnectedAddress] = useState<string>('');
 
   async function handleConnect() {
@@ -14,6 +18,7 @@ export function RoninConnectButton() {
       console.log('Ronin connect result:', result);
       if (result.address) {
         setConnectedAddress(result.address);
+        onConnect();
       }
     } catch (error) {
       console.error('Error connecting to Ronin:', error);
@@ -29,7 +34,7 @@ export function RoninConnectButton() {
       ) : (
         <button
           onClick={handleConnect}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+          className="uppercase text-white text-[16px] font-['MekMono'] bg-[#004de5] px-3 py-1 rounded-md"
         >
           Ronin Connect
         </button>

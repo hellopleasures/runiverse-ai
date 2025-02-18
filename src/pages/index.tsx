@@ -15,6 +15,17 @@ const CharacterCreation = dynamic(() => import('../components/Game/CharacterCrea
 const VillagerCreator = dynamic(() => import('../components/VillagerCreator'), { ssr: false });
 
 export default function HomePage() {
+  // Add loading state
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Add useEffect for loading timeout
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
   // Main menu state
   const [showCharacterSelect, setShowCharacterSelect] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
@@ -38,6 +49,9 @@ export default function HomePage() {
     'Connect',
     'Credits', // replaced by RoninExtensionConnectButton
   ];
+
+  // Add this new state at the top with other state declarations
+  const [isConnected, setIsConnected] = useState(false);
 
   // Handle keyboard for main menu
   useEffect(() => {
@@ -136,7 +150,7 @@ export default function HomePage() {
   // Helper to render the main menu
   function renderMenu() {
     return (
-      <div className="inline-block border-2 border-[#333] w-full h-full p-2 bg-[url('/img/background.png')] bg-cover bg-center items-center">
+      <div className="inline-block  w-full h-full p-2 bg-[url('/img/background.png')] bg-cover bg-center items-center">
         <style jsx>{`
           @keyframes blink {
             0% { opacity: 1; }
@@ -148,35 +162,38 @@ export default function HomePage() {
           }
         `}</style>
 
-        <div className="h-full mx-auto w-[90%] flex items-end">
+        <div className="h-full mx-auto w-[90%] flex items-end justify-center">
           <div className="flex flex-row justify-center items-center flex-wrap">
             {options.map((option, index) => {
               const isSelected = selectedIndex === index;
+              
+              // Only show Connect/Credits when disconnected
+              if ((option === 'Connect' || option === 'Credits') && isConnected) return null;
+              // Hide other options when disconnected
+              if (!(option === 'Connect' || option === 'Credits') && !isConnected) return null;
 
-              // If the item is "Connect" => show the RoninConnectButton
               if (option === 'Connect') {
                 return (
                   <div
                     key="connect"
-                    className={`m-[0.3rem_0] w-1/2 flex justify-center items-center ${
+                    className={`m-[0.3rem_0] w-full flex justify-center items-center ${
                       isSelected ? 'blinking-title text-yellow-400' : 'text-white'
                     }`}
                   >
-                    <RoninConnectButton />
+                    <RoninConnectButton onConnect={() => setIsConnected(true)} />
                   </div>
                 );
               }
 
-              // If the item is "Credits" => show the RoninExtensionConnectButton
               if (option === 'Credits') {
                 return (
                   <div
                     key="credits"
-                    className={`m-[0.3rem_0] w-1/2 flex justify-center items-center ${
+                    className={`m-[0.3rem_0] w-full flex justify-center items-center ${
                       isSelected ? 'blinking-title text-yellow-400' : 'text-white'
                     }`}
                   >
-                    <RoninExtensionConnectButton />
+                    <RoninExtensionConnectButton onConnect={() => setIsConnected(true)} />
                   </div>
                 );
               }
@@ -223,73 +240,85 @@ export default function HomePage() {
         <div
           className="absolute"
           style={{
-            top: '10%',
-            left: '7%',
-            width: '86%',
+            top: '10.2%',
+            left: '10%',
+            width: '81%',
             aspectRatio: '1',
-            backgroundColor: 'black',
             overflow: 'hidden',
           }}
         >
-          {!gameStarted &&
-            !showCharacterSelect &&
-            !showMap &&
-            !showCharacterCreation &&
-            !showAdventure &&
-            !showMint &&
-            !showVillagerCreator &&
-            renderMenu()}
-
-          {gameStarted &&
-            !showCharacterSelect &&
-            !showMap &&
-            !showCharacterCreation &&
-            !showAdventure &&
-            !showMint &&
-            !showVillagerCreator && (
-              <PhaserRuneBoy />
-          )}
-
-          {showCharacterSelect && (
-            <div className="absolute inset-0 bg-black/75">
-              <CharacterSelect
-                onClose={() => setShowCharacterSelect(false)}
-                onOpenVillagerCreator={() => {
-                  setShowVillagerCreator(true);
-                  setShowCharacterSelect(false);
-                }}
+          {isLoading ? (
+            <div className="absolute inset-0 flex items-center justify-center bg-[#09071b]">
+              <img 
+                src="/img/ronin.gif"
+                alt="Loading..." 
+                className="w-1/2 max-w-[200px]"
+                style={{ imageRendering: 'pixelated' }}
               />
             </div>
-          )}
-          {showMap && (
-            <div className="absolute inset-0 bg-black/75 flex justify-center items-center">
-              <RuniverseMap
-                onClose={() => setShowMap(false)}
-                width={50}
-                height={40}
-                gridSize={32}
-              />
-            </div>
-          )}
-          {showCharacterCreation && (
-            <div className="absolute inset-0 bg-black/85 overflow-y-auto">
-              <CharacterCreation />
-            </div>
-          )}
-          {showAdventure && (
-            <div className="absolute inset-0 bg-black/85">
-              <RuniverseAdventure />
-            </div>
-          )}
-          {showMint && (
-            <div className="absolute inset-0 bg-black/85">
-              <Mint />
-            </div>
-          )}
-          {showVillagerCreator && (
-            <div className="absolute inset-0 bg-black/85">
-              <VillagerCreator onClose={() => setShowVillagerCreator(false)} />
-            </div>
+          ) : (
+            <>
+              {!gameStarted &&
+                !showCharacterSelect &&
+                !showMap &&
+                !showCharacterCreation &&
+                !showAdventure &&
+                !showMint &&
+                !showVillagerCreator &&
+                renderMenu()}
+
+              {gameStarted &&
+                !showCharacterSelect &&
+                !showMap &&
+                !showCharacterCreation &&
+                !showAdventure &&
+                !showMint &&
+                !showVillagerCreator && (
+                  <PhaserRuneBoy />
+              )}
+
+              {showCharacterSelect && (
+                <div className="absolute inset-0 bg-black/75">
+                  <CharacterSelect
+                    onClose={() => setShowCharacterSelect(false)}
+                    onOpenVillagerCreator={() => {
+                      setShowVillagerCreator(true);
+                      setShowCharacterSelect(false);
+                    }}
+                  />
+                </div>
+              )}
+              {showMap && (
+                <div className="absolute inset-0 bg-black/75 flex justify-center items-center">
+                  <RuniverseMap
+                    onClose={() => setShowMap(false)}
+                    width={50}
+                    height={40}
+                    gridSize={32}
+                  />
+                </div>
+              )}
+              {showCharacterCreation && (
+                <div className="absolute inset-0 bg-black/85 overflow-y-auto">
+                  <CharacterCreation />
+                </div>
+              )}
+              {showAdventure && (
+                <div className="absolute inset-0 bg-black/85">
+                  <RuniverseAdventure />
+                </div>
+              )}
+              {showMint && (
+                <div className="absolute inset-0 bg-black/85">
+                  <Mint />
+                </div>
+              )}
+              {showVillagerCreator && (
+                <div className="absolute inset-0 bg-black/85">
+                  <VillagerCreator onClose={() => setShowVillagerCreator(false)} />
+                </div>
+              )}
+            </>
           )}
         </div>
 
