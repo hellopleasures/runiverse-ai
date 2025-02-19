@@ -14,11 +14,12 @@ const RuniverseMap = dynamic(() => import('../components/RuniverseMap'), { ssr: 
 const CharacterCreation = dynamic(() => import('../components/Game/CharacterCreation'), { ssr: false });
 const VillagerCreator = dynamic(() => import('../components/VillagerCreator'), { ssr: false });
 
+// NEW: import our Wallet component
+const WalletComponent = dynamic(() => import('../components/Wallet'), { ssr: false });
+
 export default function HomePage() {
-  // Add loading state
   const [isLoading, setIsLoading] = useState(true);
 
-  // Add useEffect for loading timeout
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -26,17 +27,20 @@ export default function HomePage() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Main menu state
   const [showCharacterSelect, setShowCharacterSelect] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  // Overlays
   const [showMap, setShowMap] = useState(false);
   const [showCharacterCreation, setShowCharacterCreation] = useState(false);
   const [showAdventure, setShowAdventure] = useState(false);
   const [showMint, setShowMint] = useState(false);
   const [showVillagerCreator, setShowVillagerCreator] = useState(false);
+
+  // NEW: track if wallet overlay is open
+  const [showWallet, setShowWallet] = useState(false);
+
+  const [isConnected, setIsConnected] = useState(false);
 
   // Menu items
   const options = [
@@ -46,19 +50,15 @@ export default function HomePage() {
     'Runiverse Adventure',
     'Mint',
     'Map',
+    'Wallet', // <--- new entry
     'Connect',
-    'Credits', // replaced by RoninExtensionConnectButton
+    'Credits',
   ];
 
-  // Add this new state at the top with other state declarations
-  const [isConnected, setIsConnected] = useState(false);
-
-  // Handle keyboard for main menu
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
     function handleKeyDown(e: KeyboardEvent) {
-      // If any overlay is open, skip main menu key handling
       if (
         showCharacterSelect ||
         showMap ||
@@ -66,7 +66,8 @@ export default function HomePage() {
         showAdventure ||
         gameStarted ||
         showVillagerCreator ||
-        showMint
+        showMint ||
+        showWallet // if wallet overlay is open, skip
       ) {
         return;
       }
@@ -97,11 +98,14 @@ export default function HomePage() {
           case 'Map':
             setShowMap(true);
             break;
+          case 'Wallet':
+            setShowWallet(true);
+            break;
           case 'Connect':
-            // "Connect" => already handled by the RoninConnectButton onClick
+            // Do nothing here, button is displayed in the menu
             break;
           case 'Credits':
-            // "Credits" => replaced by extension connect button
+            // replaced by extension connect button
             break;
           default:
             console.log(`Selected: ${currentOption}`);
@@ -123,10 +127,10 @@ export default function HomePage() {
     showAdventure,
     showMint,
     gameStarted,
-    showVillagerCreator
+    showVillagerCreator,
+    showWallet
   ]);
 
-  // Use the global WASD controls to handle ESC for overlays
   useGlobalControls({
     onEscape: () => {
       if (showVillagerCreator) {
@@ -141,13 +145,14 @@ export default function HomePage() {
         setShowAdventure(false);
       } else if (showMint) {
         setShowMint(false);
+      } else if (showWallet) {
+        setShowWallet(false);
       } else if (gameStarted) {
         setGameStarted(false);
       }
     },
   });
 
-  // Helper to render the main menu
   function renderMenu() {
     return (
       <div className="inline-block  w-full h-full p-2 bg-[url('/img/background.png')] bg-cover bg-center items-center">
@@ -166,11 +171,13 @@ export default function HomePage() {
           <div className="flex flex-row justify-center items-center flex-wrap">
             {options.map((option, index) => {
               const isSelected = selectedIndex === index;
-              
-              // Only show Connect/Credits when disconnected
-              if ((option === 'Connect' || option === 'Credits') && isConnected) return null;
-              // Hide other options when disconnected
-              if (!(option === 'Connect' || option === 'Credits') && !isConnected) return null;
+
+              // Only show Connect/Credits if not connected
+              if ((option === 'Connect' || option === 'Credits') && isConnected) {
+                return null;
+              }
+              // Hide other options if not connected? (Optional logic)
+              // if (!(option === 'Connect' || option === 'Credits') && !isConnected) return null;
 
               if (option === 'Connect') {
                 return (
@@ -198,7 +205,6 @@ export default function HomePage() {
                 );
               }
 
-              // Otherwise show normal text
               return (
                 <div
                   key={option}
@@ -217,15 +223,7 @@ export default function HomePage() {
     );
   }
 
-  // Are any overlays open?
-  const anyOverlayOpen =
-    showCharacterSelect ||
-    showMap ||
-    showCharacterCreation ||
-    showAdventure ||
-    gameStarted ||
-    showVillagerCreator ||
-    showMint;
+  const anyOverlayOpen = showCharacterSelect || showMap || showCharacterCreation || showAdventure || gameStarted || showVillagerCreator || showMint || showWallet;
 
   return (
     <div className="w-screen h-screen bg-[#2d2d2d] overflow-hidden flex items-center justify-center">
@@ -249,9 +247,9 @@ export default function HomePage() {
         >
           {isLoading ? (
             <div className="absolute inset-0 flex items-center justify-center bg-[#09071b]">
-              <img 
+              <img
                 src="/img/ronin.gif"
-                alt="Loading..." 
+                alt="Loading..."
                 className="w-1/2 max-w-[200px]"
                 style={{ imageRendering: 'pixelated' }}
               />
@@ -265,6 +263,7 @@ export default function HomePage() {
                 !showAdventure &&
                 !showMint &&
                 !showVillagerCreator &&
+                !showWallet &&
                 renderMenu()}
 
               {gameStarted &&
@@ -273,7 +272,8 @@ export default function HomePage() {
                 !showCharacterCreation &&
                 !showAdventure &&
                 !showMint &&
-                !showVillagerCreator && (
+                !showVillagerCreator &&
+                !showWallet && (
                   <PhaserRuneBoy />
               )}
 
@@ -316,6 +316,13 @@ export default function HomePage() {
               {showVillagerCreator && (
                 <div className="absolute inset-0 bg-black/85">
                   <VillagerCreator onClose={() => setShowVillagerCreator(false)} />
+                </div>
+              )}
+
+              {/* NEW: showWallet overlay */}
+              {showWallet && (
+                <div className="absolute inset-0 bg-black/85">
+                  <WalletComponent />
                 </div>
               )}
             </>

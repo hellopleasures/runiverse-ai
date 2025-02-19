@@ -8,6 +8,7 @@ import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 
 import { config } from '../wagmi';
 import { CharacterProvider } from '../context/CharacterContext';
+import { WalletProvider } from '../context/WalletContext'; // <--- added
 
 const client = new QueryClient();
 
@@ -17,7 +18,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={client}>
         <RainbowKitProvider>
           <CharacterProvider>
-            <Component {...pageProps} />
+            <WalletProvider>
+              <Component {...pageProps} />
+            </WalletProvider>
           </CharacterProvider>
         </RainbowKitProvider>
       </QueryClientProvider>

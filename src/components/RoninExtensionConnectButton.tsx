@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { SiweMessage } from 'siwe';
+import { useWallet } from '../context/WalletContext';
 
 declare global {
   interface Window {
@@ -21,7 +22,7 @@ declare global {
 }
 
 interface Props {
-  onConnect: () => void;
+  onConnect?: () => void;
 }
 
 export function RoninExtensionConnectButton({ onConnect }: Props) {
@@ -29,6 +30,8 @@ export function RoninExtensionConnectButton({ onConnect }: Props) {
   const [signature, setSignature] = useState<string>('');
   const [connecting, setConnecting] = useState<boolean>(false);
   const [signing, setSigning] = useState<boolean>(false);
+
+  const { setConnection } = useWallet();
 
   async function handleConnect() {
     if (typeof window === 'undefined') {
@@ -72,8 +75,9 @@ export function RoninExtensionConnectButton({ onConnect }: Props) {
 
       if (accounts && accounts.length > 0) {
         setAddress(accounts[0]);
+        setConnection(true, accounts[0]); // store in context
         console.log('Connected with address:', accounts[0]);
-        onConnect();
+        onConnect?.();
       } else {
         console.warn('No accounts found from Ronin extension');
       }
