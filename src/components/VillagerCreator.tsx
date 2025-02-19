@@ -288,7 +288,7 @@ export default function VillagerCreator({ onClose }: { onClose?: () => void }) {
     if (!ref.current) return;
     if (idx < 0 || idx >= length) return;
     const child = ref.current.children[idx] as HTMLElement;
-    if (child) child.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    if (child) child.scrollIntoView({ block: 'center', behavior: 'smooth' });
   }
 
   /** Optional label above the items grid to show which trait is being selected. */
@@ -311,7 +311,7 @@ export default function VillagerCreator({ onClose }: { onClose?: () => void }) {
   const { head, eyes, hair, facial_hair, tops, bottoms, background } = selectedParts;
 
   return (
-    <div className="w-full h-full bg-[#697c01] text-white flex flex-col relative">
+    <div className="w-full h-full bg-[#697c01] text-[#333d02] flex flex-col relative p-2">
       {showConfirm && (
         <ConfirmLeaveModal
           onConfirm={() => { setShowConfirm(false); if(onClose) onClose(); }}
@@ -319,11 +319,11 @@ export default function VillagerCreator({ onClose }: { onClose?: () => void }) {
         />
       )}
 
-      <div className="flex-1 flex flex-row overflow-hidden">
+      <div className="flex-1 flex flex-row overflow-hidden border-2 border-[#333d02]">
         {/* Left side => preview */}
-        <div className="w-[40%] border-r-2 border-[#333d02] p-2 flex flex-col items-center">
-          <h2 className="text-[16px] uppercase font-['MekMono'] mb-2 text-center">Character</h2>
-          <div className="relative bg-white border border-gray-700" style={{width:'160px', height:'160px'}}>
+        <div className="w-[40%] border-r-2 border-[#333d02]  flex flex-col items-center">
+          <h2 className="text-[14px] p-1 uppercase font-['MekMono'] text-center">Character</h2>
+          <div className="relative bg-white border border-gray-700" style={{width:'130px', height:'130px'}}>
             {background && (
               <img src={background} alt="bg" className="absolute w-full h-full object-contain"/>
             )}
@@ -351,7 +351,7 @@ export default function VillagerCreator({ onClose }: { onClose?: () => void }) {
         {/* Right side => either trait list or items pane */}
         <div className="w-[60%] h-full p-2 flex flex-col relative">
           {paneFocus==='traits' ? (
-            <div ref={traitListRef} className="flex-1 overflow-y-auto border-2 border-[#333d02] p-2 no-scrollbar absolute inset-0">
+            <div ref={traitListRef} className="flex-1 overflow-y-auto  p-2 no-scrollbar absolute inset-0">
               {CATEGORY_ORDER.map((trait, i)=>{
                 const isSelected = (i===traitIndex);
                 return (
@@ -379,7 +379,7 @@ export default function VillagerCreator({ onClose }: { onClose?: () => void }) {
             </div>
           ) : (
             // items pane
-            <div ref={itemListRef} className="flex-1 overflow-y-auto border-2 border-[#333d02] p-2 no-scrollbar absolute inset-0">
+            <div className="flex-1 overflow-y-auto p-2 no-scrollbar absolute inset-0">
               <h3 className="text-[10px] font-['MekMono'] uppercase text-center mb-2">
                 {getTraitLabel(CATEGORY_ORDER[traitIndex])}
               </h3>
@@ -396,7 +396,7 @@ export default function VillagerCreator({ onClose }: { onClose?: () => void }) {
                 const columns = isTextCategory(trait)?1:2;
                 const gridClass = (columns===1)? 'block' : 'grid grid-cols-2 gap-2';
                 return (
-                  <div className={gridClass}>
+                  <div ref={itemListRef} className={gridClass}>
                     {items.map((val, idx)=>{
                       const isSelected = idx===itemIndex;
                       let displayImg = '';
@@ -442,7 +442,7 @@ export default function VillagerCreator({ onClose }: { onClose?: () => void }) {
                             <img
                               src={displayImg}
                               alt={val}
-                              style={{width:'48px',height:'48px',objectFit:'contain'}}
+                              style={{width:'64px',height:'64px',objectFit:'contain'}}
                             />
                           ) : null}
                           {displayText? <span>{displayText}</span> : null}
@@ -468,7 +468,7 @@ export default function VillagerCreator({ onClose }: { onClose?: () => void }) {
         </div>
       </div>
 
-      <div className="text-center text-[10px] py-1 border-t-2 border-[#333d02] font-['MekMono'] uppercase">
+      <div className="text-center text-[12px] py-1   font-['MekMono'] uppercase">
         <p>WASD: Move | A: Select | B: Back | Start: Save</p>
       </div>
     </div>

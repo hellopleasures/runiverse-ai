@@ -169,54 +169,86 @@ export default function HomePage() {
 
         <div className="h-full mx-auto w-[90%] flex items-end justify-center">
           <div className="flex flex-row justify-center items-center flex-wrap">
-            {options.map((option, index) => {
-              const isSelected = selectedIndex === index;
-
-              // Only show Connect/Credits if not connected
-              if ((option === 'Connect' || option === 'Credits') && isConnected) {
-                return null;
-              }
-              // Hide other options if not connected? (Optional logic)
-              // if (!(option === 'Connect' || option === 'Credits') && !isConnected) return null;
-
-              if (option === 'Connect') {
-                return (
-                  <div
-                    key="connect"
-                    className={`m-[0.3rem_0] w-full flex justify-center items-center ${
-                      isSelected ? 'blinking-title text-yellow-400' : 'text-white'
-                    }`}
-                  >
-                    <RoninConnectButton onConnect={() => setIsConnected(true)} />
-                  </div>
-                );
-              }
-
-              if (option === 'Credits') {
-                return (
-                  <div
-                    key="credits"
-                    className={`m-[0.3rem_0] w-full flex justify-center items-center ${
-                      isSelected ? 'blinking-title text-yellow-400' : 'text-white'
-                    }`}
-                  >
-                    <RoninExtensionConnectButton onConnect={() => setIsConnected(true)} />
-                  </div>
-                );
-              }
-
-              return (
+            {!isConnected && (
+              <>
                 <div
-                  key={option}
-                  className={`
-                    m-[0.3rem_0] uppercase text-[16px] flex justify-center items-center font-['MekMono'] w-1/2
-                    ${isSelected ? 'font-bold text-yellow-400 blinking-title' : 'text-white'}
-                  `}
+                  key="connect"
+                  className={`m-[0.3rem_0] mb-[50px] w-full flex justify-center items-center ${
+                    selectedIndex === 0 ? 'blinking-title text-yellow-400' : 'text-white'
+                  }`}
                 >
-                  {option}
+                  <RoninConnectButton onConnect={() => setIsConnected(true)} />
                 </div>
-              );
-            })}
+                {/* <divß
+                  key="credits"
+                  className={`m-[0.3rem_0] w-full flex justify-center items-center ${
+                    selectedIndex === 1 ? 'blinking-title text-yellow-400' : 'text-white'
+                  }`}
+                >
+                  <RoninExtensionConnectButton onConnect={() => setIsConnected(true)} />
+                </div> */}
+              </>
+            )}
+            {isConnected && (
+              <>
+                <div
+                  key="startGame"
+                  className={`m-[0.3rem_0] uppercase text-[16px] flex justify-center items-center font-['MekMono'] w-1/2 ${
+                    selectedIndex === 0 ? 'font-bold text-yellow-400 blinking-title' : 'text-white'
+                  }`}
+                >
+                  Start Game
+                </div>
+                <div
+                  key="characters"
+                  className={`m-[0.3rem_0] uppercase text-[16px] flex justify-center items-center font-['MekMono'] w-1/2 ${
+                    selectedIndex === 1 ? 'font-bold text-yellow-400 blinking-title' : 'text-white'
+                  }`}
+                >
+                  Characters
+                </div>
+                <div
+                  key="characterCreation"
+                  className={`m-[0.3rem_0] uppercase text-[16px] flex justify-center items-center font-['MekMono'] w-1/2 ${
+                    selectedIndex === 2 ? 'font-bold text-yellow-400 blinking-title' : 'text-white'
+                  }`}
+                >
+                  Character Creation
+                </div>
+                <div
+                  key="runiverseAdventure"
+                  className={`m-[0.3rem_0] uppercase text-[16px] flex justify-center items-center font-['MekMono'] w-1/2 ${
+                    selectedIndex === 3 ? 'font-bold text-yellow-400 blinking-title' : 'text-white'
+                  }`}
+                >
+                  Runiverse Adventure
+                </div>
+                <div
+                  key="mint"
+                  className={`m-[0.3rem_0] uppercase text-[16px] flex justify-center items-center font-['MekMono'] w-1/2 ${
+                    selectedIndex === 4 ? 'font-bold text-yellow-400 blinking-title' : 'text-white'
+                  }`}
+                >
+                  Mint
+                </div>
+                <div
+                  key="map"
+                  className={`m-[0.3rem_0] uppercase text-[16px] flex justify-center items-center font-['MekMono'] w-1/2 ${
+                    selectedIndex === 5 ? 'font-bold text-yellow-400 blinking-title' : 'text-white'
+                  }`}
+                >
+                  Map
+                </div>
+                <div
+                  key="wallet"
+                  className={`m-[0.3rem_0] uppercase text-[16px] flex justify-center items-center font-['MekMono'] w-1/2 ${
+                    selectedIndex === 6 ? 'font-bold text-yellow-400 blinking-title' : 'text-white'
+                  }`}
+                >
+                  Wallet
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

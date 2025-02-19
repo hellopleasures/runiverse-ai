@@ -35,6 +35,7 @@ function getCollectionFolder(contract: string) {
 export default function CharacterPreview() {
   const { selectedCharacter } = useCharacter();
   const [equippedItems, setEquippedItems] = useState<EquippedItems>({});
+  const [showEquipped, setShowEquipped] = useState(false);
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
   if (!selectedCharacter || !selectedCharacter.attributes) {
@@ -76,7 +77,7 @@ export default function CharacterPreview() {
         key={`${attr.trait_type}-${finalValue}`}
         src={`/assets/${folder}/${attr.trait_type.toLowerCase()}/${traitValue}.png`}
         alt={`${attr.trait_type} - ${finalValue}`}
-        className="absolute inset-0 w-[200px] h-[200px] object-contain"
+        className="absolute inset-0 w-[150px] h-[150px] object-contain"
         style={{ zIndex }}
       />
     );
@@ -91,6 +92,10 @@ export default function CharacterPreview() {
       return { ...prev, [key]: prev[key] === currentValue ? 'none' : currentValue };
     });
   }
+
+  const handleToggleEquipped = () => {
+    setShowEquipped(!showEquipped);
+  };
 
   const handleDownload = async () => {
     if (!canvasRef.current || !selectedCharacter) return;
@@ -139,27 +144,30 @@ export default function CharacterPreview() {
   };
 
   return (
-    <div className="border-4 border-[#333d02] p-4 flex flex-row gap-3 items-center">
+    <div className="flex flex-row gap-3 items-center">
       <canvas ref={canvasRef} style={{ display: 'none' }} />
       
-      <div className="relative w-[200px] h-[200px]">
+      <div className="relative w-[150px] h-[150px]">
         {sortedAttributes.map((attr, i) => {
           const z = traitOrder[attr.trait_type.toLowerCase()] || i;
           return getTraitImage(attr, z);
         })}
       </div>
 
-      <div className="">
-        <strong className="text-[#333d02] text-xl font-mek-mono uppercase">Character Name</strong>
-        <p className="text-2xl leading-none text-[#333d02] font-[MekMono] uppercase">
+      <div className="text-left flex flex-col items-start">
+        <strong className="text-[#333d02] text-[12px] font-mek-mono uppercase">Character Name</strong>
+        <p className="text-[14px] leading-none text-[#333d02] font-[MekMono] uppercase">
           {selectedCharacter.name || 'Unknown Name'}
         </p>
-        <p className="uppercase text-xl text-[#333d02]">Equipped Items:</p>
-        {sortedAttributes.map((attr) => {
+        <p className="uppercase text-[12px] text-[#333d02]">
+          EQUIPPED ITEMS:
+        </p>
+        <button onClick={handleToggleEquipped} className="text-[12px] leading-none text-red-300 hover:underline cursor-pointer">{showEquipped ? 'HIDE' : 'SHOW'}</button>
+        {showEquipped && sortedAttributes.map((attr) => {
           const val = attr.value;
           if (val && val !== 'none') {
             return (
-              <div key={attr.trait_type} className="uppercase text-[#333d02] text-2xl font-[MekMono] leading-none">
+              <div key={attr.trait_type} className="uppercase text-[#333d02] text-[14px] font-[MekMono] leading-none">
                 {attr.trait_type.replace(/_/g, ' ')}: {String(val).replace(/_/g, ' ')}
               </div>
             );
@@ -169,7 +177,7 @@ export default function CharacterPreview() {
         
         <button
           onClick={handleDownload}
-          className="mt-2 px-2 py-1 bg-[#333d02] uppercase font-[MekMono] text-white rounded hover:bg-[#4a5803] transition-colors"
+          className="mt-2 px-2 py-1 bg-[#333d02] text-[12px] uppercase font-[MekMono] text-white rounded hover:bg-[#4a5803] transition-colors"
         >
           Download
         </button>
