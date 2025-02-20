@@ -24,9 +24,9 @@ export default function Wallet() {
         // If address is 0x..., attempt reverse resolution
         // If found, show that name. Otherwise, show partial address.
         if (address) {
-          const { name } = await rnsInstance.getName(address);
-          if (name) {
-            setRnsName(name);
+          const result = await rnsInstance.getName(address);
+          if (result?.name) {
+            setRnsName(result.name);
           } else {
             // no RNS name set
             setRnsName('');
